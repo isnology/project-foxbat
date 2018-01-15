@@ -5,13 +5,30 @@ body {
 }
 
 .main-button {
-  height: 50px;
+  height: 45px;
   background-color: #5E91CC;
-  padding: 10px, 40px, 10px, 40px;
   border-radius: 5px;
 }
 
 .button-text {
   font-size: 24px;
   margin: 35px;
+}
+
+.form {
+  border: 1px solid black;
+  border-radius: 41px;
+  margin: 5% 8% 5% 8%;
+  padding: 5%;
+}
+
+.form-text {
+  font-size: 36px;
+  text-align: left;
+  width: 100%;
+}
+
+.save-form-button {
+  text-align: center;
+  margin-top: 30px;
 }
