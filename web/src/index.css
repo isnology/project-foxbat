@@ -3,3 +3,15 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.main-button {
+  height: 50px;
+  background-color: #5E91CC;
+  padding: 10px, 40px, 10px, 40px;
+  border-radius: 5px;
+}
+
+.button-text {
+  font-size: 24px;
+  margin: 35px;
+}
