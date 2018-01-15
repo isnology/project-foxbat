@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const authMiddleware = require('./middleware/auth')
+//const authMiddleware = require('./middleware/auth')
 
 const server = express()
 
@@ -15,11 +15,11 @@ server.use(cors())  // allow access from other origins i.e. cross origin stuff (
 
 
 // routes
-//server.use([
-//  require('./routes/products'),
-//  require('./routes/auth'),
-//  require('./routes/wishlist')
-//])
+server.use([
+  require('./routes/panel'),
+  require('./routes/template'),
+  require('./routes/instrument')
+])
 
 server.listen(7000, (error) => {
   if (error) {
