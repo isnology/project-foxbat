@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -5,13 +9,59 @@ body {
 }
 
 .main-button {
-  height: 50px;
+  height: 45px;
   background-color: #5E91CC;
-  padding: 10px, 40px, 10px, 40px;
   border-radius: 5px;
 }
 
 .button-text {
   font-size: 24px;
   margin: 35px;
+}
+
+.sidebar {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 25%;
+  background: #C4C4C4;
+}
+
+.sidebar-top {
+  margin: auto;
+  padding: 10px;
+  top: 0;
+  min-height: 100px;
+  background: #0A64CB;
+  color: #F5F5F5;
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+}
+
+.sidebar-text {
+  width: 100%;
+  padding: 10px;
+  color: #1b1b1b;
+  font-family: 'Roboto', sans-serif;
+  text-align: left;
+  line-height: 1.5;
+}
+
+.form {
+  border: 1px solid black;
+  border-radius: 41px;
+  margin: 5% 8% 5% 8%;
+  padding: 5%;
+}
+
+.form-text {
+  font-size: 36px;
+  text-align: left;
+  width: 100%;
+}
+
+.save-form-button {
+  text-align: center;
+  margin-top: 30px;
 }
