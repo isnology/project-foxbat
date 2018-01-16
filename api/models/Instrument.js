@@ -6,10 +6,14 @@ const instrumentSchema = new Schema({
   brand: { type: String },
   model: { type: String },
   partNo: { type: String },
+  text: { type: String },
   pictureUrl: { type: String },
   price: { type: Number },
-  size: { type: String }
+  size: { type: String },
+  instrumentClassId: { type: Schema.ObjectId, ref: 'InstrumentClass' },
 })
+
+instrumentSchema.index({instrumentClassId: 1, brand: 1, model: 1, partNo: 1}, {unique: true});
 
 const Instrument = mongoose.model('Instrument', instrumentSchema)
 

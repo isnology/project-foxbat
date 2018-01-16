@@ -15,6 +15,8 @@ const panelSchema = new Schema({
   userId: { type: Schema.ObjectId, ref: 'User'}
 })
 
+panelSchema.index({userId: 1, name: 1}, {unique: true});
+
 const Panel = mongoose.model('Panel', panelSchema)
 
 module.exports = Panel

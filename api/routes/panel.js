@@ -17,7 +17,7 @@ router.get('/panels', requireJWT, (req, res) => {
 
 // create
 router.post('/panels', requireJWT, (req, res) => {
-  Product.create(req.body)
+  Panel.create(req.body)
   .then((panel) => {
     res.status(201).json(panel)
   })
