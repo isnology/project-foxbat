@@ -1,11 +1,11 @@
 const express = require('express')
 const Template = require('../models/Template')
-//const { requireJWT } = require('../middleware/auth')
+const { requireJWT } = require('../middleware/auth')
 
 const router = new express.Router()
 
 // read
-router.get('/templates', (req, res) => {
+router.get('/templates', requireJWT, (req, res) => {
   Template.find()
   .then((templates) => {
     res.json(templates)
@@ -16,8 +16,8 @@ router.get('/templates', (req, res) => {
 })
 
 // create
-router.post('/templates', (req, res) => {
-  Product.create(req.body)
+router.post('/templates', requireJWT, (req, res) => {
+  Template.create(req.body)
   .then((template) => {
     res.status(201).json(template)
   })
@@ -27,7 +27,7 @@ router.post('/templates', (req, res) => {
 })
 
 // Update
-router.put('/templates/:id', (req, res) => {
+router.put('/templates/:id', requireJWT, (req, res) => {
   const { id } = req.params
   Template.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
   .then((template) => {

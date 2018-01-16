@@ -2,6 +2,7 @@ const mongoose = require('./init')
 const Panel = require('./Panel')
 const Template = require('./Template')
 const Instrument = require('./Instrument')
+const InstrumentClass = require('./InstrumentClass')
 const User = require('./User')
 
 
@@ -23,6 +24,13 @@ const User = require('./User')
 //  process.exit()
 //})
 
+//InstrumentClass.deleteMany()
+//.then(() => {
+//  console.log('Deleted users')
+//  process.exit()
+//})
+
+
 //User.deleteMany()
 //.then(() => {
 //  console.log('Deleted users')
@@ -39,6 +47,10 @@ mongoose.connection.collections['Template'].drop( function(err) {
 
 mongoose.connection.collections['Instrument'].drop( function(err) {
   console.log('Instrument dropped');
+});
+
+mongoose.connection.collections['InstrumentClass'].drop( function(err) {
+  console.log('InstrumentClass dropped');
 });
 
 mongoose.connection.collections['User'].drop( function(err) {

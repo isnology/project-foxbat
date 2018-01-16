@@ -19,7 +19,8 @@ server.use([
   require('./routes/auth'),
   require('./routes/panel'),
   require('./routes/template'),
-  require('./routes/instrument')
+  require('./routes/instrument'),
+  require('./routes/instrumentClass')
 ])
 
 server.listen(7000, (error) => {
