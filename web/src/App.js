@@ -7,10 +7,14 @@ import Form from './components/Form';
 import PanelTemplate from './components/PanelTemplate';
 
 class App extends Component {
+  state = {
+
+  }
+
   render() {
     return (
       <div className="App">
-        
+        <Form />
       </div>
     );
   }
