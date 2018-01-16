@@ -8,7 +8,6 @@ import PanelTemplate from './components/PanelTemplate';
 
 class App extends Component {
   state = {
-
   }
 
   render() {
