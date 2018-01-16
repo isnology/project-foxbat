@@ -1,12 +1,14 @@
 import React from 'react'
 import Button from '../Button';
 import ExitButton from '../ExitButton';
+import InstrumentList from './InstrumentList';
 import './sidebar.css';
 
 function Sidebar({
   exitButton,
   backButton,
-  topHeading
+  topHeading,
+  instruments
 }) { 
   return (
     <div className="sidebar">
@@ -24,6 +26,9 @@ function Sidebar({
         <p>3. I am an even longer announcement that will probably wrap, I think</p>
       </div>
 
+      {
+        !!instruments ? <InstrumentList instruments={instruments}/> : console.log("there are no instruments") 
+      }
     </div>
   )
 }

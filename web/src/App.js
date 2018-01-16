@@ -9,7 +9,8 @@ import Sidebar from './components/sidebar/Sidebar';
 
 class App extends Component {
   state = {
-    showSidebar: true
+    showSidebar: true,
+    instruments: [{id: 1, brand: "IMB", model: "Alti1000"}, {id: 2, brand: "Falcon", model: "Climonometer"}]
   }
 
 toggleShowSidebar = () => {
@@ -22,7 +23,7 @@ toggleShowSidebar = () => {
 }
 
   render() {
-    const {showSidebar } = this.state
+    const {showSidebar, instruments } = this.state
 
     return (
       <Router>
@@ -53,6 +54,7 @@ toggleShowSidebar = () => {
                     exitButton={ true }
                     backButton={ true }
                     topHeading={ "Top heading!" }
+                    instruments= { instruments }
                   /> 
                 }
                 <Button 
