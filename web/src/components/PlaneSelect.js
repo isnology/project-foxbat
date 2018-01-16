@@ -6,7 +6,7 @@ function PlaneSelect({
   onToggle
 }) { 
   return (
-    <button class="landing-page-rectangle" onClick={
+    <button className="landing-page-rectangle" onClick={
         (event) => {
           onToggle()
         }

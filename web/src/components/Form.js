@@ -15,30 +15,30 @@ function Form({
   onToggle
 }) {
   return (
-    <div class="form">
+    <div className="form">
       <ExitButton onToggle />
       <RoundExitButton onToggle />
-      <p class="form-text">{ text }</p>
+      <p className="form-text">{ text }</p>
 
       { FirstInputLabel && FirstInputType ?
         <label>
-          <p class="form-text">{ FirstInputLabel }</p>
-          <input class="form-text" type={ FirstInputType } name="panel-name"/>
+          <p className="form-text">{ FirstInputLabel }</p>
+          <input className="form-text" type={ FirstInputType } name="panel-name"/>
         </label> : null }
 
       { SecondInputLabel && SecondInputType ?
         <label>
-          <p class="form-text">{ SecondInputLabel }</p>
-          <input class="form-text" type={ SecondInputType } name="panel-name"/>
+          <p className="form-text">{ SecondInputLabel }</p>
+          <input className="form-text" type={ SecondInputType } name="panel-name"/>
         </label> : null }
 
       { ThirdInputLabel && ThirdInputType ?
         <label>
-          <p class="form-text">{ ThirdInputLabel }</p>
-          <input class="form-text" type={ ThirdInputType } name="panel-name"/>
+          <p className="form-text">{ ThirdInputLabel }</p>
+          <input className="form-text" type={ ThirdInputType } name="panel-name"/>
         </label> : null }
 
-      <div class="save-form-button">
+      <div className="save-form-button">
         <Button text={ buttonText }/>
       </div>
     </div>
