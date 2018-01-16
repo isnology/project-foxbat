@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import RoundExitButton from './RoundExitButton';
 import Button from './Button';
 
