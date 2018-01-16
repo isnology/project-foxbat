@@ -8,35 +8,20 @@ body {
   font-family: sans-serif;
 }
 
-.main-button {
-  height: 45px;
-  background-color: #5E91CC;
-  border-radius: 5px;
+.center {
+  text-align: center;
 }
 
-.button-text {
-  font-size: 24px;
-  margin: 35px;
+.template {
+  border: 1px solid black;
+  height: 128px;
+  width: 256px;
 }
 
-.exit-button {
-  height: 70px;
-  width: 70px;
-  border-radius: 50%;
-  background-color: #333333;
-
-  position: absolute;
-  top: 6%;
-  left: 89.5%;
-}
-
-.exit-button-X {
-  font-size: 64px;
-  color: #F2F2F2;
-
-  position: relative;
-  top: -11px;
-  left: 1px;
+.template-with-text {
+  width: 256px;
+  display: inline-block;
+  margin: 20px;
 }
 
 .sidebar {
@@ -84,4 +69,35 @@ body {
 .save-form-button {
   text-align: center;
   margin-top: 30px;
+}
+
+.main-button {
+  height: 45px;
+  background-color: #5E91CC;
+  border-radius: 5px;
+}
+
+.button-text {
+  font-size: 24px;
+  margin: 35px;
+}
+
+.round-exit-button {
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  background-color: #333333;
+
+  position: absolute;
+  top: 6%;
+  left: 89.5%;
+}
+
+.exit-button-X {
+  font-size: 64px;
+  color: #F2F2F2;
+
+  position: relative;
+  top: -11px;
+  left: 1px;
 }

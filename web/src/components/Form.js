@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import ExitButton from './ExitButton';
 import RoundExitButton from './RoundExitButton';
 import Button from './Button';
 
@@ -10,26 +11,28 @@ function Form({
   SecondInputType = false,
   ThirdInputLabel = false,
   ThirdInputType = false,
-  buttonText
-}) { 
+  buttonText,
+  onToggle
+}) {
   return (
     <div class="form">
-      <RoundExitButton/>
+      <ExitButton onToggle />
+      <RoundExitButton onToggle />
       <p class="form-text">{ text }</p>
 
-      { FirstInputLabel && FirstInputType ? 
+      { FirstInputLabel && FirstInputType ?
         <label>
           <p class="form-text">{ FirstInputLabel }</p>
           <input class="form-text" type={ FirstInputType } name="panel-name"/>
         </label> : null }
 
-      { SecondInputLabel && SecondInputType ? 
+      { SecondInputLabel && SecondInputType ?
         <label>
           <p class="form-text">{ SecondInputLabel }</p>
           <input class="form-text" type={ SecondInputType } name="panel-name"/>
         </label> : null }
 
-      { ThirdInputLabel && ThirdInputType ? 
+      { ThirdInputLabel && ThirdInputType ?
         <label>
           <p class="form-text">{ ThirdInputLabel }</p>
           <input class="form-text" type={ ThirdInputType } name="panel-name"/>

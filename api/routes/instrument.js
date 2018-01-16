@@ -1,11 +1,11 @@
 const express = require('express')
 const Instrument = require('../models/Instrument')
-//const { requireJWT } = require('../middleware/auth')
+const { requireJWT } = require('../middleware/auth')
 
 const router = new express.Router()
 
 // read
-router.get('/instruments', (req, res) => {
+router.get('/instruments', requireJWT, (req, res) => {
   Instrument.find()
   .then((instruments) => {
     res.json(instruments)
@@ -16,8 +16,8 @@ router.get('/instruments', (req, res) => {
 })
 
 // create
-router.post('/instruments', (req, res) => {
-  Product.create(req.body)
+router.post('/instruments', requireJWT, (req, res) => {
+  Instrument.create(req.body)
   .then((instrument) => {
     res.status(201).json(instrument)
   })
@@ -27,7 +27,7 @@ router.post('/instruments', (req, res) => {
 })
 
 // Update
-router.put('/instruments/:id', (req, res) => {
+router.put('/instruments/:id', requireJWT, (req, res) => {
   const { id } = req.params
   Instrument.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
   .then((instrument) => {
