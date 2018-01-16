@@ -19,6 +19,26 @@ body {
   margin: 35px;
 }
 
+.exit-button {
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  background-color: #333333;
+
+  position: absolute;
+  top: 6%;
+  left: 89.5%;
+}
+
+.exit-button-X {
+  font-size: 64px;
+  color: #F2F2F2;
+
+  position: relative;
+  top: -11px;
+  left: 1px;
+}
+
 .sidebar {
   position: absolute;
   right: 0;

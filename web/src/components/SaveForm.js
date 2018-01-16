@@ -1,10 +1,12 @@
 import React, { Fragment } from 'react'
+import RoundExitButton from './RoundExitButton';
 import Button from './Button';
 
 function SaveForm({
 }) { 
   return (
     <div class="form">
+      <RoundExitButton/>
       <p class="form-text">Please enter your email address to save
         and give your panel a name. The url
         for your dashboard will be sent to
