@@ -8,7 +8,7 @@ const instrumentSchema = new Schema({
   partNo: { type: String },
   pictureUrl: { type: String },
   price: { type: Number },
-  size: { type: Number }
+  size: { type: String }
 })
 
 const Instrument = mongoose.model('Instrument', instrumentSchema)
