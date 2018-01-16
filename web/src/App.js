@@ -10,11 +10,6 @@ import PanelTemplate from './components/PanelTemplate';
 class App extends Component {
   render() {
     return (
-<<<<<<< Updated upstream
-      <div className="App">
-                
-      </div>
-=======
       <Router>
         <div className="App">
           <Switch>
@@ -40,10 +35,11 @@ class App extends Component {
               </Fragment>
             )}/>
 
+            
+
           </Switch>
         </div>
       </Router>
->>>>>>> Stashed changes
     );
   }
 }
