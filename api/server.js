@@ -11,15 +11,17 @@ const server = express()
 
 server.use(bodyParser.json())
 server.use(cors())  // allow access from other origins i.e. cross origin stuff (react front tend)
-//server.use(authMiddleware.initialize)
+server.use(authMiddleware.initialize)
 
 
 // routes
-//server.use([
-//  require('./routes/products'),
-//  require('./routes/auth'),
-//  require('./routes/wishlist')
-//])
+server.use([
+  require('./routes/auth'),
+  require('./routes/panel'),
+  require('./routes/template'),
+  require('./routes/instrument'),
+  require('./routes/instrumentClass')
+])
 
 server.listen(7000, (error) => {
   if (error) {
