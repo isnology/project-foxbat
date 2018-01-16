@@ -5,7 +5,7 @@ function InstrumentList({
   instruments
 }) { 
   return (
-    <div>
+    <div className="instrument-list">
       {
         instruments.map((instrument) => (
           <Button 

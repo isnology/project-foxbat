@@ -2,6 +2,7 @@ import React from 'react'
 import Button from '../Button';
 import ExitButton from '../ExitButton';
 import InstrumentList from './InstrumentList';
+import SidebarText from './SidebarText';
 import './sidebar.css';
 
 function Sidebar({
@@ -17,17 +18,11 @@ function Sidebar({
         <div className="sideBar-top-buttons">
           { exitButton && <ExitButton />}
         </div>
-        { topHeading }
-      </div>
-
-      <div className="sidebar-text">
-        <p>1. I am an announcement!</p>
-        <p>2. Obey me!</p>
-        <p>3. I am an even longer announcement that will probably wrap, I think</p>
+        <h3>{ topHeading }</h3>
       </div>
 
       {
-        !!instruments ? <InstrumentList instruments={instruments}/> : console.log("there are no instruments") 
+        !!instruments ? <InstrumentList instruments={instruments}/> : <SidebarText /> 
       }
     </div>
   )

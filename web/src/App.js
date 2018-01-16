@@ -12,7 +12,7 @@ import Sidebar from './components/sidebar/Sidebar';
 class App extends Component {
   state = {
     showSidebar: true,
-    instruments: [{id: 1, brand: "IMB", model: "Alti1000"}, {id: 2, brand: "Falcon", model: "Climonometer"}],
+    instruments: [{id: 1, brand: "IMB", model: "Alti1000"}, {id: 2, brand: "Falcon", model: "Climonometer"}, {id: 3, brand: "IMB", model: "Alti1000"}, {id: 4, brand: "Falcon", model: "Climonometer"}, {id: 5, brand: "IMB", model: "Alti1000"}, {id: 6, brand: "Falcon", model: "Climonometer"}],
     decodedToken: getDecodedToken(), // Restore the previous signed in data
   }
 

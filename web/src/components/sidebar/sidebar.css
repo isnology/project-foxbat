@@ -8,20 +8,29 @@
   top: 0;
   height: 100%;
   width: 25%;
+  overflow-y: scroll;
   background: #C4C4C4;
 }
 
+.sidebar h3 {
+  width: 100%;
+  margin: 20px auto 0 auto;
+  text-align: center;
+  font-size: 24px;
+  font-weight: normal;
+}
+
 .sidebar-top {
-  margin: auto;
-  top: 0;
+  position: relative;
+  width: 100%;
   min-height: 100px;
   background: #0A64CB;
   color: #F5F5F5;
   font-family: 'Roboto', sans-serif;
-  font-size: 24px;
 }
 
 .sideBar-top-buttons {
+  top: 0;
   height: 50px;
 }
 
@@ -31,4 +40,13 @@
   font-family: 'Roboto', sans-serif;
   text-align: left;
   line-height: 1.5;
+}
+
+.instrument-list {
+  padding: 10px;
+  overflow: scroll;
+}
+.instrument-list .main-button {
+  width: 100%;
+  margin-top: 10px;
 }
