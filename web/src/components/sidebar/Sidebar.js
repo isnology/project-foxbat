@@ -1,14 +1,23 @@
 import React from 'react'
+import Button from '../Button';
+import ExitButton from '../ExitButton';
+import './sidebar.css';
 
 function Sidebar({
-  closeButton,
-  backButton
+  exitButton,
+  backButton,
+  topHeading
 }) { 
   return (
     <div className="sidebar">
+      
       <div className="sidebar-top">
-        Heading
+        <div className="sideBar-top-buttons">
+          { exitButton && <ExitButton />}
+        </div>
+        { topHeading }
       </div>
+
       <div className="sidebar-text">
         <p>1. I am an announcement!</p>
         <p>2. Obey me!</p>

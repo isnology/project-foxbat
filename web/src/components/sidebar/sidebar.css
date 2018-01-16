@@ -1,0 +1,34 @@
+.sidebar * {
+  border: solid 1px black;
+}
+
+.sidebar {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 25%;
+  background: #C4C4C4;
+}
+
+.sidebar-top {
+  margin: auto;
+  top: 0;
+  min-height: 100px;
+  background: #0A64CB;
+  color: #F5F5F5;
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+}
+
+.sideBar-top-buttons {
+  height: 50px;
+}
+
+.sidebar-text {
+  width: 100%;
+  color: #1b1b1b;
+  font-family: 'Roboto', sans-serif;
+  text-align: left;
+  line-height: 1.5;
+}

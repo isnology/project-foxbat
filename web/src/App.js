@@ -5,12 +5,25 @@ import Button from './components/Button';
 import PlaneSelect from './components/PlaneSelect';
 import Form from './components/Form';
 import PanelTemplate from './components/PanelTemplate';
+import Sidebar from './components/sidebar/Sidebar';
 
 class App extends Component {
   state = {
+    showSidebar: true
   }
 
+toggleShowSidebar = () => {
+  this.setState((prevState) => {
+    const newShowSidebar = !prevState.showSidebar
+    return({
+      showSidebar: newShowSidebar
+    })
+  })
+}
+
   render() {
+    const {showSidebar } = this.state
+
     return (
       <Router>
         <div className="App">
@@ -34,10 +47,23 @@ class App extends Component {
                 <div>
                   <Button text="Lost your panel URL?"/>
                 </div>
+                { 
+                  showSidebar && 
+                  <Sidebar 
+                    exitButton={ true }
+                    backButton={ true }
+                    topHeading={ "Top heading!" }
+                  /> 
+                }
+                <Button 
+                  text="toggle side bar (dev)"
+                  onToggle={ this.toggleShowSidebar }
+                />
               </Fragment>
+              
             )}/>
 
-            
+         
 
           </Switch>
         </div>
