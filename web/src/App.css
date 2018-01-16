@@ -1,3 +1,24 @@
+#svgbox{
+  border: black solid 1px;
+  position: relative;
+}
+
+.panel-svg .svg-line {
+stroke:red;
+stroke-width: 1px;
+fill: grey;
+}
+
+#a22svg {
+width: 100%;
+height: auto;
+}
+
+#a32svg {
+width: 100%;
+height: auto;
+}
+
 .App {
   text-align: center;
 }
