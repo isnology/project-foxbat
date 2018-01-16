@@ -5,6 +5,6 @@ const instrumentClassSchema = new Schema({
   name: { type: String }
 })
 
-const InstrumentClass = mongoose.model('InstrumentClass', instrumentSchema)
+const InstrumentClass = mongoose.model('InstrumentClass', instrumentClassSchema)
 
 module.exports = InstrumentClass
