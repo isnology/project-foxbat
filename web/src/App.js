@@ -8,10 +8,13 @@ import Sidebar from './components/sidebar/Sidebar';
 import PlaneSelect from './components/PlaneSelect';
 import Form from './components/Form';
 import PanelTemplate from './components/PanelTemplate';
+import BasePopUp from './components/BasePopUp';
 
 class App extends Component {
   state = {
     decodedToken: getDecodedToken(), // Restore the previous signed in data
+    register: null,
+    save: null
   }
 
   onSignIn = ({ email, password }) => {
@@ -40,6 +43,8 @@ class App extends Component {
   }
 
   render() {
+    const signedIn = !!decodedToken
+
     return (
       <Router>
         <div className="App">
@@ -65,8 +70,6 @@ class App extends Component {
                 </div>
               </Fragment>
             )}/>
-
-
 
           </Switch>
         </div>
