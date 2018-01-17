@@ -11,7 +11,7 @@ import Sidebar from './components/sidebar/Sidebar';
 
 class App extends Component {
   state = {
-    showSidebar: true,
+    showConfigurator: true,
     instruments: require('./data').instruments,
     decodedToken: getDecodedToken(), // Restore the previous signed in data
   }
@@ -41,17 +41,17 @@ class App extends Component {
     this.setState({ decodedToken: null })
   }
 
-toggleShowSidebar = () => {
-  this.setState((prevState) => {
-    const newShowSidebar = !prevState.showSidebar
-    return({
-      showSidebar: newShowSidebar
+  toggleShowConfigurator = () => {
+    this.setState((prevState) => {
+      const newShowConfigurator = !prevState.showConfigurator
+      return({
+        showConfigurator: newShowConfigurator
+      })
     })
-  })
-}
+  }
 
   render() {
-    const {showSidebar, instruments } = this.state
+    const {showConfigurator, instruments } = this.state
     console.log(instruments)
     return (
       <Router>
@@ -77,7 +77,7 @@ toggleShowSidebar = () => {
                   <Button text="Lost your panel URL?"/>
                 </div>
                 { 
-                  showSidebar && 
+                  showConfigurator && 
                   <Sidebar 
                     exitButton={ true }
                     backButton={ true }
@@ -87,14 +87,11 @@ toggleShowSidebar = () => {
                 }
                 <Button 
                   text="toggle side bar (dev)"
-                  onToggle={ this.toggleShowSidebar }
+                  onToggle={ this.toggleShowConfigurator }
                 />
               </Fragment>
               
             )}/>
-
-         
-
 
           </Switch>
         </div>

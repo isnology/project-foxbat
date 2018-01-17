@@ -15,15 +15,17 @@ function Sidebar({
     <div className="sidebar">
       
       <div className="sidebar-top">
-        <div className="sideBar-top-buttons">
+        <div className="sidebar-top-buttons">
           { exitButton && <ExitButton />}
         </div>
         <h3>{ topHeading }</h3>
       </div>
 
-      {
-        !!instruments ? <InstrumentList instruments={instruments}/> : <SidebarText /> 
-      }
+      <div className="sidebar-lower">
+        {
+          !!instruments ? <InstrumentList instruments={instruments}/> : <SidebarText /> 
+        }
+      </div>
     </div>
   )
 }
