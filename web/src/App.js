@@ -95,6 +95,14 @@ class App extends Component {
     }
   }
 
+  onSidebarClose = () => {
+    this.setState({ 
+      selectedSlot: null,
+      selectedInstrumentType: null,
+      selectedInstrumentBrand: null
+    })    
+  }
+
   render() {
     const {
       decodedToken,
@@ -150,7 +158,8 @@ class App extends Component {
                     selectedInstrumentType={ selectedInstrumentType }
                     selectedInstrumentBrand={ selectedInstrumentBrand }
                     onSelect={ this.updateIntruments }
-                  />
+                    sidebarClose={ this.onSidebarClose }
+                  /> 
                 }
                 <Button
                   text="toggle side bar (dev)"
