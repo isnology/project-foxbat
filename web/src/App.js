@@ -128,7 +128,6 @@ class App extends Component {
                   text="toggle side bar (dev)"
                   onToggle={ this.toggleShowConfigurator }
                 />
-                }
 
                 { register &&
                   <SaveRegister onExit={ this.onExitPopUp } onSubmit={ this.onSignUp } />
