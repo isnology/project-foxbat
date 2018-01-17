@@ -32,21 +32,25 @@ function SaveRegister({ onExit, onSubmit }) {
                 defaultValue={ " " }
             />
           </label>
+
           <label>
             {'Email: '}
             <input
-                type='text'
+                type='email'
                 name='email'
                 defaultValue={ " " }
             />
           </label>
+
           <label>
             {'Password: '}
             <input
                 type='password'
-                name='email'
+                name='password'
             />
           </label>
+
+          <br />
           <Button text="Save"
             onToggle={ () => {} }
           />

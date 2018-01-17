@@ -9,18 +9,21 @@ import Form from './components/Form';
 import PanelTemplate from './components/PanelTemplate';
 import Sidebar from './components/sidebar/Sidebar';
 import SaveRegister from './components/SaveRegister';
+import { savePanel, updatePanel } from './api/panels'
 
 class App extends Component {
   state = {
     decodedToken: getDecodedToken(), // Restore the previous signed in data
-    welcome: true,
-    register: true,
     save: null,
     showConfigurator: true,
     instruments: require('./data').instrumentsType,
     selectedSlot: 1,
     selectedInstrumentType: null,
-    selectedInstrumentBrand: null
+    selectedInstrumentBrand: null,
+    templateId: null,
+    slots: null,
+    welcome: false,
+    saveRegister: true
   }
 
   onSignIn = ({ email, password }) => {
@@ -33,13 +36,26 @@ class App extends Component {
     })
   }
 
-  onSignUp = ({ email, password }) => {
-    signUp({ email, password })
-    .then((decodedToken) => {
-      this.setState({ decodedToken })
-    })
-    .catch((error) => {
-      this.setState({ error })
+  onSaveRegister = ({ name, email, password }) => {
+    const signedIn = !!this.state.decodedToken
+    if (!signedIn) {
+      signUp({ email, password })
+      .then((decodedToken) => {
+        this.setState({ decodedToken })
+      })
+      .catch((error) => {
+        this.setState({ error })
+      })
+    }
+    const data = {
+      template: this.state.templateId,
+      name: name,
+      slots: this.state.slots,
+      userId: this.state.decodedToken.sub     // as per passport documentation
+    }
+    savePanel({data})
+    .then(() => {
+      this.setState({ saveRegister: null })
     })
   }
 
@@ -65,21 +81,32 @@ class App extends Component {
 
   updateIntruments = (selection) => {
     if (!this.state.selectedInstrumentType) {
-      this.setState({ 
+      this.setState({
         selectedInstrumentType: selection,
         instruments: require('./data').instrumentsBrand
       })
     }
     else if (!!this.state.selectedInstrumentType && !this.state.selectedInstrumentBrand) {
-      this.setState({ 
+      this.setState({
         selectedInstrumentBrand: selection,
         instruments: require('./data').instrumentsModel
-      })    
+      })
     }
   }
 
   render() {
-    const {decodedToken, welcome, register, showConfigurator, instruments, selectedSlot, selectedInstrumentType, selectedInstrumentBrand } = this.state
+    const {
+      decodedToken,
+      welcome,
+      saveRegister,
+      showConfigurator,
+      instruments,
+      selectedSlot,
+      selectedInstrumentType,
+      selectedInstrumentBrand
+    } = this.state
+
+    console.log(instruments)
 
     const signedIn = !!decodedToken
     const toggle = false
@@ -112,25 +139,28 @@ class App extends Component {
                 <div>
                   <Button text="Lost your panel URL?"/>
                 </div>
-                { 
-                  showConfigurator && 
-                  <Sidebar 
+                {
+                  showConfigurator &&
+                  <Sidebar
                     exitButton={ true }
                     backButton={ true }
                     instruments={ instruments }
-                    selectedSlot={ selectedSlot } 
+                    selectedSlot={ selectedSlot }
                     selectedInstrumentType={ selectedInstrumentType }
                     selectedInstrumentBrand={ selectedInstrumentBrand }
                     onSelect={ this.updateIntruments }
-                  /> 
+                  />
                 }
-                <Button 
+                <Button
                   text="toggle side bar (dev)"
                   onToggle={ this.toggleShowConfigurator }
                 />
 
-                { register &&
-                  <SaveRegister onExit={ this.onExitPopUp } onSubmit={ this.onSignUp } />
+                { saveRegister &&
+                  <SaveRegister
+                      onExit={ this.onExitPopUp }
+                      onSubmit={ this.onSaveRegister }
+                  />
                 }
               </Fragment>
 
@@ -181,7 +211,7 @@ class App extends Component {
           </Switch>
         </div>
       </Router>
-    );
+    )
   }
 }
 
