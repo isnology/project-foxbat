@@ -11,7 +11,8 @@ function Sidebar({
   instruments,
   selectedSlot, 
   selectedInstrumentType,
-  selectedInstrumentBrand
+  selectedInstrumentBrand,
+  onSelect
 }) { 
 
   let topHeading
@@ -43,6 +44,7 @@ function Sidebar({
               instruments={ instruments }
               selectedInstrumentType={ selectedInstrumentType }
               selectedInstrumentBrand={ selectedInstrumentType }
+              onSelect={ onSelect }
             /> : 
             <SidebarText /> 
         }

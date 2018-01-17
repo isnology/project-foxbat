@@ -4,7 +4,8 @@ import Button from '../Button';
 function InstrumentList({
   instruments,
   selectedInstrumentType,
-  selectedInstrumentBrand
+  selectedInstrumentBrand,
+  onSelect
 }) { 
 
   return (
@@ -14,7 +15,8 @@ function InstrumentList({
           <Button 
             key={ instrument._id }
             text={ instrument.brand }
-          />
+            onToggle={ onSelect }
+            text={ `${instrument.brand } ${ instrument.model }` }/>
         ))
       }
     </div>

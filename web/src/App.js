@@ -53,6 +53,12 @@ class App extends Component {
     })
   }
 
+  updateIntruments = (event) => {
+    this.setState(
+      {instruments: [{_id: 1, brand: "test", model: "test"}]}
+    )
+  }
+
   render() {
     const {showConfigurator, instruments, selectedSlot, selectedInstrumentType, selectedInstrumentBrand } = this.state
 
@@ -88,6 +94,7 @@ class App extends Component {
                     selectedSlot={ selectedSlot } 
                     selectedInstrumentType={ selectedInstrumentType }
                     selectedInstrumentBrand={ selectedInstrumentBrand }
+                    onSelect={ this.updateIntruments }
                   /> 
                 }
                 <Button 
