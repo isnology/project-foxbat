@@ -4,24 +4,18 @@
 
 .sidebar {
   position: absolute;
+  display: flex;
+  flex-direction: column;
   right: 0;
   top: 0;
   height: 100%;
   width: 25%;
   overflow-y: scroll;
-  background: #C4C4C4;
-}
-
-.sidebar h3 {
-  width: 100%;
-  margin: 20px auto 0 auto;
-  text-align: center;
-  font-size: 24px;
-  font-weight: normal;
 }
 
 .sidebar-top {
   position: relative;
+  margin: 0;
   width: 100%;
   min-height: 100px;
   background: #0A64CB;
@@ -29,24 +23,57 @@
   font-family: 'Roboto', sans-serif;
 }
 
-.sideBar-top-buttons {
+.sidebar-top-buttons {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
   top: 0;
   height: 50px;
+  padding: 5px 10px;
+}
+
+.sidebar-top h3 {
+  width: 100%;
+  margin: 20px auto 0 auto;
+  text-align: center;
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.sidebar-lower {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 10px;
+  height: calc(100% - 100px);
+  background: #C4C4C4;
+  overflow-y: auto;
 }
 
 .sidebar-text {
+  display: flex;  
+  flex-grow: 1;
+  flex-direction: column;  
+  justify-content: center;
   width: 100%;
+  height: calc(100% - 100px); 
+  margin: 0;
   color: #1b1b1b;
   font-family: 'Roboto', sans-serif;
   text-align: left;
-  line-height: 1.5;
+  line-height: 150%;
+}
+
+.sidebar-text p {
+  font-size: 18px;
+  margin: 0 0 20px 0;
 }
 
 .instrument-list {
-  padding: 10px;
-  overflow: scroll;
+  padding: 0 20px;
 }
 .instrument-list .main-button {
   width: 100%;
   margin-top: 10px;
+  cursor: pointer;
 }

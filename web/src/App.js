@@ -12,12 +12,15 @@ import SaveRegister from './components/SaveRegister';
 
 class App extends Component {
   state = {
-    showSidebar: false,
-    instruments: require('./data').instruments,
     decodedToken: getDecodedToken(), // Restore the previous signed in data
     welcome: true,
     register: true,
-    save: null
+    save: null,
+    showConfigurator: true,
+    instruments: require('./data').instrumentsType,
+    selectedSlot: 1,
+    selectedInstrumentType: null,
+    selectedInstrumentBrand: null
   }
 
   onSignIn = ({ email, password }) => {
@@ -51,17 +54,33 @@ class App extends Component {
     })
   }
 
-toggleShowSidebar = () => {
-  this.setState((prevState) => {
-    const newShowSidebar = !prevState.showSidebar
-    return({
-      showSidebar: newShowSidebar
+  toggleShowConfigurator = () => {
+    this.setState((prevState) => {
+      const newShowConfigurator = !prevState.showConfigurator
+      return({
+        showConfigurator: newShowConfigurator
+      })
     })
-  }) }
+  }
+
+  updateIntruments = (selection) => {
+    if (!this.state.selectedInstrumentType) {
+      this.setState({ 
+        selectedInstrumentType: selection,
+        instruments: require('./data').instrumentsBrand
+      })
+    }
+    else if (!!this.state.selectedInstrumentType && !this.state.selectedInstrumentBrand) {
+      this.setState({ 
+        selectedInstrumentBrand: selection,
+        instruments: require('./data').instrumentsModel
+      })    
+    }
+  }
 
   render() {
-    const {showSidebar, instruments, decodedToken, welcome, register } = this.state
-    console.log(instruments)
+    const {decodedToken, welcome, register, showConfigurator, instruments, selectedSlot, selectedInstrumentType, selectedInstrumentBrand } = this.state
+
     const signedIn = !!decodedToken
     const toggle = false
 
@@ -93,21 +112,21 @@ toggleShowSidebar = () => {
                 <div>
                   <Button text="Lost your panel URL?"/>
                 </div>
-
-                {
-                  showSidebar &&
-                  <Sidebar
+                { 
+                  showConfigurator && 
+                  <Sidebar 
                     exitButton={ true }
                     backButton={ true }
-                    topHeading={ "Top heading!" }
-                    instruments= { instruments }
-                  />
+                    instruments={ instruments }
+                    selectedSlot={ selectedSlot } 
+                    selectedInstrumentType={ selectedInstrumentType }
+                    selectedInstrumentBrand={ selectedInstrumentBrand }
+                    onSelect={ this.updateIntruments }
+                  /> 
                 }
-
-                { toggle &&
-                <Button
-                    text="toggle side bar (dev)"
-                    onToggle={ (e) => this.toggleShowSidebar() }
+                <Button 
+                  text="toggle side bar (dev)"
+                  onToggle={ this.toggleShowConfigurator }
                 />
                 }
 
