@@ -8,14 +8,15 @@ import PlaneSelect from './components/PlaneSelect';
 import Form from './components/Form';
 import PanelTemplate from './components/PanelTemplate';
 import Sidebar from './components/sidebar/Sidebar';
-import BasePopUp from './components/BasePopUp';
+import SaveRegister from './components/SaveRegister';
 
 class App extends Component {
   state = {
-    showSidebar: true,
+    showSidebar: false,
     instruments: require('./data').instruments,
     decodedToken: getDecodedToken(), // Restore the previous signed in data
-    register: null,
+    welcome: true,
+    register: true,
     save: null
   }
 
@@ -44,6 +45,12 @@ class App extends Component {
     this.setState({ decodedToken: null })
   }
 
+  onExitPopUp = ( key ) => {
+    this.setState({
+      [key]: false
+    })
+  }
+
 toggleShowSidebar = () => {
   this.setState((prevState) => {
     const newShowSidebar = !prevState.showSidebar
@@ -54,9 +61,10 @@ toggleShowSidebar = () => {
 }
 
   render() {
-    const {showSidebar, instruments } = this.state
+    const {showSidebar, instruments, decodedToken, welcome, register } = this.state
     console.log(instruments)
     const signedIn = !!decodedToken
+    const toggle = false
 
     return (
       <Router>
@@ -65,22 +73,27 @@ toggleShowSidebar = () => {
 
             <Route path='/' exact render={ () => (
               <Fragment>
-                <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
-                <br/>
-                <h2>Which plane are you configuring for?</h2>
-                <br/>
+                { welcome &&
+                  <Fragment>
+                    <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
+                    <br/>
+                    <h2>Which plane are you configuring for?</h2>
+                    <br/>
 
-                <PlaneSelect name="A32 Vixxen" imageURL=""/>
-                <PlaneSelect name="A22 Foxbat/Kelpie"/>
+                    <PlaneSelect name="A32 Vixxen" imageURL=""/>
+                    <PlaneSelect name="A22 Foxbat/Kelpie"/>
 
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <div>
-                  <Button text="Lost your panel URL?"/>
-                </div>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div>
+                      <Button text="Lost your panel URL?"/>
+                    </div>
+                  </Fragment>
+                }
+
                 {
                   showSidebar &&
                   <Sidebar
@@ -90,12 +103,18 @@ toggleShowSidebar = () => {
                     instruments= { instruments }
                   />
                 }
-                <Button
-                  text="toggle side bar (dev)"
-                  onToggle={ this.toggleShowSidebar }
-                />
-              </Fragment>
 
+                { toggle &&
+                <Button
+                    text="toggle side bar (dev)"
+                    onToggle={ (e) => this.toggleShowSidebar() }
+                />
+                }
+
+                { register &&
+                  <SaveRegister onExit={ this.onExitPopUp } onSubmit={ this.onSignUp } />
+                }
+              </Fragment>
             )}/>
 
           </Switch>

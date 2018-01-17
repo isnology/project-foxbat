@@ -1,10 +1,14 @@
 import React, { Fragment } from 'react'
 import RoundExitButton from './RoundExitButton';
 
-function BasePopUp({ children, onToggle }) {
+function BasePopUp({ children, onExit, attribute}) {
   return (
-    <div class="form">
-      <RoundExitButton onToggle />
+    <div className="basepopup">
+      <RoundExitButton
+        onToggle = { (event) => {
+        onExit(attribute)
+        } }
+      />
       { children }
     </div>
   )

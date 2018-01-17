@@ -5,7 +5,7 @@ function RoundExitButton({
   onToggle
 }) {
   return (
-    <div className="round-exit-button" ><ExitButton onToggle /></div>
+    <div className="round-exit-button" ><ExitButton onToggle={ onToggle } /></div>
   )
 }
 

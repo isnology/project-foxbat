@@ -24,11 +24,16 @@ body {
   margin: 20px;
 }
 
-.form {
+.basepopup {
+  position: absolute;
+  top: 6%;
+  left: 6%;
+  width: 87.5%;
   border: 1px solid black;
   border-radius: 41px;
-  margin: 5% 8% 5% 8%;
   padding: 5%;
+  z-index: 10;
+  background: white;
 }
 
 .form-text {
@@ -38,7 +43,7 @@ body {
 }
 
 .save-form-button {
-  text-align: center;
+  
   margin-top: 30px;
 }
 
@@ -49,6 +54,7 @@ body {
 }
 
 .button-text {
+  text-align: center;
   font-size: 24px;
   margin: 35px;
 }
@@ -60,8 +66,8 @@ body {
   background-color: #333333;
 
   position: absolute;
-  top: 6%;
-  left: 89.5%;
+  top: -30px;
+  left: 96.8%;
 }
 
 .exit-button-X {
@@ -69,6 +75,6 @@ body {
   color: #F2F2F2;
 
   position: relative;
-  top: -11px;
+  top: -8px;
   left: 1px;
 }
