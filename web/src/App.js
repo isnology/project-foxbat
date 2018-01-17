@@ -10,6 +10,7 @@ import PanelTemplate from './components/PanelTemplate';
 import Sidebar from './components/sidebar/Sidebar';
 import SaveRegister from './components/SaveRegister';
 import { savePanel, updatePanel } from './api/panels'
+import Panel from './components/Panel';
 
 class App extends Component {
   state = {
@@ -23,7 +24,7 @@ class App extends Component {
     templateId: null,
     slots: null,
     welcome: false,
-    saveRegister: true
+    saveRegister: false
   }
 
   onSignIn = ({ email, password }) => {
@@ -205,6 +206,15 @@ class App extends Component {
                 <div>
                   <Button text="Lost your panel URL?"/>
                 </div>
+              </Fragment>
+            )}/>
+
+            <Route path='/alextest' exact render={ () => (
+              <Fragment>
+                <h1>Alex testing components page</h1>
+                <Panel 
+                type="a22"
+                height={400}/>
               </Fragment>
             )}/>
 
