@@ -13,14 +13,14 @@ function Sidebar({
   selectedInstrumentType,
   selectedInstrumentBrand
 }) { 
+
   let topHeading
+
   if (!selectedSlot) {
     topHeading = "Nothing is selected"
   }
   else if (!!selectedSlot && !selectedInstrumentType) {
    topHeading = "Select an instrument type"
-   console.log(topHeading)
-
   }
   else if (!!selectedSlot && !!selectedInstrumentType && !selectedInstrumentBrand) {
     topHeading = `Select a ${ selectedInstrumentType } brand`
