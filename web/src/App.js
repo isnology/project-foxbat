@@ -78,6 +78,14 @@ class App extends Component {
     }
   }
 
+  onSidebarClose = () => {
+    this.setState({ 
+      selectedSlot: null,
+      selectedInstrumentType: null,
+      selectedInstrumentBrand: null
+    })    
+  }
+
   render() {
     const {decodedToken, welcome, register, showConfigurator, instruments, selectedSlot, selectedInstrumentType, selectedInstrumentBrand } = this.state
 
@@ -122,6 +130,7 @@ class App extends Component {
                     selectedInstrumentType={ selectedInstrumentType }
                     selectedInstrumentBrand={ selectedInstrumentBrand }
                     onSelect={ this.updateIntruments }
+                    sidebarClose={ this.onSidebarClose }
                   /> 
                 }
                 <Button 

@@ -12,7 +12,8 @@ function Sidebar({
   selectedSlot, 
   selectedInstrumentType,
   selectedInstrumentBrand,
-  onSelect
+  onSelect,
+  sidebarClose
 }) { 
 
   let topHeading
@@ -35,7 +36,7 @@ function Sidebar({
       
       <div className="sidebar-top">
         <div className="sidebar-top-buttons">
-          { exitButton && <ExitButton />}
+          { exitButton && <ExitButton onToggle={ sidebarClose }/>}
         </div>
         <h3>{ topHeading }</h3>
       </div>
