@@ -11,7 +11,6 @@ const panelSchema = new Schema({
   template: { type: Schema.ObjectId, ref: 'Template'},
   name: { type: String },
   slots: [SlotSchema],
-  email: { type: String },
   userId: { type: Schema.ObjectId, ref: 'User'}
 })
 

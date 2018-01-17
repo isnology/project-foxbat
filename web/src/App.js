@@ -9,15 +9,17 @@ import Form from './components/Form';
 import PanelTemplate from './components/PanelTemplate';
 import Sidebar from './components/sidebar/Sidebar';
 import SaveRegister from './components/SaveRegister';
+import { savePanel, updatePanel } from './api/panels'
 
 class App extends Component {
   state = {
-    showSidebar: false,
+    showConfigurator: true,
     instruments: require('./data').instruments,
     decodedToken: getDecodedToken(), // Restore the previous signed in data
-    welcome: true,
-    register: true,
-    save: null
+    templateId: null,
+    slots: null,
+    welcome: false,
+    saveRegister: true
   }
 
   onSignIn = ({ email, password }) => {
@@ -30,13 +32,26 @@ class App extends Component {
     })
   }
 
-  onSignUp = ({ email, password }) => {
-    signUp({ email, password })
-    .then((decodedToken) => {
-      this.setState({ decodedToken })
-    })
-    .catch((error) => {
-      this.setState({ error })
+  onSaveRegister = ({ name, email, password }) => {
+    const signedIn = !!this.state.decodedToken
+    if (!signedIn) {
+      signUp({ email, password })
+      .then((decodedToken) => {
+        this.setState({ decodedToken })
+      })
+      .catch((error) => {
+        this.setState({ error })
+      })
+    }
+    const data = {
+      template: this.state.templateId,
+      name: name,
+      slots: this.state.slots,
+      userId: this.state.decodedToken.sub     // as per passport documentation
+    }
+    savePanel({data})
+    .then(() => {
+      this.setState({ saveRegister: null })
     })
   }
 
@@ -60,7 +75,7 @@ toggleShowSidebar = () => {
   }) }
 
   render() {
-    const {showSidebar, instruments, decodedToken, welcome, register } = this.state
+    const {showSidebar, instruments, decodedToken, welcome, saveRegister } = this.state
     console.log(instruments)
     const signedIn = !!decodedToken
     const toggle = false
@@ -111,8 +126,11 @@ toggleShowSidebar = () => {
                 />
                 }
 
-                { register &&
-                  <SaveRegister onExit={ this.onExitPopUp } onSubmit={ this.onSignUp } />
+                { saveRegister &&
+                  <SaveRegister
+                      onExit={ this.onExitPopUp }
+                      onSubmit={ this.onSaveRegister }
+                  />
                 }
               </Fragment>
 
@@ -163,7 +181,7 @@ toggleShowSidebar = () => {
           </Switch>
         </div>
       </Router>
-    );
+    )
   }
 }
 
