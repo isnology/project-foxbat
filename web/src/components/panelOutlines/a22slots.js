@@ -5,10 +5,11 @@ function A22Slots({
   height,
   // width
   // instruments, //array of objects commented out while component testing
-  onClick //callback function to pass back which slot was clicked
+  onClick, //callback function to pass back which slot was clicked
+  template //a22, a32, a22digital, a32digital
 }){
   const instruments = [
-    {instrument:null,
+    {instrument:{shape: 'circle'},
     slotNumber:'slot1'},
     {instrument:null,
     slotNumber:'slot2'},
@@ -33,6 +34,50 @@ function A22Slots({
     {instrument:null,
     slotNumber:'slot12'}
       ] //testing purposes
+
+  const a32SlotRatios = [ //TODO: put controls in place to ensure the ordering is adhered to in the instruments array passed in.
+    //top of the six pack (all 3.125") (left to right)
+    {leftRatio: 0.2263,
+    bottomRatio: 0.8315,
+    diameterRatio: 0.266},
+    {leftRatio: 0.5249,
+    bottomRatio: 0.8315,
+    diameterRatio: 0.266},
+    {leftRatio: 0.8234,
+    bottomRatio: 0.8315,
+    diameterRatio: 0.266},
+    //bottom of the six pack (all 3.125") (left to right)
+    {leftRatio: 0.2263,
+    bottomRatio: 0.5329,
+    diameterRatio: 0.266},
+    {leftRatio: 0.5249,
+    bottomRatio: 0.5329,
+    diameterRatio: 0.266},
+    {leftRatio: 0.8234,
+    bottomRatio: 0.5329,
+    diameterRatio: 0.266},
+    //column of the 2.25" (top to bottom)
+    {leftRatio: 1.1284,
+    bottomRatio: 0.8636,
+    diameterRatio: 0.191},
+    {leftRatio: 1.1284,
+    bottomRatio: 0.6388,
+    diameterRatio: 0.191},
+    {leftRatio: 1.1284,
+    bottomRatio: 0.4125,
+    diameterRatio: 0.191},
+
+    //column of the 2" (top to bottom)
+    {leftRatio: 1.3612,
+    bottomRatio: 0.8555,
+    diameterRatio: 0.173},
+    {leftRatio: 1.3612,
+    bottomRatio: 0.6292,
+    diameterRatio: 0.173},
+    {leftRatio: 1.3612,
+    bottomRatio: 0.4045,
+    diameterRatio: 0.173},
+  ]
   const a22SlotRatios = [ //TODO: put controls in place to ensure the ordering is adhered to in the instruments array passed in.
     //top of the six pack (all 3.125") (left to right)
     {leftRatio: 0.2758,
@@ -80,7 +125,7 @@ function A22Slots({
     <Fragment>
       {
         instruments.map((instrument, index)=> (
-          <Slot 
+          <Slot //if a digital [square] instrument is desired, the instrument object should contain a key called 'shape': 'circle' or 'square' ,or boolean key called 'circle':true or false
             instrument = { !!instrument.instrument ? instrument.instrument : null}
             panelHeight = {height} //necessary to readjust size and position appropriately
             slotNumber = {instrument.slotNumber} //assigned and tracked by the caller
