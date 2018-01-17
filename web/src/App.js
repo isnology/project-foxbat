@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { signIn, signUp, signOutNow } from './api/auth'
 import { getDecodedToken } from './api/token'
 import './App.css';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom'
 import Button from './components/Button';
 import PlaneSelect from './components/PlaneSelect';
 import Form from './components/Form';
@@ -57,8 +57,7 @@ toggleShowSidebar = () => {
     return({
       showSidebar: newShowSidebar
     })
-  })
-}
+  }
 
   render() {
     const {showSidebar, instruments, decodedToken, welcome, register } = this.state
@@ -73,26 +72,27 @@ toggleShowSidebar = () => {
 
             <Route path='/' exact render={ () => (
               <Fragment>
-                { welcome &&
-                  <Fragment>
-                    <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
-                    <br/>
-                    <h2>Which plane are you configuring for?</h2>
-                    <br/>
 
-                    <PlaneSelect name="A32 Vixxen" imageURL=""/>
-                    <PlaneSelect name="A22 Foxbat/Kelpie"/>
+                <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
+                <br/>
+                <h2>Which plane are you configuring for?</h2>
+                <br/>
 
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <div>
-                      <Button text="Lost your panel URL?"/>
-                    </div>
-                  </Fragment>
-                }
+                <Link to="/a32">
+                  <PlaneSelect name="A32 Vixxen"/>
+                </Link>
+                <Link to="/a22">
+                  <PlaneSelect name="A22 Foxbat/Kelpie"/>
+                </Link>
+
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <div>
+                  <Button text="Lost your panel URL?"/>
+                </div>
 
                 {
                   showSidebar &&
@@ -114,6 +114,49 @@ toggleShowSidebar = () => {
                 { register &&
                   <SaveRegister onExit={ this.onExitPopUp } onSubmit={ this.onSignUp } />
                 }
+              </Fragment>
+
+            )}/>
+
+            <Route path='/a22' exact render={ () => (
+              <Fragment>
+                <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
+                <br/>
+                <h2>Choose a template to continue</h2>
+                <br/>
+
+                <PanelTemplate name="Analogue A-22 Panel"/>
+                <PanelTemplate name="Digital A-22 Panel"/>
+
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <div>
+                  <Button text="Lost your panel URL?"/>
+                </div>
+              </Fragment>
+            )}/>
+
+            <Route path='/a32' exact render={ () => (
+              <Fragment>
+                <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
+                <br/>
+                <h2>Choose a template to continue</h2>
+                <br/>
+
+                <PanelTemplate name="Analogue A-32 Panel"/>
+                <PanelTemplate name="Digital A-32 Panel"/>
+
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <div>
+                  <Button text="Lost your panel URL?"/>
+                </div>
               </Fragment>
             )}/>
 
