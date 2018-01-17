@@ -57,7 +57,7 @@ toggleShowSidebar = () => {
     return({
       showSidebar: newShowSidebar
     })
-  }
+  }) }
 
   render() {
     const {showSidebar, instruments, decodedToken, welcome, register } = this.state
