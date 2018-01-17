@@ -8,12 +8,15 @@ import PlaneSelect from './components/PlaneSelect';
 import Form from './components/Form';
 import PanelTemplate from './components/PanelTemplate';
 import Sidebar from './components/sidebar/Sidebar';
+import BasePopUp from './components/BasePopUp';
 
 class App extends Component {
   state = {
     showSidebar: true,
     instruments: require('./data').instruments,
     decodedToken: getDecodedToken(), // Restore the previous signed in data
+    register: null,
+    save: null
   }
 
   onSignIn = ({ email, password }) => {
@@ -53,6 +56,8 @@ toggleShowSidebar = () => {
   render() {
     const {showSidebar, instruments } = this.state
     console.log(instruments)
+    const signedIn = !!decodedToken
+
     return (
       <Router>
         <div className="App">
@@ -76,25 +81,22 @@ toggleShowSidebar = () => {
                 <div>
                   <Button text="Lost your panel URL?"/>
                 </div>
-                { 
-                  showSidebar && 
-                  <Sidebar 
+                {
+                  showSidebar &&
+                  <Sidebar
                     exitButton={ true }
                     backButton={ true }
                     topHeading={ "Top heading!" }
                     instruments= { instruments }
-                  /> 
+                  />
                 }
-                <Button 
+                <Button
                   text="toggle side bar (dev)"
                   onToggle={ this.toggleShowSidebar }
                 />
               </Fragment>
-              
+
             )}/>
-
-         
-
 
           </Switch>
         </div>
