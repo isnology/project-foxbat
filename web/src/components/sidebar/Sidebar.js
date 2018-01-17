@@ -26,6 +26,9 @@ function Sidebar({
   else if (!!selectedSlot && !!selectedInstrumentType && !selectedInstrumentBrand) {
     topHeading = `Select a ${ selectedInstrumentType } brand`
   }
+  else if (!!selectedSlot && !!selectedInstrumentType && !!selectedInstrumentBrand) {
+    topHeading = `Select a ${ selectedInstrumentType } model from ${ selectedInstrumentBrand }`
+  }
 
   return (
     <div className="sidebar">

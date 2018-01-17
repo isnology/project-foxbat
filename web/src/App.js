@@ -12,9 +12,9 @@ import Sidebar from './components/sidebar/Sidebar';
 class App extends Component {
   state = {
     showConfigurator: true,
-    instruments: require('./data').instruments,
+    instruments: require('./data').instrumentsType,
     decodedToken: getDecodedToken(), // Restore the previous signed in data
-    selectedSlot: null,
+    selectedSlot: 1,
     selectedInstrumentType: null,
     selectedInstrumentBrand: null
   }
@@ -53,10 +53,19 @@ class App extends Component {
     })
   }
 
-  updateIntruments = (event) => {
-    this.setState(
-      {instruments: [{_id: 1, brand: "test", model: "test"}]}
-    )
+  updateIntruments = (selection) => {
+    if (!this.state.selectedInstrumentType) {
+      this.setState({ 
+        selectedInstrumentType: selection,
+        instruments: require('./data').instrumentsBrand
+      })
+    }
+    else if (!!this.state.selectedInstrumentType && !this.state.selectedInstrumentBrand) {
+      this.setState({ 
+        selectedInstrumentBrand: selection,
+        instruments: require('./data').instrumentsModel
+      })    
+    }
   }
 
   render() {

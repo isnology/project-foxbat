@@ -14,9 +14,9 @@ function InstrumentList({
         instruments.map((instrument) => (
           <Button 
             key={ instrument._id }
-            text={ instrument.brand }
-            onToggle={ onSelect }
-            text={ `${instrument.brand } ${ instrument.model }` }/>
+            text={ instrument.title }
+            onToggle={ ()=>{ onSelect(instrument.title) } }
+          />
         ))
       }
     </div>
