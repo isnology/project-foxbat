@@ -1,18 +1,11 @@
 import React, { Fragment } from 'react'
+import ExitButton from './ExitButton'
 
 function RoundExitButton({
   onToggle
-}) { 
+}) {
   return (
-    <Fragment>
-      <button class="exit-button" onClick={
-          (event) => {
-            onToggle()
-          }
-        }>
-        <span class="exit-button-X">x</span>
-      </button>
-    </Fragment>
+    <div className="round-exit-button" ><ExitButton onToggle /></div>
   )
 }
 

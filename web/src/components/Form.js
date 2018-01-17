@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import ExitButton from './ExitButton';
 import RoundExitButton from './RoundExitButton';
 import Button from './Button';
 
@@ -10,32 +11,34 @@ function Form({
   SecondInputType = false,
   ThirdInputLabel = false,
   ThirdInputType = false,
-  buttonText
-}) { 
+  buttonText,
+  onToggle
+}) {
   return (
-    <div class="form">
-      <RoundExitButton/>
-      <p class="form-text">{ text }</p>
+    <div className="form">
+      <ExitButton onToggle />
+      <RoundExitButton onToggle />
+      <p className="form-text">{ text }</p>
 
-      { FirstInputLabel && FirstInputType ? 
+      { FirstInputLabel && FirstInputType ?
         <label>
-          <p class="form-text">{ FirstInputLabel }</p>
-          <input class="form-text" type={ FirstInputType } name="panel-name"/>
+          <p className="form-text">{ FirstInputLabel }</p>
+          <input className="form-text" type={ FirstInputType } name="panel-name"/>
         </label> : null }
 
-      { SecondInputLabel && SecondInputType ? 
+      { SecondInputLabel && SecondInputType ?
         <label>
-          <p class="form-text">{ SecondInputLabel }</p>
-          <input class="form-text" type={ SecondInputType } name="panel-name"/>
+          <p className="form-text">{ SecondInputLabel }</p>
+          <input className="form-text" type={ SecondInputType } name="panel-name"/>
         </label> : null }
 
-      { ThirdInputLabel && ThirdInputType ? 
+      { ThirdInputLabel && ThirdInputType ?
         <label>
-          <p class="form-text">{ ThirdInputLabel }</p>
-          <input class="form-text" type={ ThirdInputType } name="panel-name"/>
+          <p className="form-text">{ ThirdInputLabel }</p>
+          <input className="form-text" type={ ThirdInputType } name="panel-name"/>
         </label> : null }
 
-      <div class="save-form-button">
+      <div className="save-form-button">
         <Button text={ buttonText }/>
       </div>
     </div>

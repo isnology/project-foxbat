@@ -6,12 +6,12 @@ function Button({
 }) { 
   return (
     <Fragment>
-      <button class="main-button" onClick={
+      <button className="main-button" onClick={
           (event) => {
             onToggle()
           }
         }>
-        <span class="button-text">{ text }</span>
+        <span className="button-text">{ text }</span>
       </button>
     </Fragment>
   )

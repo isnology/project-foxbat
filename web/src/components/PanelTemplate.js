@@ -6,10 +6,10 @@ function PanelTemplate({
   alt
 }) { 
   return (
-    <div class="template-with-text">
+    <div className="template-with-text">
       <label>
-        <h2 class="center" >{ name }</h2>
-        <div class="template">
+        <h2 className="center" >{ name }</h2>
+        <div className="template">
           <img src={ imageURL } alt={ alt }/>
         </div>
       </label>
