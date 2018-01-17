@@ -14,6 +14,9 @@ class App extends Component {
     showConfigurator: true,
     instruments: require('./data').instruments,
     decodedToken: getDecodedToken(), // Restore the previous signed in data
+    selectedSlot: null,
+    selectedInstrumentType: null,
+    selectedInstrumentBrand: null
   }
 
   onSignIn = ({ email, password }) => {
@@ -51,8 +54,8 @@ class App extends Component {
   }
 
   render() {
-    const {showConfigurator, instruments } = this.state
-    console.log(instruments)
+    const {showConfigurator, instruments, selectedSlot, selectedInstrumentType, selectedInstrumentBrand } = this.state
+
     return (
       <Router>
         <div className="App">
@@ -81,8 +84,10 @@ class App extends Component {
                   <Sidebar 
                     exitButton={ true }
                     backButton={ true }
-                    topHeading={ "Top heading!" }
-                    instruments= { instruments }
+                    instruments={ instruments }
+                    selectedSlot={ selectedSlot } 
+                    selectedInstrumentType={ selectedInstrumentType }
+                    selectedInstrumentBrand={ selectedInstrumentBrand }
                   /> 
                 }
                 <Button 

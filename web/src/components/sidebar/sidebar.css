@@ -24,8 +24,12 @@
 }
 
 .sidebar-top-buttons {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
   top: 0;
   height: 50px;
+  padding: 5px 10px;
 }
 
 .sidebar-top h3 {
@@ -71,4 +75,5 @@
 .instrument-list .main-button {
   width: 100%;
   margin-top: 10px;
+  cursor: pointer;
 }

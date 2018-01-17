@@ -8,9 +8,24 @@ import './sidebar.css';
 function Sidebar({
   exitButton,
   backButton,
-  topHeading,
-  instruments
+  instruments,
+  selectedSlot, 
+  selectedInstrumentType,
+  selectedInstrumentBrand
 }) { 
+  let topHeading
+  if (!selectedSlot) {
+    topHeading = "Nothing is selected"
+  }
+  else if (!!selectedSlot && !selectedInstrumentType) {
+   topHeading = "Select an instrument type"
+   console.log(topHeading)
+
+  }
+  else if (!!selectedSlot && !!selectedInstrumentType && !selectedInstrumentBrand) {
+    topHeading = `Select a ${ selectedInstrumentType } brand`
+  }
+
   return (
     <div className="sidebar">
       
@@ -23,7 +38,13 @@ function Sidebar({
 
       <div className="sidebar-lower">
         {
-          !!instruments ? <InstrumentList instruments={instruments}/> : <SidebarText /> 
+          (!!instruments && !!selectedSlot) ? 
+            <InstrumentList 
+              instruments={ instruments }
+              selectedInstrumentType={ selectedInstrumentType }
+              selectedInstrumentBrand={ selectedInstrumentType }
+            /> : 
+            <SidebarText /> 
         }
       </div>
     </div>
