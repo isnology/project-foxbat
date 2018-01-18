@@ -1,15 +1,18 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment } from 'react'
 import { signIn, signUp, signOutNow } from './api/auth'
 import { getDecodedToken } from './api/token'
-import './App.css';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import WelcomePage from './components/WelcomePage';
-import Button from './components/Button';
-import PanelTemplate from './components/PanelTemplate';
-import Sidebar from './components/sidebar/Sidebar';
-import SaveRegister from './components/SaveRegister';
+import './App.css'
+import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom'
+import WelcomePage from './components/WelcomePage'
+import Button from './components/Button'
+import PanelTemplate from './components/PanelTemplate'
+import Sidebar from './components/sidebar/Sidebar'
+import SaveRegister from './components/SaveRegister'
 import { savePanel, updatePanel } from './api/panels'
-import Panel from './components/Panel';
+import Panel from './components/Panel'
+import PlaneSelect from './components/PlaneSelect'
+import Form from './components/Form';
+import SignIn from './components/SignIn'
 
 class App extends Component {
   state = {
@@ -22,31 +25,53 @@ class App extends Component {
     selectedInstrumentBrand: null,
     templateId: null,
     slots: null,
+    panelName: null,
     welcome: false,
-    saveRegister: false
+    saveRegister: false,
+    signIn: false,
+    error: null
   }
 
-  onSignIn = ({ email, password }) => {
+  onSignIn = ({ key, email, password }) => {
     signIn({ email, password })
     .then((decodedToken) => {
       this.setState({ decodedToken })
+      this.onExitPopUp(key)
     })
     .catch((error) => {
       this.setState({ error })
     })
   }
 
-  onSaveRegister = ({ name, email, password }) => {
+  onSaveRegister = ({ key, name, email, password }) => {
     const signedIn = !!this.state.decodedToken
     if (!signedIn) {
       signUp({ email, password })
       .then((decodedToken) => {
-        this.setState({ decodedToken })
+        this.setState({ decodedToken, panelName: name })
+        this.doSave({ key, name })
       })
       .catch((error) => {
-        this.setState({ error })
+        // User already exists
+        if (/ 403/.test(error.message)) {
+          signIn({ email, password })
+          .then((decodedToken) => {
+            this.setState({ decodedToken })
+            this.doSave({ key, name })
+          })
+        }
+        else {
+          this.setState({ error })
+        }
       })
     }
+    else {
+      const stateName = this.state.panelName
+      this.doSave({ key, stateName })
+    }
+  }
+
+  doSave = ({ key, name }) => {
     const data = {
       template: this.state.templateId,
       name: name,
@@ -55,7 +80,7 @@ class App extends Component {
     }
     savePanel({data})
     .then(() => {
-      this.setState({ saveRegister: null })
+      this.onExitPopUp(key)
     })
   }
 
@@ -97,11 +122,11 @@ class App extends Component {
   }
 
   onSidebarClose = () => {
-    this.setState({ 
+    this.setState({
       selectedSlot: null,
       selectedInstrumentType: null,
       selectedInstrumentBrand: null
-    })    
+    })
   }
 
   render() {
@@ -110,6 +135,7 @@ class App extends Component {
       welcome,
       saveRegister,
       showConfigurator,
+      signIn,
       instruments,
       selectedSlot,
       selectedInstrumentType,
@@ -140,7 +166,7 @@ class App extends Component {
                   selectedInstrumentBrand={ selectedInstrumentBrand }
                   onSelect={ this.updateIntruments }
                   sidebarClose={ this.onSidebarClose }
-                /> 
+                />
                 <Button
                   text="toggle side bar (dev)"
                   onToggle={ this.toggleShowConfigurator }
@@ -150,6 +176,13 @@ class App extends Component {
                   <SaveRegister
                       onExit={ this.onExitPopUp }
                       onSubmit={ this.onSaveRegister }
+                  />
+                }
+
+                { signIn &&
+                  <SignIn
+                      onExit={ this.onExitPopUp }
+                      onSubmit={ this.onSignIn }
                   />
                 }
               </div>
@@ -200,7 +233,7 @@ class App extends Component {
             <Route path='/alextest' exact render={ () => (
               <Fragment>
                 <h1>Alex testing components page</h1>
-                <Panel 
+                <Panel
                 type="a22"
                 height={400}/>
               </Fragment>

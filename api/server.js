@@ -23,6 +23,16 @@ server.use([
   require('./routes/instrumentClass')
 ])
 
+// error handler
+server.use((error, req, res, next) => {
+  const statusCode = error.statusCode || error.status || error.code || 500
+  res.status(statusCode).json({
+    error: {
+      message: error.message
+    }
+  })
+})
+
 server.listen(7000, (error) => {
   if (error) {
     console.error('Error starting', error)
