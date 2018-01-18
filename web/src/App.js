@@ -28,11 +28,12 @@ class App extends Component {
     panelName: null,
     welcome: false,
     saveRegister: false,
-    signIn: false,
+    signIn: true,
     error: null
   }
 
   onSignIn = ({ key, email, password }) => {
+    this.setState({ error: null })
     signIn({ email, password })
     .then((decodedToken) => {
       this.setState({ decodedToken })
@@ -40,11 +41,15 @@ class App extends Component {
     })
     .catch((error) => {
       this.setState({ error })
+      if (/ 401/.test(error.message)) {
+        //this.doInvalidPasswordMessage()
+      }
     })
   }
 
   onSaveRegister = ({ key, name, email, password }) => {
     const signedIn = !!this.state.decodedToken
+    this.setState({ error: null })
     if (!signedIn) {
       signUp({ email, password })
       .then((decodedToken) => {
@@ -59,6 +64,12 @@ class App extends Component {
             this.setState({ decodedToken })
             this.doSave({ key, name })
           })
+          .catch((error) => {
+            this.setState({ error })
+            if (/ 401/.test(error.message)) {
+              //this.doInvalidPasswordMessage()
+            }
+          })
         }
         else {
           this.setState({ error })
@@ -66,9 +77,13 @@ class App extends Component {
       })
     }
     else {
-      const stateName = this.state.panelName
-      this.doSave({ key, stateName })
+      const panelName = this.state.panelName
+      this.doSave({ key, panelName })
     }
+  }
+
+  doInvalidPasswordMessage = () => {
+    this.setState({ errMsg: "Invalid password entered." })
   }
 
   doSave = ({ key, name }) => {
@@ -78,15 +93,27 @@ class App extends Component {
       slots: this.state.slots,
       userId: this.state.decodedToken.sub     // as per passport documentation
     }
-    savePanel({data})
+    savePanel({ data })
     .then(() => {
       this.onExitPopUp(key)
     })
   }
 
+  onSave = () => {
+    const signedIn = !!this.state.decodedToken
+    if ( signedIn ) {
+      const key = "saveRegister"
+      const name = this.state.panelName
+      this.doSave({ key, name })
+    }
+    else {
+      this.setState({ saveRegister: true })
+    }
+  }
+
   onSignOut = () => {
     signOutNow()
-    this.setState({ decodedToken: null })
+    this.setState({ decodedToken: null, error: null })
   }
 
   onExitPopUp = ( key ) => {
@@ -139,7 +166,8 @@ class App extends Component {
       instruments,
       selectedSlot,
       selectedInstrumentType,
-      selectedInstrumentBrand
+      selectedInstrumentBrand,
+      error,
     } = this.state
 
     console.log(instruments)
@@ -176,6 +204,7 @@ class App extends Component {
                   <SaveRegister
                       onExit={ this.onExitPopUp }
                       onSubmit={ this.onSaveRegister }
+                      errMsg={ !!error ? error.message : error }
                   />
                 }
 
@@ -183,8 +212,19 @@ class App extends Component {
                   <SignIn
                       onExit={ this.onExitPopUp }
                       onSubmit={ this.onSignIn }
+                      errMsg={ !!error ? error.message : error }
                   />
                 }
+                { signedIn &&
+                  <Button
+                    text="Sign Out"
+                    onToggle={ this.onSignOut }
+                  />
+                }
+                <Button
+                  text="Save"
+                  onToggle={ this.onSave }
+                />
               </div>
             )}/>
 

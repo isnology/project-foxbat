@@ -1,7 +1,7 @@
 import React from 'react'
 import RoundExitButton from './RoundExitButton';
 
-function BasePopUp({ children, onExit, attribute}) {
+function BasePopUp({ children, onExit, attribute, errMsg }) {
   return (
     <div className="base-popup">
       <RoundExitButton
@@ -9,6 +9,11 @@ function BasePopUp({ children, onExit, attribute}) {
         onExit(attribute)
         } }
       />
+      { !!errMsg &&
+        <div>
+          <p>{ errMsg }</p>
+        </div>
+      }
       { children }
     </div>
   )

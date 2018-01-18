@@ -2,14 +2,15 @@ import React from 'react'
 import Button from './Button'
 import BasePopUp from './BasePopUp'
 
-function SaveRegister({ onExit, onSubmit }) {
+function SaveRegister({ onExit, onSubmit, errMsg }) {
   const key = "saveRegister"
   return (
-    <BasePopUp onExit={ onExit } attribute={ key }>
+    <BasePopUp onExit={ onExit } attribute={ key } errMsg={ errMsg }>
       <p className="form-text">
         Please give your panel a name and enter your email address and a password to save
         (so it can be re-called latter using these).
       </p>
+
       <form
           onSubmit={ (event) => {
             // Prevent old-school form submission
