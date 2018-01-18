@@ -16,7 +16,7 @@ class App extends Component {
     decodedToken: getDecodedToken(), // Restore the previous signed in data
     save: null,
     showConfigurator: true,
-    instruments: require('./data').instrumentsType,
+    instruments: require('./data').instruments,
     selectedSlot: 1,
     selectedInstrumentType: null,
     selectedInstrumentBrand: null,
@@ -80,21 +80,12 @@ class App extends Component {
   }
 
   updateIntruments = (selection, type, brand, model) => {
-    if (!this.state.selectedInstrumentType) {
       this.setState({
         selectedInstrumentType: type,
         selectedInstrumentBrand: brand,
-        selectedInstrumentModel: model,
-        instruments: require('./data').instrumentsBrand
+        selectedInstrumentModel: model
       })
     }
-    else if (!!this.state.selectedInstrumentType && !this.state.selectedInstrumentBrand) {
-      this.setState({
-        selectedInstrumentBrand: selection,
-        instruments: require('./data').instrumentsModel
-      })
-    }
-  }
 
   onSidebarClose = () => {
     this.setState({ 
