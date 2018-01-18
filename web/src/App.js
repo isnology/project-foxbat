@@ -28,8 +28,31 @@ class App extends Component {
     welcome: false,
     saveRegister: false,
     signIn: false,
-    error: null
+    error: null,
+    windowWidth: 0,
+    windowHeight: 0
   }
+
+  // BEGIN: code necessary for window size detection
+  // (necessary for correct sizing of Panel component)
+  constructor(props) {
+    super(props);
+    this.state = { width: 0, height: 0 };
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  }
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions)
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions)
+  }
+  updateWindowDimensions() {
+    this.setState({ 
+      windowWidth: window.innerWidth, 
+      windowHeight: window.innerHeight })
+  }
+  // END: code necessary for window size detection
 
   onSignIn = ({ key, email, password }) => {
     signIn({ email, password })
@@ -153,7 +176,9 @@ class App extends Component {
       selectedInstrumentType,
       selectedInstrumentBrand,
       templateId,
-      slottedInstruments
+      slottedInstruments,
+      windowHeight,
+      windowWidth
     } = this.state
 
     console.log(instruments)
@@ -174,7 +199,8 @@ class App extends Component {
                <div>
                 <Panel 
                 type={templateId}
-                height={640}
+                windowHeight={windowHeight}
+                windowWidth={windowWidth}
                 instruments={slottedInstruments}
                 selectedSlot={selectedSlot}
                 selectSlot={ this.onSelectSlot }
