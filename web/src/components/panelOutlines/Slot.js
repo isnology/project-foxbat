@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 
 function Slot({
   instrument, //object representing the instrument occupying this slot

@@ -1,8 +1,8 @@
 import React from 'react'
 
-function SidebarText({
+function SidebarText(
 
-}) { 
+) { 
   return (
     <div className="sidebar-text">
       <p>1. I am an announcement!</p>

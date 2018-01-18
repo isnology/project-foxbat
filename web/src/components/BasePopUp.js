@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import RoundExitButton from './RoundExitButton';
 
 function BasePopUp({ children, onExit, attribute}) {

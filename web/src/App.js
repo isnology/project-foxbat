@@ -2,10 +2,9 @@ import React, { Component, Fragment } from 'react';
 import { signIn, signUp, signOutNow } from './api/auth'
 import { getDecodedToken } from './api/token'
 import './App.css';
-import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import WelcomePage from './components/WelcomePage';
 import Button from './components/Button';
-import PlaneSelect from './components/PlaneSelect';
-import Form from './components/Form';
 import PanelTemplate from './components/PanelTemplate';
 import Sidebar from './components/sidebar/Sidebar';
 import SaveRegister from './components/SaveRegister';
@@ -118,7 +117,6 @@ class App extends Component {
     console.log(instruments)
 
     const signedIn = !!decodedToken
-    const toggle = false
 
     return (
       <Router>
@@ -126,41 +124,21 @@ class App extends Component {
           <Switch>
 
             <Route path='/' exact render={ () => (
-              <Fragment>
+              <WelcomePage />
+            )}/>
 
-                <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
-                <br/>
-                <h2>Which plane are you configuring for?</h2>
-                <br/>
-
-                <Link to="/a32">
-                  <PlaneSelect name="A32 Vixxen"/>
-                </Link>
-                <Link to="/a22">
-                  <PlaneSelect name="A22 Foxbat/Kelpie"/>
-                </Link>
-
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <div>
-                  <Button text="Lost your panel URL?"/>
-                </div>
-                {
-                  showConfigurator &&
-                  <Sidebar
-                    exitButton={ true }
-                    backButton={ true }
-                    instruments={ instruments }
-                    selectedSlot={ selectedSlot }
-                    selectedInstrumentType={ selectedInstrumentType }
-                    selectedInstrumentBrand={ selectedInstrumentBrand }
-                    onSelect={ this.updateIntruments }
-                    sidebarClose={ this.onSidebarClose }
-                  /> 
-                }
+            <Route path='/app' exact render={ () => (
+              <div>
+                <Sidebar
+                  exitButton={ true }
+                  backButton={ true }
+                  instruments={ instruments }
+                  selectedSlot={ selectedSlot }
+                  selectedInstrumentType={ selectedInstrumentType }
+                  selectedInstrumentBrand={ selectedInstrumentBrand }
+                  onSelect={ this.updateIntruments }
+                  sidebarClose={ this.onSidebarClose }
+                /> 
                 <Button
                   text="toggle side bar (dev)"
                   onToggle={ this.toggleShowConfigurator }
@@ -172,8 +150,7 @@ class App extends Component {
                       onSubmit={ this.onSaveRegister }
                   />
                 }
-              </Fragment>
-
+              </div>
             )}/>
 
             <Route path='/a22' exact render={ () => (

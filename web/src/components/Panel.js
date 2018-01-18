@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import A22outline from './panelOutlines/a22'
 import A32outline from './panelOutlines/a32'
 import A22Slots from './panelOutlines/a22slots'

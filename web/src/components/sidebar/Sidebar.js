@@ -1,5 +1,4 @@
 import React from 'react'
-import Button from '../Button';
 import ExitButton from '../ExitButton';
 import InstrumentList from './InstrumentList';
 import SidebarText from './SidebarText';
