@@ -11,7 +11,8 @@ function Panel({
   type, //determine which panel to render A22 or A32 (Digital or Analog)
   slotClicked, //tell the parent which slot was clicked
   height,
-  instruments
+  instruments,
+  selectSlot
 }) { 
   const width = (type === 'a22' || type === 'a22Digital') ? height*A22_SVG_HEIGHT_RATIO : height*A32_SVG_HEIGHT_RATIO
   const imagePath = (type === 'a22') ? 'images/a22.svg' : 'images/a32.svg'
@@ -25,7 +26,12 @@ function Panel({
       style = {svgContainerStyle}
       >
 
-      <A22Slots height={height} template={type} instruments={instruments}/>
+      <A22Slots 
+        height={height} 
+        template={type} 
+        instruments={instruments}
+        onClick={selectSlot}
+      />
 
       {(type === 'a22') ? 
       <A22outline

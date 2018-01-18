@@ -88,14 +88,19 @@ class App extends Component {
     //return
   }
 
-  toggleShowConfigurator = () => {
-    this.setState((prevState) => {
-      const newShowConfigurator = !prevState.showConfigurator
-      return({
-        showConfigurator: newShowConfigurator
-      })
+  onSelectSlot = (slot) => {
+    let newSlot
+    if (slot === this.state.selectedSlot) {
+      newSlot = null
+    }
+    else {
+      newSlot = slot
+    }
+    this.setState({
+      selectedSlot: newSlot
     })
   }
+
   updateIntrumentSelection = (selection, type, brand, model) => {
       this.setState({
         selectedInstrumentType: type,
@@ -145,7 +150,9 @@ class App extends Component {
                 <Panel 
                 type={templateId}
                 height={640}
-                instruments={slottedInstruments}/>
+                instruments={slottedInstruments}
+                selectSlot={ this.onSelectSlot }
+                />
 
                 <Sidebar
                   exitButton={ true }
@@ -157,10 +164,6 @@ class App extends Component {
                   onSelect={ this.updateIntrumentSelection }
                   sidebarClose={ this.onSidebarClose }
                 /> 
-                <Button
-                  text="toggle side bar (dev)"
-                  onToggle={ this.toggleShowConfigurator }
-                />
 
                 { saveRegister &&
                   <SaveRegister
