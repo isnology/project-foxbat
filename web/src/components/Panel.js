@@ -12,6 +12,7 @@ function Panel({
   slotClicked, //tell the parent which slot was clicked
   height,
   instruments,
+  selectedSlot,
   selectSlot
 }) { 
   const width = (type === 'a22' || type === 'a22Digital') ? height*A22_SVG_HEIGHT_RATIO : height*A32_SVG_HEIGHT_RATIO
@@ -30,6 +31,7 @@ function Panel({
         height={height} 
         template={type} 
         instruments={instruments}
+        selectedSlot={selectedSlot}
         onClick={selectSlot}
       />
 

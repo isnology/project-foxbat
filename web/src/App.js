@@ -176,6 +176,7 @@ class App extends Component {
                 type={templateId}
                 height={640}
                 instruments={slottedInstruments}
+                selectedSlot={selectedSlot}
                 selectSlot={ this.onSelectSlot }
                 />
 

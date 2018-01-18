@@ -1,4 +1,5 @@
 import React from 'react'
+import './slot.css'
 
 function Slot({
   instrument, //object representing the instrument occupying this slot
@@ -9,6 +10,7 @@ function Slot({
   diameterRatio, //the diameter of the slot as a ratio of the panel height
   heightRatio,
   widthRatio,
+  selectedSlot,
   onClick //callback function to pass back which slot was clicked
 }){
   let slotWidth
@@ -22,10 +24,7 @@ function Slot({
   }
 
   let slotStyle={
-    position: 'absolute',
-    border: 'solid black 2px',
-    backgroundColor: 'black',
-    overflow:'hidden',
+    // Variable styles only. Other styles in css
     zIndex: 2,
     width: slotWidth + 'px',
     height: slotHeight + 'px',
@@ -39,8 +38,13 @@ function Slot({
   //   slotStyle.borderRadius = (instrument.shape === "circle") ? '50%' : '0%'
   // }
   
+  var classForSlot = "slot"
+  if (selectedSlot === slotNumber) {
+    classForSlot = classForSlot + " selected-slot"
+  }
+
   return(
-      <div className="slot" id={slotNumber} style={slotStyle} onClick={onClick}>
+      <div className={classForSlot} id={slotNumber} style={slotStyle} onClick={onClick}>
       <img src="http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/1/10-02259.jpg" width="100%"/>
       </div>
   )}
