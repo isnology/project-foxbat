@@ -79,10 +79,12 @@ class App extends Component {
     })
   }
 
-  updateIntruments = (selection) => {
+  updateIntruments = (selection, type, brand, model) => {
     if (!this.state.selectedInstrumentType) {
       this.setState({
-        selectedInstrumentType: selection,
+        selectedInstrumentType: type,
+        selectedInstrumentBrand: brand,
+        selectedInstrumentModel: model,
         instruments: require('./data').instrumentsBrand
       })
     }
