@@ -1,7 +1,7 @@
 import api from './init'
 
 export function savePanel(data) {
-  return api.get('/panels', data)
+  return api.post('/panels', data)
   .then((res) => res.data)
 }
 

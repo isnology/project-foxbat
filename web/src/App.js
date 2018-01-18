@@ -1,15 +1,16 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment } from 'react'
 import { signIn, signUp, signOutNow } from './api/auth'
 import { getDecodedToken } from './api/token'
-import './App.css';
+import './App.css'
 import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom'
-import Button from './components/Button';
-import PlaneSelect from './components/PlaneSelect';
+import Button from './components/Button'
+import PlaneSelect from './components/PlaneSelect'
 import Form from './components/Form';
-import PanelTemplate from './components/PanelTemplate';
-import Sidebar from './components/sidebar/Sidebar';
-import SaveRegister from './components/SaveRegister';
+import PanelTemplate from './components/PanelTemplate'
+import Sidebar from './components/sidebar/Sidebar'
+import SaveRegister from './components/SaveRegister'
 import { savePanel, updatePanel } from './api/panels'
+import SignIn from './components/SignIn'
 
 class App extends Component {
   state = {
@@ -22,31 +23,53 @@ class App extends Component {
     selectedInstrumentBrand: null,
     templateId: null,
     slots: null,
+    panelName: null,
     welcome: false,
-    saveRegister: true
+    saveRegister: true,
+    signIn: false,
+    error: null
   }
 
-  onSignIn = ({ email, password }) => {
+  onSignIn = ({ key, email, password }) => {
     signIn({ email, password })
     .then((decodedToken) => {
       this.setState({ decodedToken })
+      this.onExitPopUp(key)
     })
     .catch((error) => {
       this.setState({ error })
     })
   }
 
-  onSaveRegister = ({ name, email, password }) => {
+  onSaveRegister = ({ key, name, email, password }) => {
     const signedIn = !!this.state.decodedToken
     if (!signedIn) {
       signUp({ email, password })
       .then((decodedToken) => {
-        this.setState({ decodedToken })
+        this.setState({ decodedToken, panelName: name })
+        this.doSave({ key, name })
       })
       .catch((error) => {
-        this.setState({ error })
+        // User already exists
+        if (/ 403/.test(error.message)) {
+          signIn({ email, password })
+          .then((decodedToken) => {
+            this.setState({ decodedToken })
+            this.doSave({ key, name })
+          })
+        }
+        else {
+          this.setState({ error })
+        }
       })
     }
+    else {
+      const stateName = this.state.panelName
+      this.doSave({ key, stateName })
+    }
+  }
+
+  doSave = ({ key, name }) => {
     const data = {
       template: this.state.templateId,
       name: name,
@@ -55,7 +78,7 @@ class App extends Component {
     }
     savePanel({data})
     .then(() => {
-      this.setState({ saveRegister: null })
+      this.onExitPopUp(key)
     })
   }
 
@@ -100,6 +123,7 @@ class App extends Component {
       welcome,
       saveRegister,
       showConfigurator,
+      signIn,
       instruments,
       selectedSlot,
       selectedInstrumentType,
@@ -161,6 +185,12 @@ class App extends Component {
                       onExit={ this.onExitPopUp }
                       onSubmit={ this.onSaveRegister }
                   />
+                }
+                { signIn &&
+                <SignIn
+                    onExit={ this.onExitPopUp }
+                    onSubmit={ this.onSignIn }
+                />
                 }
               </Fragment>
 
