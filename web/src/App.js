@@ -11,7 +11,7 @@ import SaveRegister from './components/SaveRegister'
 import { savePanel, updatePanel } from './api/panels'
 import Panel from './components/Panel'
 import PlaneSelect from './components/PlaneSelect'
-import Form from './components/Form';
+import Form from './components/Form'
 import SignIn from './components/SignIn'
 
 class App extends Component {
@@ -19,13 +19,12 @@ class App extends Component {
     decodedToken: getDecodedToken(), // Restore the previous signed in data
     save: null,
     showConfigurator: true,
-    instruments: require('./data').instrumentsType,
-    selectedSlot: 1,
-    selectedInstrumentType: null,
+    instruments: require('./data').instruments,
+    selectedSlot: null,
+    selectedInstrumentType: "Altimeter",
     selectedInstrumentBrand: null,
     templateId: null,
-    slots: null,
-    panelName: null,
+    slottedInstruments: null,
     welcome: false,
     saveRegister: false,
     signIn: false,
@@ -95,31 +94,44 @@ class App extends Component {
     })
   }
 
-  toggleShowConfigurator = () => {
+  onSelectTemplate = (templateName) => {
+    let slotins
+    if (templateName==='a22' || templateName === 'a32'){
+      slotins = require('./data').analogSlottedInstruments
+    } else { //hardcoded for testing.
+      slotins = require('./data').digitalSlottedInstruments
+    }
+
     this.setState((prevState) => {
-      const newShowConfigurator = !prevState.showConfigurator
       return({
-        showConfigurator: newShowConfigurator
+        templateId: templateName,
+        slottedInstruments: slotins
       })
+    })
+
+    //return
+  }
+
+  onSelectSlot = (slot) => {
+    let newSlot
+    if (slot === this.state.selectedSlot) {
+      newSlot = null
+    }
+    else {
+      newSlot = slot
+    }
+    this.setState({
+      selectedSlot: newSlot
     })
   }
 
-  updateIntruments = (selection, type, brand, model) => {
-    if (!this.state.selectedInstrumentType) {
+  updateIntrumentSelection = (selection, type, brand, model) => {
       this.setState({
         selectedInstrumentType: type,
         selectedInstrumentBrand: brand,
-        selectedInstrumentModel: model,
-        instruments: require('./data').instrumentsBrand
+        selectedInstrumentModel: model
       })
     }
-    else if (!!this.state.selectedInstrumentType && !this.state.selectedInstrumentBrand) {
-      this.setState({
-        selectedInstrumentBrand: selection,
-        instruments: require('./data').instrumentsModel
-      })
-    }
-  }
 
   onSidebarClose = () => {
     this.setState({
@@ -139,13 +151,15 @@ class App extends Component {
       instruments,
       selectedSlot,
       selectedInstrumentType,
-      selectedInstrumentBrand
+      selectedInstrumentBrand,
+      templateId,
+      slottedInstruments
     } = this.state
 
     console.log(instruments)
 
     const signedIn = !!decodedToken
-
+       
     return (
       <Router>
         <div className="App">
@@ -156,7 +170,15 @@ class App extends Component {
             )}/>
 
             <Route path='/app' exact render={ () => (
-              <div>
+             !!templateId ? (
+               <div>
+                <Panel 
+                type={templateId}
+                height={640}
+                instruments={slottedInstruments}
+                selectSlot={ this.onSelectSlot }
+                />
+
                 <Sidebar
                   exitButton={ true }
                   backButton={ true }
@@ -164,13 +186,9 @@ class App extends Component {
                   selectedSlot={ selectedSlot }
                   selectedInstrumentType={ selectedInstrumentType }
                   selectedInstrumentBrand={ selectedInstrumentBrand }
-                  onSelect={ this.updateIntruments }
+                  onSelect={ this.updateIntrumentSelection }
                   sidebarClose={ this.onSidebarClose }
-                />
-                <Button
-                  text="toggle side bar (dev)"
-                  onToggle={ this.toggleShowConfigurator }
-                />
+                /> 
 
                 { saveRegister &&
                   <SaveRegister
@@ -186,17 +204,23 @@ class App extends Component {
                   />
                 }
               </div>
+            ):(
+              <Redirect to='/' />
+            )
             )}/>
 
             <Route path='/a22' exact render={ () => (
+              !!templateId ? (
+              <Redirect to='/app' />
+              ):(
               <Fragment>
                 <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
                 <br/>
                 <h2>Choose a template to continue</h2>
                 <br/>
 
-                <PanelTemplate name="Analogue A-22 Panel"/>
-                <PanelTemplate name="Digital A-22 Panel"/>
+                <PanelTemplate name="Analogue A-22 Panel" clicked={()=>{this.onSelectTemplate('a22')}}/>
+                <PanelTemplate name="Digital A-22 Panel" clicked={()=>{this.onSelectTemplate('a22Digital')}}/>
 
                 <br/>
                 <br/>
@@ -207,17 +231,21 @@ class App extends Component {
                   <Button text="Lost your panel URL?"/>
                 </div>
               </Fragment>
+              )
             )}/>
 
             <Route path='/a32' exact render={ () => (
-              <Fragment>
+              !!templateId ? (
+                <Redirect to='/app' />
+                ):(
+                <Fragment>
                 <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
                 <br/>
                 <h2>Choose a template to continue</h2>
                 <br/>
 
-                <PanelTemplate name="Analogue A-32 Panel"/>
-                <PanelTemplate name="Digital A-32 Panel"/>
+                <PanelTemplate name="Analogue A-32 Panel" clicked={()=>{this.onSelectTemplate('a32')}}/>
+                <PanelTemplate name="Digital A-32 Panel" clicked={()=>{this.onSelectTemplate('a32Digital')}}/>
 
                 <br/>
                 <br/>
@@ -228,6 +256,7 @@ class App extends Component {
                   <Button text="Lost your panel URL?"/>
                 </div>
               </Fragment>
+              )
             )}/>
 
             <Route path='/alextest' exact render={ () => (

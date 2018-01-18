@@ -1,6 +1,7 @@
 #svgbox{
   border: black solid 1px;
   position: relative;
+  width: 80%;
 }
 
 .panel-svg .svg-line {
@@ -21,4 +22,8 @@ height: auto;
 
 .App {
   text-align: center;
+}
+
+.plane-selector{
+  height:20rem;
 }

@@ -2,22 +2,21 @@ import React from 'react'
 import Button from '../Button';
 
 function allTypesFromInstruments(instruments) {
-
+  const typesArray = 
+    instruments.map((instrument) => (
+      instrument.instrumentClass
+    ))
+  return typesArray
 }
 
-function allBrandsForTypeFromInstruments(type, instruments) {
-  return [
-    'sony',
-    'panasonic'
-  ]
+function allBrandsForTypeFromInstruments(instruments, selectedInstrumentType) {
+  const typesArray = 
+    instruments.map((instrument) => (
+      instrument.brand
+    ))
+  return typesArray
 }
 
-function allModelsForBrandsForTypeFromInstruments(type, instruments) {
-  return [
-    'playstation',
-    'tv'
-  ]
-}
 
 function InstrumentList({
   instruments,
@@ -26,30 +25,20 @@ function InstrumentList({
   onSelect // (type, brand?, model?) => {}
 }) {
 
+  const brandsArray = allBrandsForTypeFromInstruments(instruments, selectedInstrumentType)
+  const typesArray = allTypesFromInstruments(instruments)
   // Listing brands
-  const brands = [] // TODO
+  console.log(typesArray)
+  console.log(brandsArray)
+  console.log(selectedInstrumentType)
   return (
     <div className="instrument-list">
       {
-        brands.map((brand) => (
+        typesArray.map((type) => (
           <Button 
-            key={ brand }
-            text={ brand }
-            onToggle={ ()=>{ onSelect(selectedInstrumentType, brand) } }
-          />
-        ))
-      }
-    </div>
-  )
-
-  return (
-    <div className="instrument-list">
-      {
-        instruments.map((instrument) => (
-          <Button 
-            key={ instrument._id }
-            text={ instrument.title }
-            onToggle={ ()=>{ onSelect(instrument.title) } }
+            key={ type }
+            text={ type }
+            onToggle={ ()=>{ onSelect(selectedInstrumentType, type) } }
           />
         ))
       }
