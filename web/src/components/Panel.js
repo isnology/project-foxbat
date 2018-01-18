@@ -12,27 +12,18 @@ function Panel({
   slotClicked, //tell the parent which slot was clicked
   height
 }) { 
-  const width = (type === 'a22') ? height*A22_SVG_HEIGHT_RATIO : height*A32_SVG_HEIGHT_RATIO
+  const width = (type === 'a22' || type === 'a22Digital') ? height*A22_SVG_HEIGHT_RATIO : height*A32_SVG_HEIGHT_RATIO
   const imagePath = (type === 'a22') ? 'images/a22.svg' : 'images/a32.svg'
   const svgContainerStyle = {
     height: height + 'px',
     width: width + 'px'
-  }
-  const circleStyle = {
-    // height: height + 'px',
-    // width: width + 'px'
   }
   return (
     <div 
       id = "svgbox"
       style = {svgContainerStyle}
       >
-      <A22Slots height={height}/>
-      {/* <img 
-        src = {imagePath}
-        height = {height + 'px'}
-        width = {width + 'px'}
-      /> */}
+      <A22Slots height={height} template={type}/>
       {(type === 'a22') ? 
       <A22outline
       height = {height + 'px'}

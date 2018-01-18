@@ -6,7 +6,7 @@ function A22Slots({
   // width
   // instruments, //array of objects commented out while component testing
   onClick, //callback function to pass back which slot was clicked
-  template //a22, a32, a22digital, a32digital
+  template //a22, a32, a22Digital, a32Digital
 }){
   const instruments = [
     {instrument:{shape: 'circle'},
@@ -19,108 +19,207 @@ function A22Slots({
     slotNumber:'slot4'},
     {instrument:null,
     slotNumber:'slot5'},
-    {instrument:null,
-    slotNumber:'slot6'},
-    {instrument:null,
-    slotNumber:'slot7'},
-    {instrument:null,
-    slotNumber:'slot8'},
-    {instrument:null,
-    slotNumber:'slot9'},
-    {instrument:null,
-    slotNumber:'slot10'},
-    {instrument:null,
-    slotNumber:'slot11'},
-    {instrument:null,
-    slotNumber:'slot12'}
+    // {instrument:null,
+    // slotNumber:'slot6'},
+    // {instrument:null,
+    // slotNumber:'slot7'},
+    // {instrument:null,
+    // slotNumber:'slot8'},
+    // {instrument:null,
+    // slotNumber:'slot9'},
+    // {instrument:null,
+    // slotNumber:'slot10'},
+    // {instrument:null,
+    // slotNumber:'slot11'},
+    // {instrument:null,
+    // slotNumber:'slot12'}
       ] //testing purposes
 
   const a32SlotRatios = [ //TODO: put controls in place to ensure the ordering is adhered to in the instruments array passed in.
     //top of the six pack (all 3.125") (left to right)
     {leftRatio: 0.2263,
     bottomRatio: 0.8315,
-    diameterRatio: 0.266},
+    diameterRatio: 0.266,
+    circle: true},
     {leftRatio: 0.5249,
     bottomRatio: 0.8315,
-    diameterRatio: 0.266},
+    diameterRatio: 0.266,
+    circle: true},
     {leftRatio: 0.8234,
     bottomRatio: 0.8315,
-    diameterRatio: 0.266},
+    diameterRatio: 0.266,
+    circle: true},
     //bottom of the six pack (all 3.125") (left to right)
     {leftRatio: 0.2263,
     bottomRatio: 0.5329,
-    diameterRatio: 0.266},
+    diameterRatio: 0.266,
+    circle: true},
     {leftRatio: 0.5249,
     bottomRatio: 0.5329,
-    diameterRatio: 0.266},
+    diameterRatio: 0.266,
+    circle: true},
     {leftRatio: 0.8234,
     bottomRatio: 0.5329,
-    diameterRatio: 0.266},
+    diameterRatio: 0.266,
+    circle: true},
     //column of the 2.25" (top to bottom)
     {leftRatio: 1.1284,
     bottomRatio: 0.8636,
-    diameterRatio: 0.191},
+    diameterRatio: 0.191,
+    circle: true},
     {leftRatio: 1.1284,
     bottomRatio: 0.6388,
-    diameterRatio: 0.191},
+    diameterRatio: 0.191,
+    circle: true},
     {leftRatio: 1.1284,
     bottomRatio: 0.4125,
-    diameterRatio: 0.191},
+    diameterRatio: 0.191,
+    circle: true},
 
     //column of the 2" (top to bottom)
     {leftRatio: 1.3612,
     bottomRatio: 0.8555,
-    diameterRatio: 0.173},
+    diameterRatio: 0.173,
+    circle: true},
     {leftRatio: 1.3612,
     bottomRatio: 0.6292,
-    diameterRatio: 0.173},
+    diameterRatio: 0.173,
+    circle: true},
     {leftRatio: 1.3612,
     bottomRatio: 0.4045,
-    diameterRatio: 0.173},
+    diameterRatio: 0.173,
+    circle: true}
   ]
   const a22SlotRatios = [ //TODO: put controls in place to ensure the ordering is adhered to in the instruments array passed in.
     //top of the six pack (all 3.125") (left to right)
     {leftRatio: 0.2758,
     bottomRatio: 0.8634,
-    diameterRatio: 0.289},
+    diameterRatio: 0.289,
+    circle: true},
     {leftRatio: 0.6031,
     bottomRatio: 0.8634,
-    diameterRatio: 0.289},
+    diameterRatio: 0.289,
+    circle: true},
     {leftRatio: 0.9304,
     bottomRatio: 0.8634,
-    diameterRatio: 0.289},
+    diameterRatio: 0.289,
+    circle: true},
     //bottom of the six pack (all 3.125") (left to right)
     {leftRatio: 0.2758,
     bottomRatio: 0.5335,
-    diameterRatio: 0.289},
+    diameterRatio: 0.289,
+    circle: true},
     {leftRatio: 0.6031,
     bottomRatio: 0.5335,
-    diameterRatio: 0.289},
+    diameterRatio: 0.289,
+    circle: true},
     {leftRatio: 0.9304,
     bottomRatio: 0.5335,
-    diameterRatio: 0.289},
+    diameterRatio: 0.289,
+    circle: true},
     //column of the 2.25" (top to bottom)
     {leftRatio: 1.2655,
     bottomRatio: 0.8789,
-    diameterRatio: 0.206},
+    diameterRatio: 0.206,
+    circle: true},
     {leftRatio: 1.2655,
     bottomRatio: 0.6289,
-    diameterRatio: 0.206},
+    diameterRatio: 0.206,
+    circle: true},
     {leftRatio: 1.2655,
     bottomRatio: 0.3763,
-    diameterRatio: 0.206},
+    diameterRatio: 0.206,
+    circle: true},
 
     //column of the 2" (top to bottom)
     {leftRatio: 1.5284,
     bottomRatio: 0.8557,
-    diameterRatio: 0.188},
+    diameterRatio: 0.188,
+    circle: true},
     {leftRatio: 1.5284,
     bottomRatio: 0.6186,
-    diameterRatio: 0.188},
+    diameterRatio: 0.188,
+    circle: true},
     {leftRatio: 1.5284,
     bottomRatio: 0.3686,
-    diameterRatio: 0.188},
+    diameterRatio: 0.188,
+    circle: true}
   ]
+  const a32DigitalSlotRatios = [ //TODO: put controls in place to ensure the ordering is adhered to in the instruments array passed in.
+
+    //Dynon big screen
+    {leftRatio: 0.3162,
+    bottomRatio: 0.8796,
+    width: 0.8186,
+    height: 0.5859,
+    circle: false},
+
+    //smaller Dynon Walkie-talkie things (top to bottom)
+    {leftRatio: 1.2039,
+    bottomRatio: 0.8844,
+    width: 0.1525,
+    height: 0.2970,
+    circle: false},
+    {leftRatio: 1.2039,
+    bottomRatio: 0.5746,
+    width: 0.1525,
+    height: 0.2970,
+    circle: false},
+    //column of the 2.25" (top to bottom)
+    {leftRatio: 1.4286,
+    bottomRatio: 0.8812,
+    diameterRatio: 0.191,
+    circle: true},
+    {leftRatio: 1.4286,
+    bottomRatio: 0.6629,
+    diameterRatio: 0.191,
+    circle: true}
+  ]
+  const a22DigitalSlotRatios = [ //TODO: put controls in place to ensure the ordering is adhered to in the instruments array passed in.
+    //column of the 2.25" (top to bottom)
+    {leftRatio: 0.3050,
+    bottomRatio: 0.8523,
+    diameterRatio: 0.191,
+    circle: true},
+    {leftRatio: 0.3050,
+    bottomRatio: 0.5907,
+    diameterRatio: 0.191,
+    circle: true},
+
+    //Dynon big screen
+    {leftRatio: 0.5795,
+    bottomRatio: 0.9422,
+    width: 0.9230,
+    height: 0.6597,
+    circle: false},
+
+    //smaller Dynon Walkie-talkie things (top to bottom)
+    {leftRatio: 1.5441,
+    bottomRatio: 0.9518,
+    width: 0.1750,
+    height: 0.3387,
+    circle: false},
+    {leftRatio: 1.5441,
+    bottomRatio: 0.6067,
+    width: 0.1750,
+    height: 0.3387,
+    circle: false},
+  ]
+  let slotRatios = null
+  switch (template){
+    case 'a22':
+      slotRatios = a22SlotRatios;
+      break;
+    case 'a32':
+      slotRatios = a32SlotRatios;
+      break;
+    case 'a22Digital':
+      slotRatios = a22DigitalSlotRatios;
+      break;
+    case 'a32Digital':
+      slotRatios = a32DigitalSlotRatios;
+  }
+
   return(
     <Fragment>
       {
@@ -129,9 +228,11 @@ function A22Slots({
             instrument = { !!instrument.instrument ? instrument.instrument : null}
             panelHeight = {height} //necessary to readjust size and position appropriately
             slotNumber = {instrument.slotNumber} //assigned and tracked by the caller
-            leftRatio = {a22SlotRatios[index].leftRatio} //the left position of this slot as a ratio of the panel height
-            bottomRatio = {a22SlotRatios[index].bottomRatio} //the top position of this slot as a ratio of the panel height measured from the bottom
-            diameterRatio = {a22SlotRatios[index].diameterRatio}   //the diameter of the slot as a ratio of the panel height
+            leftRatio = {slotRatios[index].leftRatio} //the left position of this slot as a ratio of the panel height
+            bottomRatio = {slotRatios[index].bottomRatio} //the top position of this slot as a ratio of the panel height measured from the bottom
+            diameterRatio = {slotRatios[index].diameterRatio} //the diameter of the slot as a ratio of the panel height
+            heightRatio = {slotRatios[index].height}
+            widthRatio = {slotRatios[index].width}
             onClick = {()=>{onClick(instrument.slotNumber)}} //each button will 
           />
         ))
