@@ -1,6 +1,7 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import A22outline from './panelOutlines/a22'
 import A32outline from './panelOutlines/a32'
+import A22Slots from './panelOutlines/a22slots'
 
 const A22_SVG_HEIGHT_RATIO = 2.1318
 const A32_SVG_HEIGHT_RATIO = 2.1228
@@ -26,10 +27,7 @@ function Panel({
       id = "svgbox"
       style = {svgContainerStyle}
       >
-      <div 
-        className = "circle"
-        id = "circle1"
-      />
+      <A22Slots height={height}/>
       {/* <img 
         src = {imagePath}
         height = {height + 'px'}

@@ -1,47 +1,63 @@
-import React, { Fragment } from 'react'
-import ExitButton from './ExitButton';
-import RoundExitButton from './RoundExitButton';
-import Button from './Button';
+import React from 'react'
+import Button from './Button'
+import BasePopUp from './BasePopUp'
 
-function SaveRegister({
-                text,
-                FirstInputLabel = false,
-                FirstInputType = false,
-                SecondInputLabel = false,
-                SecondInputType = false,
-                ThirdInputLabel = false,
-                ThirdInputType = false,
-                buttonText,
-                onToggle
-              }) {
+function SaveRegister({ onExit, onSubmit }) {
+  const key = "saveRegister"
   return (
-      <div class="form">
-        <ExitButton onToggle />
-        <RoundExitButton onToggle />
-        <p class="form-text">{ text }</p>
+    <BasePopUp onExit={ onExit } attribute={ key }>
+      <p className="form-text">
+        Please give your panel a name and enter your email address and a password to save
+        (so it can be re-called latter using these).
+      </p>
+      <form
+          onSubmit={ (event) => {
+            // Prevent old-school form submission
+            event.preventDefault()
 
-        { FirstInputLabel && FirstInputType ?
-            <label>
-              <p class="form-text">{ FirstInputLabel }</p>
-              <input class="form-text" type={ FirstInputType } name="panel-name"/>
-            </label> : null }
+            const elements = event.target.elements // Allows looking up fields using their 'name' attributes
+            // Get entered values from fields
+            const email = elements.email.value
+            const password = elements.password.value
+            const name = elements.name.value
 
-        { SecondInputLabel && SecondInputType ?
-            <label>
-              <p class="form-text">{ SecondInputLabel }</p>
-              <input class="form-text" type={ SecondInputType } name="panel-name"/>
-            </label> : null }
+            // Pass this information along to the parent component
+            onSubmit({ key, name, email, password })
+          } }
+      >
+        <label>
+          { 'Panel name: ' }
+          <input
+              type='text'
+              name='name'
+              defaultValue={ " " }
+          />
+        </label>
 
-        { ThirdInputLabel && ThirdInputType ?
-            <label>
-              <p class="form-text">{ ThirdInputLabel }</p>
-              <input class="form-text" type={ ThirdInputType } name="panel-name"/>
-            </label> : null }
+        <label>
+          { 'Email: ' }
+          <input
+              type='email'
+              name='email'
+              defaultValue={ " " }
+          />
+        </label>
 
-        <div class="save-form-button">
-          <Button text={ buttonText }/>
-        </div>
-      </div>
+        <label>
+          { 'Password: ' }
+          <input
+              type='password'
+              name='password'
+          />
+        </label>
+
+        <br/>
+        <Button text="Save"
+                onToggle={ () => {
+                } }
+        />
+      </form>
+    </BasePopUp>
   )
 }
 

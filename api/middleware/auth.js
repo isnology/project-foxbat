@@ -17,6 +17,9 @@ function register(req, res, next) {
   // Create the user with the specific password
   User.register(user, req.body.password, (error, user) => {
     if (error) {
+      if (error.message === 'A user with the given username is already registered') {
+        error.statusCode = 403
+      }
       next(error)
       return
     }
