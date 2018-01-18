@@ -10,8 +10,6 @@ import Sidebar from './components/sidebar/Sidebar'
 import SaveRegister from './components/SaveRegister'
 import { savePanel, updatePanel } from './api/panels'
 import Panel from './components/Panel'
-import PlaneSelect from './components/PlaneSelect'
-import Form from './components/Form'
 import SignIn from './components/SignIn'
 
 class App extends Component {
@@ -19,7 +17,7 @@ class App extends Component {
     decodedToken: getDecodedToken(), // Restore the previous signed in data
     save: null,
     showConfigurator: true,
-    instruments: require('./data').instruments,
+    instruments: null,
     selectedSlot: null,
     selectedInstrumentType: "Altimeter",
     selectedInstrumentBrand: null,
@@ -124,9 +122,10 @@ class App extends Component {
     } else { //hardcoded for testing.
       slotins = require('./data').digitalSlottedInstruments
     }
-
+    //require get req for all intruments
     this.setState((prevState) => {
       return({
+        instruments: require('./data').instruments, // hard coded for testing
         templateId: templateName,
         slottedInstruments: slotins
       })
@@ -164,12 +163,21 @@ class App extends Component {
     })
   }
 
+  onClearCurrentPanel = () => {
+    this.onSelectTemplate(this.state.templateId)
+    this.setState({
+      selectedSlot: null,
+      selectedInstrumentType: null,
+      selectedInstrumentBrand: null,
+      selectedInstrumentModel: null
+    })
+  }
+
   render() {
     const {
       decodedToken,
       welcome,
       saveRegister,
-      showConfigurator,
       signIn,
       instruments,
       selectedSlot,
@@ -180,8 +188,6 @@ class App extends Component {
       windowHeight,
       windowWidth
     } = this.state
-
-    console.log(instruments)
 
     const signedIn = !!decodedToken
        
@@ -205,7 +211,10 @@ class App extends Component {
                 selectedSlot={selectedSlot}
                 selectSlot={ this.onSelectSlot }
                 />
-
+                <Button 
+                  text={ "Clear all instruments" }
+                  onToggle={ this.onClearCurrentPanel }
+                />
                 <Sidebar
                   exitButton={ true }
                   backButton={ true }

@@ -3,6 +3,7 @@
   border: solid black 2px;
   background-color: black;
   overflow: hidden;
+  transition: 0.7s;
 }
 
 .selected-slot {
