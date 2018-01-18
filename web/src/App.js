@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { signIn, signUp, signOutNow } from './api/auth'
 import { getDecodedToken } from './api/token'
 import './App.css';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import WelcomePage from './components/WelcomePage';
 import Button from './components/Button';
 import PanelTemplate from './components/PanelTemplate';
@@ -17,11 +17,11 @@ class App extends Component {
     save: null,
     showConfigurator: true,
     instruments: require('./data').instruments,
-    selectedSlot: 1,
+    selectedSlot: null,
     selectedInstrumentType: "Altimeter",
     selectedInstrumentBrand: null,
     templateId: null,
-    slots: null,
+    slottedInstruments: null,
     welcome: false,
     saveRegister: false
   }
@@ -70,6 +70,24 @@ class App extends Component {
     })
   }
 
+  onSelectTemplate = (templateName) => {
+    let slotins
+    if (templateName==='a22' || templateName === 'a32'){
+      slotins = require('./data').analogSlottedInstruments
+    } else { //hardcoded for testing.
+      slotins = require('./data').digitalSlottedInstruments
+    }
+
+    this.setState((prevState) => {
+      return({
+        templateId: templateName,
+        slottedInstruments: slotins
+      })
+    })
+
+    //return
+  }
+
   toggleShowConfigurator = () => {
     this.setState((prevState) => {
       const newShowConfigurator = !prevState.showConfigurator
@@ -78,7 +96,6 @@ class App extends Component {
       })
     })
   }
-
   updateIntrumentSelection = (selection, type, brand, model) => {
       this.setState({
         selectedInstrumentType: type,
@@ -104,13 +121,15 @@ class App extends Component {
       instruments,
       selectedSlot,
       selectedInstrumentType,
-      selectedInstrumentBrand
+      selectedInstrumentBrand,
+      templateId,
+      slottedInstruments
     } = this.state
 
     console.log(instruments)
 
     const signedIn = !!decodedToken
-
+       
     return (
       <Router>
         <div className="App">
@@ -121,7 +140,13 @@ class App extends Component {
             )}/>
 
             <Route path='/app' exact render={ () => (
-              <div>
+             !!templateId ? (
+               <div>
+                <Panel 
+                type={templateId}
+                height={640}
+                instruments={slottedInstruments}/>
+
                 <Sidebar
                   exitButton={ true }
                   backButton={ true }
@@ -144,17 +169,23 @@ class App extends Component {
                   />
                 }
               </div>
+            ):(
+              <Redirect to='/' />
+            )
             )}/>
 
             <Route path='/a22' exact render={ () => (
+              !!templateId ? (
+              <Redirect to='/app' />
+              ):(
               <Fragment>
                 <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
                 <br/>
                 <h2>Choose a template to continue</h2>
                 <br/>
 
-                <PanelTemplate name="Analogue A-22 Panel"/>
-                <PanelTemplate name="Digital A-22 Panel"/>
+                <PanelTemplate name="Analogue A-22 Panel" clicked={()=>{this.onSelectTemplate('a22')}}/>
+                <PanelTemplate name="Digital A-22 Panel" clicked={()=>{this.onSelectTemplate('a22Digital')}}/>
 
                 <br/>
                 <br/>
@@ -165,17 +196,21 @@ class App extends Component {
                   <Button text="Lost your panel URL?"/>
                 </div>
               </Fragment>
+              )
             )}/>
 
             <Route path='/a32' exact render={ () => (
-              <Fragment>
+              !!templateId ? (
+                <Redirect to='/app' />
+                ):(
+                <Fragment>
                 <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
                 <br/>
                 <h2>Choose a template to continue</h2>
                 <br/>
 
-                <PanelTemplate name="Analogue A-32 Panel"/>
-                <PanelTemplate name="Digital A-32 Panel"/>
+                <PanelTemplate name="Analogue A-32 Panel" clicked={()=>{this.onSelectTemplate('a32')}}/>
+                <PanelTemplate name="Digital A-32 Panel" clicked={()=>{this.onSelectTemplate('a32Digital')}}/>
 
                 <br/>
                 <br/>
@@ -186,6 +221,7 @@ class App extends Component {
                   <Button text="Lost your panel URL?"/>
                 </div>
               </Fragment>
+              )
             )}/>
 
             <Route path='/alextest' exact render={ () => (

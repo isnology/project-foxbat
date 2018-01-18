@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { BrowserRouter as Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Button from './Button'
 import PlaneSelect from './PlaneSelect'
 
@@ -14,10 +14,13 @@ function WelcomePage(
       <br/>
 
       <Link to="/a32">
-        <PlaneSelect name="A32 Vixxen"/>
+        <PlaneSelect 
+        name="A32 Vixxen" imageURL="http://www.foxbat.com.au/public/editor_images/A32_04.jpg"/>
       </Link>
       <Link to="/a22">
-        <PlaneSelect name="A22 Foxbat/Kelpie"/>
+        <PlaneSelect 
+        name="A22 Foxbat/Kelpie"
+        imageURL="http://www.foxbat.com.au/public/editor_images/A22LS_yellow_01.jpg"/>
       </Link>
 
       <br/>

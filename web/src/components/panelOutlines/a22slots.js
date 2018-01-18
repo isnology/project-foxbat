@@ -4,36 +4,11 @@ import Slot from './Slot'
 function A22Slots({
   height,
   // width
-  // instruments, //array of objects commented out while component testing
+  instruments, //array of objects commented out while component testing
   onClick, //callback function to pass back which slot was clicked
   template //a22, a32, a22Digital, a32Digital
 }){
-  const instruments = [
-    {instrument:{shape: 'circle'},
-    slotNumber:'slot1'},
-    {instrument:null,
-    slotNumber:'slot2'},
-    {instrument:null,
-    slotNumber:'slot3'},
-    {instrument:null,
-    slotNumber:'slot4'},
-    {instrument:null,
-    slotNumber:'slot5'},
-    // {instrument:null,
-    // slotNumber:'slot6'},
-    // {instrument:null,
-    // slotNumber:'slot7'},
-    // {instrument:null,
-    // slotNumber:'slot8'},
-    // {instrument:null,
-    // slotNumber:'slot9'},
-    // {instrument:null,
-    // slotNumber:'slot10'},
-    // {instrument:null,
-    // slotNumber:'slot11'},
-    // {instrument:null,
-    // slotNumber:'slot12'}
-      ] //testing purposes
+  
 
   const a32SlotRatios = [ //TODO: put controls in place to ensure the ordering is adhered to in the instruments array passed in.
     //top of the six pack (all 3.125") (left to right)
