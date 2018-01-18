@@ -18,7 +18,7 @@ class App extends Component {
     showConfigurator: true,
     instruments: require('./data').instruments,
     selectedSlot: 1,
-    selectedInstrumentType: null,
+    selectedInstrumentType: "Altimeter",
     selectedInstrumentBrand: null,
     templateId: null,
     slots: null,
@@ -79,7 +79,7 @@ class App extends Component {
     })
   }
 
-  updateIntruments = (selection, type, brand, model) => {
+  updateIntrumentSelection = (selection, type, brand, model) => {
       this.setState({
         selectedInstrumentType: type,
         selectedInstrumentBrand: brand,
@@ -129,7 +129,7 @@ class App extends Component {
                   selectedSlot={ selectedSlot }
                   selectedInstrumentType={ selectedInstrumentType }
                   selectedInstrumentBrand={ selectedInstrumentBrand }
-                  onSelect={ this.updateIntruments }
+                  onSelect={ this.updateIntrumentSelection }
                   sidebarClose={ this.onSidebarClose }
                 /> 
                 <Button
