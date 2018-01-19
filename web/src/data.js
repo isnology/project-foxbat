@@ -10,7 +10,7 @@
 
 const instruments = [
   {
-    name: "Alti 1000",
+    name: "Alti 1000-a",
     brand: "Falcon",
     model: "",
     partNo: "",

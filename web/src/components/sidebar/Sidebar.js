@@ -1,9 +1,10 @@
 import React from 'react'
-import ExitButton from '../ExitButton';
-import InstrumentList from './InstrumentList';
-import SidebarText from './SidebarText';
-import { sideBarMessages } from '../../constants/messages';
-import './sidebar.css';
+import ExitButton from '../ExitButton'
+import InstrumentList from './InstrumentList'
+import SidebarText from './SidebarText'
+import { sideBarMessages } from '../../constants/messages'
+import './sidebar.css'
+var array = require('lodash/array') //Lodash
 
 function Sidebar({
   exitButton,
@@ -16,20 +17,47 @@ function Sidebar({
   sidebarClose
 }) { 
 
+  function allTypesFromInstruments(instruments) {
+    const allTypesArray = 
+      instruments.map((instrument) => (
+        instrument.instrumentClass
+      ))
+    const typesArray = array.uniq(allTypesArray)
+    return typesArray
+  }
+  
+  function allBrandsForTypeFromInstruments(instruments, selectedInstrumentType) {
+    const brandsArray = 
+      instruments.map((instrument) => (
+        instrument.instrumentClass
+      ))
+      // instruments.map(instruments, function(inst) {
+      //   if (inst.instrumentClass == selectedInstrumentType) return inst.brand;
+      // })
+    return brandsArray
+  }
+
   let topHeading
+  let displayItems
 
   if (!selectedSlot) {
     topHeading = sideBarMessages.welcome
   }
   else if (!!selectedSlot && !selectedInstrumentType) {
    topHeading = sideBarMessages.selectInstrumentType
+   displayItems = allTypesFromInstruments(instruments)
+   console.log("in conditional: ",displayItems)
+   console.log("second if")
   }
   else if (!!selectedSlot && !!selectedInstrumentType && !selectedInstrumentBrand) {
     topHeading = sideBarMessages.selectBrandOrModel + " " + selectedInstrumentType.toLowerCase()
+    displayItems = allBrandsForTypeFromInstruments(instruments, selectedInstrumentType)
   }
   else if (!!selectedSlot && !!selectedInstrumentType && !!selectedInstrumentBrand) {
     topHeading = sideBarMessages.selectBrandOrModel + " " + selectedInstrumentBrand
   }
+
+  console.log(displayItems)
 
   return (
     <div className="sidebar">
@@ -45,6 +73,7 @@ function Sidebar({
         {
           (!!instruments && !!selectedSlot) ? 
             <InstrumentList 
+              displayItems={ displayItems }
               instruments={ instruments }
               selectedInstrumentType={ selectedInstrumentType }
               selectedInstrumentBrand={ selectedInstrumentType }

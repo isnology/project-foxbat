@@ -1,34 +1,28 @@
-#svgbox{
+#svgbox {
   /* border: black solid 1px; */
   position: relative;
-  width: 80%;
-}
+  width: 80%; }
 
 .panel-svg .svg-line {
-stroke:#6f7174;
-stroke-width: 1px;
-fill: #ACB3B8;
-}
+  stroke: #6f7174;
+  stroke-width: 1px;
+  fill: #ACB3B8; }
 
 #a22svg {
-width: 100%;
-height: auto;
-}
+  width: 100%;
+  height: auto; }
 
 #a32svg {
-width: 100%;
-height: auto;
-}
+  width: 100%;
+  height: auto; }
 
 .slot {
   position: absolute;
   border: solid #6f7174 1px;
   background-color: #ACB3B8;
   overflow: hidden;
-  box-shadow: inset -1px -1px 1px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 1px 1px rgba(255, 255, 255, 0.2);
-}
+  box-shadow: inset -1px -1px 1px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 1px 1px rgba(255, 255, 255, 0.2); }
 
 .selected-slot, .slot:hover {
   border-color: #23547c;
-  box-shadow: 0px 0px 5px 5px #23547c, inset 0px 0px 5px 5px #23547c;
-}
+  box-shadow: 0px 0px 5px 5px #23547c, inset 0px 0px 5px 5px #23547c; }
