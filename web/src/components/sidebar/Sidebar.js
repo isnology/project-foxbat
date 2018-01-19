@@ -2,6 +2,7 @@ import React from 'react'
 import ExitButton from '../ExitButton';
 import InstrumentList from './InstrumentList';
 import SidebarText from './SidebarText';
+import { sideBarMessages } from '../../constants/messages';
 import './sidebar.css';
 
 function Sidebar({
@@ -18,16 +19,16 @@ function Sidebar({
   let topHeading
 
   if (!selectedSlot) {
-    topHeading = "Nothing is selected"
+    topHeading = sideBarMessages.welcome
   }
   else if (!!selectedSlot && !selectedInstrumentType) {
-   topHeading = "Select an instrument type"
+   topHeading = sideBarMessages.selectInstrumentType
   }
   else if (!!selectedSlot && !!selectedInstrumentType && !selectedInstrumentBrand) {
-    topHeading = `Select a ${ selectedInstrumentType } brand`
+    topHeading = sideBarMessages.selectBrandOrModel + " " + selectedInstrumentType.toLowerCase()
   }
   else if (!!selectedSlot && !!selectedInstrumentType && !!selectedInstrumentBrand) {
-    topHeading = `Select a ${ selectedInstrumentType } model from ${ selectedInstrumentBrand }`
+    topHeading = sideBarMessages.selectBrandOrModel + " " + selectedInstrumentBrand
   }
 
   return (

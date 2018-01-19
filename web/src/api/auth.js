@@ -4,8 +4,7 @@ import { getDecodedToken } from './token'
 export function signIn({ email, password }) {
   return api.post('/auth', { email, password })
   .then((res) => {
-    const token = res.data.token
-    setToken(token)
+    setToken(res.data.token)
     return getDecodedToken()
   })
   .catch((error) => {
@@ -19,9 +18,7 @@ export function signIn({ email, password }) {
 export function signUp({ email, password }) {
   return api.post('/auth/register', { email, password })
   .then((res) => {
-    const token = res.data.token
-    console.log("res.data:", res.data)
-    setToken(token)
+    setToken(res.data.token)
     return getDecodedToken()
   })
 }

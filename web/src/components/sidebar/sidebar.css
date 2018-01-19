@@ -4,6 +4,7 @@
 
 .sidebar {
   position: absolute;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   right: 0;
@@ -16,6 +17,7 @@
 .sidebar-top {
   position: relative;
   margin: 0;
+  padding: 10px;
   width: 100%;
   min-height: 100px;
   background: #0A64CB;
@@ -44,7 +46,7 @@
   display: flex;
   flex-direction: column;
   margin: 0;
-  padding: 10px;
+  padding: 2px;
   height: calc(100% - 100px);
   background: #C4C4C4;
   overflow-y: auto;
@@ -70,10 +72,38 @@
 }
 
 .instrument-list {
-  padding: 0 20px;
+  padding: 0 5px;
 }
 .instrument-list .main-button {
+  margin-top: 5px;
   width: 100%;
-  margin-top: 10px;
+  height: 3em;
   cursor: pointer;
+}
+
+.instrument-list .button-text{
+  margin: auto;
+  font-size: 1.5em;
+}
+
+.sidebar .exit-button-X {
+  font-size: 1.5em;
+}
+
+/*  MEDIA QUEEEEEEERIES */
+@media screen and (min-width: 1000px) {
+  .sidebar-lower {
+    padding: 10px;
+  }
+  .instrument-list {
+    padding: 0 20px;
+  }
+  .instrument-list .main-button {
+    width: 100%;
+    height: 4em;
+    margin-top: 10px;
+  }
+  .instrument-list .button-text{
+    font-size: 2em;
+  }
 }

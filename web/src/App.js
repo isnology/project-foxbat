@@ -4,14 +4,13 @@ import { getDecodedToken } from './api/token'
 import './App.css'
 import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom'
 import WelcomePage from './components/WelcomePage'
+import SelectPanelTemplatePage from './components/SelectPanelTemplatePage'
 import Button from './components/Button'
 import PanelTemplate from './components/PanelTemplate'
 import Sidebar from './components/sidebar/Sidebar'
 import SaveRegister from './components/SaveRegister'
 import { savePanel, updatePanel } from './api/panels'
 import Panel from './components/Panel'
-import PlaneSelect from './components/PlaneSelect'
-import Form from './components/Form';
 import SignIn from './components/SignIn'
 
 class App extends Component {
@@ -19,20 +18,42 @@ class App extends Component {
     decodedToken: getDecodedToken(), // Restore the previous signed in data
     save: null,
     showConfigurator: true,
-    instruments: require('./data').instrumentsType,
-    selectedSlot: 1,
-    selectedInstrumentType: null,
+    instruments: null,
+    selectedSlot: null,
+    selectedInstrumentType: "Altimeter",
     selectedInstrumentBrand: null,
     templateId: null,
-    slots: null,
-    panelName: null,
-    welcome: false,
+    slottedInstruments: null,
     saveRegister: false,
     signIn: false,
-    error: null
+    error: null,
+    windowWidth: 0,
+    windowHeight: 0
   }
 
+  // BEGIN: code necessary for window size detection
+  // (necessary for correct sizing of Panel component)
+  constructor(props) {
+    super(props);
+    this.state = { width: 0, height: 0 };
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  }
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions)
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions)
+  }
+  updateWindowDimensions() {
+    this.setState({
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight })
+  }
+  // END: code necessary for window size detection
+
   onSignIn = ({ key, email, password }) => {
+    this.setState({ error: null })
     signIn({ email, password })
     .then((decodedToken) => {
       this.setState({ decodedToken })
@@ -45,11 +66,12 @@ class App extends Component {
 
   onSaveRegister = ({ key, name, email, password }) => {
     const signedIn = !!this.state.decodedToken
+    this.setState({ error: null })
     if (!signedIn) {
       signUp({ email, password })
       .then((decodedToken) => {
         this.setState({ decodedToken, panelName: name })
-        this.doSave({ key, name })
+        this.doSave({key, name})
       })
       .catch((error) => {
         // User already exists
@@ -57,7 +79,10 @@ class App extends Component {
           signIn({ email, password })
           .then((decodedToken) => {
             this.setState({ decodedToken })
-            this.doSave({ key, name })
+            this.doSave({key, name})
+          })
+          .catch((error) => {
+            this.setState({ error })
           })
         }
         else {
@@ -66,8 +91,8 @@ class App extends Component {
       })
     }
     else {
-      const stateName = this.state.panelName
-      this.doSave({ key, stateName })
+      const panelName = this.state.panelName
+      this.doSave({ key, panelName })
     }
   }
 
@@ -84,9 +109,21 @@ class App extends Component {
     })
   }
 
+  onSave = () => {
+    const signedIn = !!this.state.decodedToken
+    if (signedIn) {
+      const key = "saveRegister"
+      const name = this.state.panelName
+      this.doSave({ key, name })
+    }
+    else {
+      this.setState({ saveRegister: true })
+    }
+  }
+
   onSignOut = () => {
     signOutNow()
-    this.setState({ decodedToken: null })
+    this.setState({ decodedToken: null, error: null })
   }
 
   onExitPopUp = ( key ) => {
@@ -95,31 +132,46 @@ class App extends Component {
     })
   }
 
-  toggleShowConfigurator = () => {
+  onSelectTemplate = (templateName) => {
+    let slotins
+    if (templateName==='a22' || templateName === 'a32'){
+      slotins = require('./data').analogSlottedInstruments
+    } else { //hardcoded for testing.
+      slotins = require('./data').digitalSlottedInstruments
+    }
+    //require get req for all intruments
     this.setState((prevState) => {
-      const newShowConfigurator = !prevState.showConfigurator
       return({
-        showConfigurator: newShowConfigurator
+        instruments: require('./data').instruments, // hard coded for testing
+        templateId: templateName,
+        slottedInstruments: slotins
       })
+    })
+
+    //return
+  }
+
+  onSelectSlot = (slot) => {
+    let newSlot
+    if (slot === this.state.selectedSlot) {
+      newSlot = null
+    }
+    else {
+      newSlot = slot
+    }
+    this.setState({
+      selectedSlot: newSlot
     })
   }
 
-  updateIntruments = (selection, type, brand, model) => {
-    if (!this.state.selectedInstrumentType) {
+
+  updateIntrumentSelection = (type, brand, model) => {
       this.setState({
         selectedInstrumentType: type,
         selectedInstrumentBrand: brand,
-        selectedInstrumentModel: model,
-        instruments: require('./data').instrumentsBrand
+        selectedInstrumentModel: model
       })
     }
-    else if (!!this.state.selectedInstrumentType && !this.state.selectedInstrumentBrand) {
-      this.setState({
-        selectedInstrumentBrand: selection,
-        instruments: require('./data').instrumentsModel
-      })
-    }
-  }
 
   onSidebarClose = () => {
     this.setState({
@@ -129,20 +181,31 @@ class App extends Component {
     })
   }
 
+  onClearCurrentPanel = () => {
+    this.onSelectTemplate(this.state.templateId)
+    this.setState({
+      selectedSlot: null,
+      selectedInstrumentType: null,
+      selectedInstrumentBrand: null,
+      selectedInstrumentModel: null
+    })
+  }
+
   render() {
     const {
       decodedToken,
-      welcome,
       saveRegister,
-      showConfigurator,
       signIn,
+      templateId,
       instruments,
       selectedSlot,
       selectedInstrumentType,
-      selectedInstrumentBrand
+      selectedInstrumentBrand,
+      slottedInstruments,
+      windowWidth,
+      windowHeight,
+      error,
     } = this.state
-
-    console.log(instruments)
 
     const signedIn = !!decodedToken
 
@@ -156,7 +219,20 @@ class App extends Component {
             )}/>
 
             <Route path='/app' exact render={ () => (
-              <div>
+             !!templateId ? (
+               <div>
+                <Panel
+                type={templateId}
+                windowHeight={windowHeight}
+                windowWidth={windowWidth}
+                instruments={slottedInstruments}
+                selectedSlot={selectedSlot}
+                selectSlot={ this.onSelectSlot }
+                />
+                <Button
+                  text={ "Clear all instruments" }
+                  onToggle={ this.onClearCurrentPanel }
+                />
                 <Sidebar
                   exitButton={ true }
                   backButton={ true }
@@ -164,18 +240,15 @@ class App extends Component {
                   selectedSlot={ selectedSlot }
                   selectedInstrumentType={ selectedInstrumentType }
                   selectedInstrumentBrand={ selectedInstrumentBrand }
-                  onSelect={ this.updateIntruments }
+                  onSelect={ this.updateIntrumentSelection }
                   sidebarClose={ this.onSidebarClose }
-                />
-                <Button
-                  text="toggle side bar (dev)"
-                  onToggle={ this.toggleShowConfigurator }
                 />
 
                 { saveRegister &&
                   <SaveRegister
                       onExit={ this.onExitPopUp }
                       onSubmit={ this.onSaveRegister }
+                      errMsg={ !!error ? error.message : null }
                   />
                 }
 
@@ -183,51 +256,51 @@ class App extends Component {
                   <SignIn
                       onExit={ this.onExitPopUp }
                       onSubmit={ this.onSignIn }
+                      errMsg={ !!error ? error.message : null }
                   />
                 }
+                { signedIn &&
+                  <Button
+                    text="Sign Out"
+                    onToggle={ this.onSignOut }
+                  />
+                }
+                <Button
+                  text="Save"
+                  onToggle={ this.onSave }
+                />
               </div>
+            ):(
+              <Redirect to='/' />
+            )
             )}/>
 
             <Route path='/a22' exact render={ () => (
-              <Fragment>
-                <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
-                <br/>
-                <h2>Choose a template to continue</h2>
-                <br/>
-
-                <PanelTemplate name="Analogue A-22 Panel"/>
-                <PanelTemplate name="Digital A-22 Panel"/>
-
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <div>
-                  <Button text="Lost your panel URL?"/>
-                </div>
-              </Fragment>
+              !!templateId ? (
+              <Redirect to='/app' />
+              ):(
+                <SelectPanelTemplatePage
+                  firstPanelName="Analogue A-22 Panel"
+                  firstPanelTemplate="a22"
+                  secondPanelName="Digital A-22 Panel"
+                  secondPanelTemplate="a22Digital"
+                  onSelectTemplate={this.onSelectTemplate}
+                />
+              )
             )}/>
 
             <Route path='/a32' exact render={ () => (
-              <Fragment>
-                <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
-                <br/>
-                <h2>Choose a template to continue</h2>
-                <br/>
-
-                <PanelTemplate name="Analogue A-32 Panel"/>
-                <PanelTemplate name="Digital A-32 Panel"/>
-
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <div>
-                  <Button text="Lost your panel URL?"/>
-                </div>
-              </Fragment>
+              !!templateId ? (
+                <Redirect to='/app' />
+                ):(
+                <SelectPanelTemplatePage
+                firstPanelName="Analogue A-32 Panel"
+                firstPanelTemplate="a32"
+                secondPanelName="Digital A-32 Panel"
+                secondPanelTemplate="a32Digital"
+                onSelectTemplate={this.onSelectTemplate}
+                />
+              )
             )}/>
 
             <Route path='/alextest' exact render={ () => (
