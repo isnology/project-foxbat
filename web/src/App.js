@@ -164,6 +164,7 @@ class App extends Component {
     })
   }
 
+
   updateIntrumentSelection = (type, brand, model) => {
       this.setState({
         selectedInstrumentType: type,
@@ -283,6 +284,7 @@ class App extends Component {
                   firstPanelTemplate="a22"
                   secondPanelName="Digital A-22 Panel"
                   secondPanelTemplate="a22Digital"
+                  onSelectTemplate={this.onSelectTemplate}
                 />
               )
             )}/>
@@ -291,24 +293,13 @@ class App extends Component {
               !!templateId ? (
                 <Redirect to='/app' />
                 ):(
-                <Fragment>
-                <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
-                <br/>
-                <h2>Choose a template to continue</h2>
-                <br/>
-
-                <PanelTemplate name="Analogue A-32 Panel"/>
-                <PanelTemplate name="Digital A-32 Panel"/>
-
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <div>
-                  <Button text="Lost your panel URL?"/>
-                </div>
-              </Fragment>
+                <SelectPanelTemplatePage
+                firstPanelName="Analogue A-32 Panel"
+                firstPanelTemplate="a32"
+                secondPanelName="Digital A-32 Panel"
+                secondPanelTemplate="a32Digital"
+                onSelectTemplate={this.onSelectTemplate}
+                />
               )
             )}/>
 
