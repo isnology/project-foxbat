@@ -67,6 +67,5 @@ typings/
 .env.test.local
 .env.production.local
 
-
 # dotenv environment variables file
 .env

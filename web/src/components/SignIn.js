@@ -2,10 +2,10 @@ import React, { Fragment } from 'react'
 import Button from './Button'
 import BasePopUp from './BasePopUp'
 
-function SignIn({ onExit, onSubmit }) {
+function SignIn({ onExit, onSubmit, errMsg }) {
   const key = "signIn"
   return (
-      <BasePopUp onExit={ onExit } attribute={ key } >
+      <BasePopUp onExit={ onExit } attribute={ key } errMsg={ errMsg } >
         <p className="form-text">
           Please log in to retrieve your Instument Panel.
         </p>

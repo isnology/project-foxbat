@@ -45,13 +45,14 @@ class App extends Component {
     window.removeEventListener('resize', this.updateWindowDimensions)
   }
   updateWindowDimensions() {
-    this.setState({ 
-      windowWidth: window.innerWidth, 
+    this.setState({
+      windowWidth: window.innerWidth,
       windowHeight: window.innerHeight })
   }
   // END: code necessary for window size detection
 
   onSignIn = ({ key, email, password }) => {
+    this.setState({ error: null })
     signIn({ email, password })
     .then((decodedToken) => {
       this.setState({ decodedToken })
@@ -64,11 +65,12 @@ class App extends Component {
 
   onSaveRegister = ({ key, name, email, password }) => {
     const signedIn = !!this.state.decodedToken
+    this.setState({ error: null })
     if (!signedIn) {
       signUp({ email, password })
       .then((decodedToken) => {
         this.setState({ decodedToken, panelName: name })
-        this.doSave({ key, name })
+        this.doSave({key, name})
       })
       .catch((error) => {
         // User already exists
@@ -76,7 +78,10 @@ class App extends Component {
           signIn({ email, password })
           .then((decodedToken) => {
             this.setState({ decodedToken })
-            this.doSave({ key, name })
+            this.doSave({key, name})
+          })
+          .catch((error) => {
+            this.setState({ error })
           })
         }
         else {
@@ -85,8 +90,8 @@ class App extends Component {
       })
     }
     else {
-      const stateName = this.state.panelName
-      this.doSave({ key, stateName })
+      const panelName = this.state.panelName
+      this.doSave({ key, panelName })
     }
   }
 
@@ -103,9 +108,21 @@ class App extends Component {
     })
   }
 
+  onSave = () => {
+    const signedIn = !!this.state.decodedToken
+    if (signedIn) {
+      const key = "saveRegister"
+      const name = this.state.panelName
+      this.doSave({ key, name })
+    }
+    else {
+      this.setState({ saveRegister: true })
+    }
+  }
+
   onSignOut = () => {
     signOutNow()
-    this.setState({ decodedToken: null })
+    this.setState({ decodedToken: null, error: null })
   }
 
   onExitPopUp = ( key ) => {
@@ -181,14 +198,11 @@ class App extends Component {
       selectedSlot,
       selectedInstrumentType,
       selectedInstrumentBrand,
-      templateId,
-      slottedInstruments,
-      windowHeight,
-      windowWidth
+      error,
     } = this.state
 
     const signedIn = !!decodedToken
-       
+
     return (
       <Router>
         <div className="App">
@@ -201,7 +215,7 @@ class App extends Component {
             <Route path='/app' exact render={ () => (
              !!templateId ? (
                <div>
-                <Panel 
+                <Panel
                 type={templateId}
                 windowHeight={windowHeight}
                 windowWidth={windowWidth}
@@ -209,7 +223,7 @@ class App extends Component {
                 selectedSlot={selectedSlot}
                 selectSlot={ this.onSelectSlot }
                 />
-                <Button 
+                <Button
                   text={ "Clear all instruments" }
                   onToggle={ this.onClearCurrentPanel }
                 />
@@ -222,12 +236,13 @@ class App extends Component {
                   selectedInstrumentBrand={ selectedInstrumentBrand }
                   onSelect={ this.updateIntrumentSelection }
                   sidebarClose={ this.onSidebarClose }
-                /> 
+                />
 
                 { saveRegister &&
                   <SaveRegister
                       onExit={ this.onExitPopUp }
                       onSubmit={ this.onSaveRegister }
+                      errMsg={ !!error ? error.message : null }
                   />
                 }
 
@@ -235,8 +250,19 @@ class App extends Component {
                   <SignIn
                       onExit={ this.onExitPopUp }
                       onSubmit={ this.onSignIn }
+                      errMsg={ !!error ? error.message : null }
                   />
                 }
+                { signedIn &&
+                  <Button
+                    text="Sign Out"
+                    onToggle={ this.onSignOut }
+                  />
+                }
+                <Button
+                  text="Save"
+                  onToggle={ this.onSave }
+                />
               </div>
             ):(
               <Redirect to='/' />
@@ -278,8 +304,8 @@ class App extends Component {
                 <h2>Choose a template to continue</h2>
                 <br/>
 
-                <PanelTemplate name="Analogue A-32 Panel" clicked={()=>{this.onSelectTemplate('a32')}}/>
-                <PanelTemplate name="Digital A-32 Panel" clicked={()=>{this.onSelectTemplate('a32Digital')}}/>
+                <PanelTemplate name="Analogue A-32 Panel"/>
+                <PanelTemplate name="Digital A-32 Panel"/>
 
                 <br/>
                 <br/>
