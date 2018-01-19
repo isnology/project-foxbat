@@ -201,7 +201,6 @@ class App extends Component {
       selectedSlot,
       selectedInstrumentType,
       selectedInstrumentBrand,
-      templateId,
       slottedInstruments,
       windowWidth,
       windowHeight,
