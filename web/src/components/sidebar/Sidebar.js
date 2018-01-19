@@ -1,10 +1,10 @@
 import React from 'react'
 import ExitButton from '../ExitButton'
-import InstrumentList from './InstrumentList'
+import NavList from './NavList'
 import SidebarText from './SidebarText'
 import { sideBarMessages } from '../../constants/messages'
 import './sidebar.css'
-var array = require('lodash/array') //Lodash
+var _array = require('lodash/array') // Lodash
 
 function Sidebar({
   exitButton,
@@ -13,7 +13,7 @@ function Sidebar({
   selectedSlot, 
   selectedInstrumentType,
   selectedInstrumentBrand,
-  onSelect,
+  onSelect, // (type?, brand?, model?) => {}
   sidebarClose
 }) { 
 
@@ -22,39 +22,59 @@ function Sidebar({
       instruments.map((instrument) => (
         instrument.instrumentClass
       ))
-    const typesArray = array.uniq(allTypesArray)
+    const typesArray = _array.uniq(allTypesArray)
     return typesArray
   }
-  
+
   function allBrandsForTypeFromInstruments(instruments, selectedInstrumentType) {
-    const brandsArray = 
-      instruments.map((instrument) => (
-        instrument.instrumentClass
-      ))
-      // instruments.map(instruments, function(inst) {
-      //   if (inst.instrumentClass == selectedInstrumentType) return inst.brand;
-      // })
-    return brandsArray
+    console.log('allBrandsForTypeFromInstruments running')
+    const instrumentsWithType = instruments.filter((instrument) => {
+      return instrument.instrumentClass == selectedInstrumentType
+    })
+    const allBrands = instrumentsWithType.map((instrument) => instrument.brand)
+    const uniqueBrands = _array.uniq(allBrands)
+    return uniqueBrands
+  }
+
+  function allModelsForBrandsForTypeFromInstruments(instruments, selectedInstrumentType, selectedInstrumentBrand) {
+    console.log('allModelsForBrandsForTypeFromInstruments running')
+    const instrumentsWithTypeAndBrand = instruments.filter((instrument) => {
+      return instrument.instrumentClass == selectedInstrumentType && instrument.brand == selectedInstrumentBrand
+    })
+    return instrumentsWithTypeAndBrand.map((instrument) => instrument.name)
   }
 
   let topHeading
   let displayItems
+  let onSelectItem
 
+  // Nothing selected
   if (!selectedSlot) {
     topHeading = sideBarMessages.welcome
   }
+  // Selected a slot
   else if (!!selectedSlot && !selectedInstrumentType) {
    topHeading = sideBarMessages.selectInstrumentType
    displayItems = allTypesFromInstruments(instruments)
    console.log("in conditional: ",displayItems)
    console.log("second if")
+   onSelectItem = (type) => {
+      onSelect(type)
+   }
   }
+  // Select slot and type
   else if (!!selectedSlot && !!selectedInstrumentType && !selectedInstrumentBrand) {
-    topHeading = sideBarMessages.selectBrandOrModel + " " + selectedInstrumentType.toLowerCase()
+    console.log('display items for selected slot and type')
+    topHeading = sideBarMessages.selectBrand + selectedInstrumentType.toLowerCase()
     displayItems = allBrandsForTypeFromInstruments(instruments, selectedInstrumentType)
+    onSelectItem = (brand) => {
+      onSelect(selectedInstrumentType, brand)
+   }
   }
+  // Select slot, type, and brand
   else if (!!selectedSlot && !!selectedInstrumentType && !!selectedInstrumentBrand) {
-    topHeading = sideBarMessages.selectBrandOrModel + " " + selectedInstrumentBrand
+    topHeading = sideBarMessages.selectModel + selectedInstrumentBrand + " " + selectedInstrumentType.toLowerCase()
+    displayItems = allModelsForBrandsForTypeFromInstruments(instruments, selectedInstrumentType, selectedInstrumentBrand)
   }
 
   console.log(displayItems)
@@ -72,12 +92,12 @@ function Sidebar({
       <div className="sidebar-lower">
         {
           (!!instruments && !!selectedSlot) ? 
-            <InstrumentList 
+            <NavList 
               displayItems={ displayItems }
               instruments={ instruments }
               selectedInstrumentType={ selectedInstrumentType }
               selectedInstrumentBrand={ selectedInstrumentType }
-              onSelect={ onSelect }
+              onSelect={ onSelectItem }
             /> : 
             <SidebarText /> 
         }

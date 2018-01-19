@@ -1,14 +1,11 @@
 import React from 'react'
 import Button from '../Button';
-var array = require('lodash/array')
+// var _array = require('lodash/array')
 
 
-function InstrumentList({
-  instruments,
+function NavList({
   displayItems,
-  selectedInstrumentType,
-  selectedInstrumentBrand,
-  onSelect // (type, brand?, model?) => {}
+  onSelect
 }) {
   console.log(displayItems)
 
@@ -25,7 +22,7 @@ function InstrumentList({
           <Button 
             key={ item }
             text={ item }
-            onToggle={ ()=>{ onSelect(item, null, null) } }
+            onToggle={ ()=>{ onSelect(item) } }
           />
         ))
       }
@@ -33,4 +30,4 @@ function InstrumentList({
   )
 }
 
-export default InstrumentList
+export default NavList
