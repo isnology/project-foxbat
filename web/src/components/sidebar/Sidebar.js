@@ -74,6 +74,9 @@ function Sidebar({
   else if (!!selectedSlot && !!selectedInstrumentType && !!selectedInstrumentBrand) {
     topHeading = sideBarMessages.selectModel + selectedInstrumentBrand + " " + selectedInstrumentType.toLowerCase()
     displayItems = allModelsForBrandsForTypeFromInstruments(instruments, selectedInstrumentType, selectedInstrumentBrand)
+    onSelectItem = (model) => {
+      onSelect(selectedInstrumentType, selectedInstrumentBrand, model)
+   }
   }
 
   console.log(displayItems)

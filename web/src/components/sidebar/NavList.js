@@ -1,7 +1,5 @@
 import React from 'react'
 import Button from '../Button';
-// var _array = require('lodash/array')
-
 
 function NavList({
   displayItems,
@@ -9,12 +7,6 @@ function NavList({
 }) {
   console.log(displayItems)
 
-  // const brandsArray = allBrandsForTypeFromInstruments(instruments, selectedInstrumentType)
-  // const typesArray = allTypesFromInstruments(instruments)
-  // // Listing brands
-  // console.log(typesArray)
-  // console.log(brandsArray)
-  // console.log(selectedInstrumentType)
   return (
     <div className="instrument-list">
       {

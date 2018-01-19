@@ -160,16 +160,40 @@ class App extends Component {
       newSlot = slot
     }
     this.setState({
-      selectedSlot: newSlot
+      selectedSlot: newSlot,
+      selectedInstrumentType: null,
+      selectedInstrumentBrand: null,
+      selectedInstrumentModel: null
     })
   }
 
+
+  assignInstrumentToSlot = (model) => {
+    // this.state.selectedSlot
+    // Note: we must receive the model as a parameter
+    // because we cannot rely on the state being updated
+    // when this runs. However we can rely on it being correct
+    // for the currently selected slot.
+    console.log(model, ' has been assigned to slot: ', this.state.selectedSlot)
+  }
+
   updateIntrumentSelection = (type, brand, model) => {
+
       this.setState({
         selectedInstrumentType: type,
         selectedInstrumentBrand: brand,
         selectedInstrumentModel: model
       })
+      if(!!model){
+        this.assignInstrumentToSlot(model)
+        //Note: we MUST pass it model, we CAN'T rely on the
+        // function being able to grab it from the state
+        // even though we just set the state, because the 
+        // setState method is asynchronous, this means it 
+        // may not have actually been done yet by the time we call
+        // this function.
+      }
+    
     }
 
   onSidebarClose = () => {
