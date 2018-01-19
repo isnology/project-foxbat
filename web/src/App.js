@@ -146,7 +146,7 @@ class App extends Component {
     })
   }
 
-  updateIntrumentSelection = (selection, type, brand, model) => {
+  updateIntrumentSelection = (type, brand, model) => {
       this.setState({
         selectedInstrumentType: type,
         selectedInstrumentBrand: brand,
