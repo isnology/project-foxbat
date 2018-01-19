@@ -1,5 +1,4 @@
 import React from 'react'
-import './panel.css'
 
 function Slot({
   instrument, //object representing the instrument occupying this slot

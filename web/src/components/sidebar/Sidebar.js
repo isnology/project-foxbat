@@ -3,7 +3,6 @@ import ExitButton from '../ExitButton'
 import NavList from './NavList'
 import SidebarText from './SidebarText'
 import { sideBarMessages } from '../../constants/messages'
-import './sidebar.css'
 var _array = require('lodash/array') // Lodash
 
 function Sidebar({
@@ -29,7 +28,7 @@ function Sidebar({
   function allBrandsForTypeFromInstruments(instruments, selectedInstrumentType) {
     console.log('allBrandsForTypeFromInstruments running')
     const instrumentsWithType = instruments.filter((instrument) => {
-      return instrument.instrumentClass == selectedInstrumentType
+      return instrument.instrumentClass === selectedInstrumentType
     })
     const allBrands = instrumentsWithType.map((instrument) => instrument.brand)
     const uniqueBrands = _array.uniq(allBrands)
@@ -39,7 +38,7 @@ function Sidebar({
   function allModelsForBrandsForTypeFromInstruments(instruments, selectedInstrumentType, selectedInstrumentBrand) {
     console.log('allModelsForBrandsForTypeFromInstruments running')
     const instrumentsWithTypeAndBrand = instruments.filter((instrument) => {
-      return instrument.instrumentClass == selectedInstrumentType && instrument.brand == selectedInstrumentBrand
+      return instrument.instrumentClass === selectedInstrumentType && instrument.brand === selectedInstrumentBrand
     })
     return instrumentsWithTypeAndBrand.map((instrument) => instrument.name)
   }

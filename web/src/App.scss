@@ -1,7 +1,75 @@
+@import 'styles/constants';
+@import 'styles/buttons';
+@import 'styles/sidebar';
+@import 'styles/panel';
+
 .App {
   text-align: center;
 }
 
 .plane-selector{
   height:20rem;
+}
+
+.center {
+  text-align: center;
+}
+
+.template {
+  border: 1px solid black;
+  height: 128px;
+  width: 256px;
+}
+
+.template-with-text {
+  width: 256px;
+  display: inline-block;
+  margin: 20px;
+}
+
+.base-popup {
+  position: absolute;
+  top: 6%;
+  left: 6%;
+  width: 87.5%;
+  border: 1px solid black;
+  border-radius: 41px;
+  padding: 5%;
+  z-index: 10;
+  background: $popup-background;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  form label {
+    height: 30px;
+    height: 3rem;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin: 25px;
+    margin: 2.5rem;
+    input {
+      background: $input-background;
+      min-width: 50px;
+      min-width: 50rem;
+      height: 30px;
+      height: 3rem;
+      font-size: 20px;
+      font-size: 2rem;
+    }
+  }
+  .errmsg {
+    background: $light-red;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 20px;
+    font-size: 2rem;
+  }
+}
+
+.form-text {
+  font-size: 36px;
+  font-size: 3.6rem;
+  text-align: left;
+  width: 100%;
 }

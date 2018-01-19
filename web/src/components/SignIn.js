@@ -1,9 +1,8 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import Button from './Button'
 import BasePopUp from './BasePopUp'
 
 function SignIn({ onExit, onSubmit, errMsg }) {
-  const key = "signIn"
   return (
       <BasePopUp onExit={ onExit } errMsg={ errMsg } >
         <p className="form-text">
