@@ -3,16 +3,19 @@
 }
 
 .main-button {
-  height: 45px;
-  background-color: #5E91CC;
+  height: 45px; 
+  background-color: #5E91CC; 
   border-radius: 5px;
 }
 
 .button-text {
   text-align: center;
-  font-size: 24px;
   font-size: 2.4rem;
   margin: 35px;
+}
+
+.btnimg {
+  width: 100%;
 }
 
 .round-exit-button {

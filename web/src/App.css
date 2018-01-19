@@ -8,9 +8,11 @@
 
 .button-text {
   text-align: center;
-  font-size: 24px;
   font-size: 2.4rem;
   margin: 35px; }
+
+.btnimg {
+  width: 100%; }
 
 .round-exit-button {
   height: 70px;
@@ -96,7 +98,7 @@
 .instrument-list .main-button {
   margin-top: 5px;
   width: 100%;
-  height: 3em;
+  height: fit-content;
   cursor: pointer; }
 
 .instrument-list .button-text {
@@ -114,7 +116,7 @@
     padding: 0 20px; }
   .instrument-list .main-button {
     width: 100%;
-    height: 4em;
+    height: fit-content;
     margin-top: 10px; }
   .instrument-list .button-text {
     font-size: 2em; } }
