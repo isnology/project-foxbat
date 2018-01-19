@@ -4,6 +4,7 @@ import { getDecodedToken } from './api/token'
 import './App.css'
 import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom'
 import WelcomePage from './components/WelcomePage'
+import SelectPanelTemplatePage from './components/SelectPanelTemplatePage'
 import Button from './components/Button'
 import PanelTemplate from './components/PanelTemplate'
 import Sidebar from './components/sidebar/Sidebar'
@@ -247,24 +248,12 @@ class App extends Component {
               !!templateId ? (
               <Redirect to='/app' />
               ):(
-              <Fragment>
-                <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
-                <br/>
-                <h2>Choose a template to continue</h2>
-                <br/>
-
-                <PanelTemplate name="Analogue A-22 Panel" clicked={()=>{this.onSelectTemplate('a22')}}/>
-                <PanelTemplate name="Digital A-22 Panel" clicked={()=>{this.onSelectTemplate('a22Digital')}}/>
-
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <div>
-                  <Button text="Lost your panel URL?"/>
-                </div>
-              </Fragment>
+                <SelectPanelTemplatePage
+                  firstPanelName="Analogue A-22 Panel"
+                  firstPanelTemplate="a22"
+                  secondPanelName="Digital A-22 Panel"
+                  secondPanelTemplate="a22Digital"
+                />
               )
             )}/>
 
