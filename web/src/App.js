@@ -23,7 +23,7 @@ class App extends Component {
     selectedInstrumentType: "Altimeter",
     selectedInstrumentBrand: null,
     templateId: null,
-    slottedInstruments: null,
+    slots: null,
     saveRegister: false,
     signIn: false,
     error: null,
@@ -35,7 +35,6 @@ class App extends Component {
   // (necessary for correct sizing of Panel component)
   constructor(props) {
     super(props);
-    this.state = { width: 0, height: 0 };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
   componentDidMount() {
@@ -144,7 +143,7 @@ class App extends Component {
       return({
         instruments: require('./data').instruments, // hard coded for testing
         templateId: templateName,
-        slottedInstruments: slotins
+        slots: slotins
       })
     })
 
@@ -201,7 +200,7 @@ class App extends Component {
       selectedSlot,
       selectedInstrumentType,
       selectedInstrumentBrand,
-      slottedInstruments,
+      slots,
       windowWidth,
       windowHeight,
       error,
@@ -225,7 +224,7 @@ class App extends Component {
                 type={templateId}
                 windowHeight={windowHeight}
                 windowWidth={windowWidth}
-                instruments={slottedInstruments}
+                instruments={slots}
                 selectedSlot={selectedSlot}
                 selectSlot={ this.onSelectSlot }
                 />
