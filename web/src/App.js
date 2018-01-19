@@ -41,9 +41,6 @@ class App extends Component {
     })
     .catch((error) => {
       this.setState({ error })
-      if (/ 401/.test(error.message)) {
-        //this.doInvalidPasswordMessage()
-      }
     })
   }
 
@@ -54,7 +51,7 @@ class App extends Component {
       signUp({ email, password })
       .then((decodedToken) => {
         this.setState({ decodedToken, panelName: name })
-        this.doSave({ key, name })
+        this.doSave({key, name})
       })
       .catch((error) => {
         // User already exists
@@ -62,13 +59,10 @@ class App extends Component {
           signIn({ email, password })
           .then((decodedToken) => {
             this.setState({ decodedToken })
-            this.doSave({ key, name })
+            this.doSave({key, name})
           })
           .catch((error) => {
             this.setState({ error })
-            if (/ 401/.test(error.message)) {
-              //this.doInvalidPasswordMessage()
-            }
           })
         }
         else {
@@ -80,10 +74,6 @@ class App extends Component {
       const panelName = this.state.panelName
       this.doSave({ key, panelName })
     }
-  }
-
-  doInvalidPasswordMessage = () => {
-    this.setState({ errMsg: "Invalid password entered." })
   }
 
   doSave = ({ key, name }) => {
@@ -101,7 +91,7 @@ class App extends Component {
 
   onSave = () => {
     const signedIn = !!this.state.decodedToken
-    if ( signedIn ) {
+    if (signedIn) {
       const key = "saveRegister"
       const name = this.state.panelName
       this.doSave({ key, name })
@@ -204,7 +194,7 @@ class App extends Component {
                   <SaveRegister
                       onExit={ this.onExitPopUp }
                       onSubmit={ this.onSaveRegister }
-                      errMsg={ !!error ? error.message : error }
+                      errMsg={ !!error ? error.message : null }
                   />
                 }
 
@@ -212,7 +202,7 @@ class App extends Component {
                   <SignIn
                       onExit={ this.onExitPopUp }
                       onSubmit={ this.onSignIn }
-                      errMsg={ !!error ? error.message : error }
+                      errMsg={ !!error ? error.message : null }
                   />
                 }
                 { signedIn &&

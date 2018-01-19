@@ -10,7 +10,7 @@ function BasePopUp({ children, onExit, attribute, errMsg }) {
         } }
       />
       { !!errMsg &&
-        <div>
+        <div className="errMsg">
           <p>{ errMsg }</p>
         </div>
       }

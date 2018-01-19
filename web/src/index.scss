@@ -1,23 +1,31 @@
+$popup-background: white;
+$input-background: lightyellow;
+
 * {
-  box-sizing: border-box; }
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif; }
+  font-family: sans-serif;
+}
 
 .center {
-  text-align: center; }
+  text-align: center;
+}
 
 .template {
   border: 1px solid black;
   height: 128px;
-  width: 256px; }
+  width: 256px;
+}
 
 .template-with-text {
   width: 256px;
   display: inline-block;
-  margin: 20px; }
+  margin: 20px;
+}
 
 .base-popup {
   position: absolute;
@@ -28,51 +36,63 @@ body {
   border-radius: 41px;
   padding: 5%;
   z-index: 10;
-  background: white;
+  background: $popup-background;
   display: flex;
   flex-direction: column;
-  align-items: center; }
-  .base-popup form label {
+  align-items: center;
+  form label {
     height: 3em;
     display: flex;
     flex-direction: column;
     text-align: left;
-    margin: 10px; }
-    .base-popup form label input {
-      background: lightyellow;
+    margin: 10px;
+    input {
+      background: $input-background;
       min-width: 50em;
-      height: 3em; }
+      height: 3em;
+    }
+  }
+}
 
 .form-text {
   font-size: 36px;
   text-align: left;
-  width: 100%; }
+  width: 100%;
+}
 
 .save-form-button {
-  margin-top: 30px; }
+
+  margin-top: 30px;
+}
 
 .main-button {
   height: 45px;
   background-color: #5E91CC;
-  border-radius: 5px; }
+  border-radius: 5px;
+}
 
 .button-text {
   text-align: center;
   font-size: 24px;
-  margin: 35px; }
+  margin: 35px;
+}
 
 .round-exit-button {
   height: 70px;
   width: 70px;
   border-radius: 50%;
   background-color: #333333;
+
   /*position: absolute;*/
   top: -0.3%;
-  left: 94.3%; }
+  left: 94.3%;
+}
 
 .exit-button-X {
   font-size: 64px;
   color: #F2F2F2;
+
   position: relative;
   top: -8px;
-  left: 1px; }
+  left: 1px;
+}
