@@ -195,10 +195,14 @@ class App extends Component {
       decodedToken,
       saveRegister,
       signIn,
+      templateId,
       instruments,
       selectedSlot,
       selectedInstrumentType,
       selectedInstrumentBrand,
+      slottedInstruments,
+      windowWidth,
+      windowHeight,
       error,
     } = this.state
 
