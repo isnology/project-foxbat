@@ -5,7 +5,7 @@ import BasePopUp from './BasePopUp'
 function SignIn({ onExit, onSubmit, errMsg }) {
   const key = "signIn"
   return (
-      <BasePopUp onExit={ onExit } attribute={ key } errMsg={ errMsg } >
+      <BasePopUp onExit={ onExit } errMsg={ errMsg } >
         <p className="form-text">
           Please log in to retrieve your Instument Panel.
         </p>
@@ -20,7 +20,7 @@ function SignIn({ onExit, onSubmit, errMsg }) {
               const password = elements.password.value
 
               // Pass this information along to the parent component
-              onSubmit({ key, email, password })
+              onSubmit({ email, password })
             } }
         >
           <label>
@@ -45,6 +45,7 @@ function SignIn({ onExit, onSubmit, errMsg }) {
                   onToggle={ () => {} }
           />
         </form>
+        <br />
       </BasePopUp>
   )
 }
