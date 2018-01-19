@@ -169,7 +169,6 @@ class App extends Component {
 
 
   assignInstrumentToSlot = (model) => {
-    // this.state.selectedSlot
     // Note: we must receive the model as a parameter
     // because we cannot rely on the state being updated
     // when this runs. However we can rely on it being correct

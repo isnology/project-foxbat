@@ -32,19 +32,23 @@ function Sidebar({
     })
     const allBrands = instrumentsWithType.map((instrument) => instrument.brand)
     const uniqueBrands = _array.uniq(allBrands)
+    
     return uniqueBrands
   }
 
   function allModelsForBrandsForTypeFromInstruments(instruments, selectedInstrumentType, selectedInstrumentBrand) {
     console.log('allModelsForBrandsForTypeFromInstruments running')
+    console.log(instruments)
+    
     const instrumentsWithTypeAndBrand = instruments.filter((instrument) => {
       return instrument.instrumentClass === selectedInstrumentType && instrument.brand === selectedInstrumentBrand
     })
-    return instrumentsWithTypeAndBrand.map((instrument) => instrument.name)
+    return instrumentsWithTypeAndBrand
   }
 
   let topHeading
   let displayItems
+  let pictureItems
   let onSelectItem
 
   // Nothing selected
@@ -73,7 +77,19 @@ function Sidebar({
   // Select slot, type, and brand
   else if (!!selectedSlot && !!selectedInstrumentType && !!selectedInstrumentBrand) {
     topHeading = sideBarMessages.selectModel + selectedInstrumentBrand + " " + selectedInstrumentType.toLowerCase()
-    displayItems = allModelsForBrandsForTypeFromInstruments(instruments, selectedInstrumentType, selectedInstrumentBrand)
+
+    const modelObjects = allModelsForBrandsForTypeFromInstruments(instruments, selectedInstrumentType, selectedInstrumentBrand)
+
+    displayItems = modelObjects.map((instrument) => instrument.name)
+    pictureItems = modelObjects.map((instrument) => instrument.pictureURL)
+    console.log('alex sanity check')
+    console.log('alex sanity check modelObjects')
+    console.log(modelObjects)
+    console.log('alex sanity check displayItems')
+    console.log(displayItems)
+    console.log('alex sanity check pictureItems')
+    console.log(pictureItems)
+    console.log('END alex sanity check')
     onSelectItem = (model) => {
       onSelect(selectedInstrumentType, selectedInstrumentBrand, model)
    }
@@ -96,9 +112,7 @@ function Sidebar({
           (!!instruments && !!selectedSlot) ? 
             <NavList 
               displayItems={ displayItems }
-              instruments={ instruments }
-              selectedInstrumentType={ selectedInstrumentType }
-              selectedInstrumentBrand={ selectedInstrumentType }
+              pictureItems={ pictureItems }
               onSelect={ onSelectItem }
             /> : 
             <SidebarText /> 
