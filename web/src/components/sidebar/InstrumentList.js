@@ -10,11 +10,11 @@ function allTypesFromInstruments(instruments) {
 }
 
 function allBrandsForTypeFromInstruments(instruments, selectedInstrumentType) {
-  const typesArray = 
+  const brandsArray = 
     instruments.map((instrument) => (
       instrument.brand
     ))
-  return typesArray
+  return brandsArray
 }
 
 
