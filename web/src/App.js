@@ -25,7 +25,7 @@ class App extends Component {
     templateId: null,
     slottedInstruments: null,
     saveRegister: false,
-    signIn: false,
+    signIn: true,
     error: null,
     windowWidth: 0,
     windowHeight: 0
@@ -214,7 +214,16 @@ class App extends Component {
           <Switch>
 
             <Route path='/' exact render={ () => (
-              <WelcomePage />
+              <Fragment>
+              <WelcomePage
+                  onExit={ this.onExitPopUp }
+                  onSignIn={ this.onSignIn }
+                  errMsg={ !!error ? error.message : null }
+                  onSignOut={ this.onSignOut }
+                  signedIn={ signedIn }
+              />
+
+              </Fragment>
             )}/>
 
             <Route path='/app' exact render={ () => (
@@ -251,13 +260,6 @@ class App extends Component {
                   />
                 }
 
-                { signIn &&
-                  <SignIn
-                      onExit={ this.onExitPopUp }
-                      onSubmit={ this.onSignIn }
-                      errMsg={ !!error ? error.message : null }
-                  />
-                }
                 { signedIn &&
                   <Button
                     text="Sign Out"
