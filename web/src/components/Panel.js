@@ -65,7 +65,7 @@ function Panel({
         onClick={selectSlot}
       />
 
-      {(type === 'a22') ? 
+      {(type === 'a22' || type === 'a22Digital') ? 
       <A22outline
       height = {height + 'px'}
       width= {width + 'px'}
