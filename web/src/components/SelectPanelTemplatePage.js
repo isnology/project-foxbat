@@ -6,7 +6,8 @@ function SelectPanelTemplatePage({
   firstPanelName,
   firstPanelTemplate,
   secondPanelName,
-  secondPanelTemplate
+  secondPanelTemplate,
+  onSelectTemplate
 }) { 
   return (
     <Fragment>
@@ -15,8 +16,8 @@ function SelectPanelTemplatePage({
       <h2>Choose a template to continue</h2>
       <br/>
 
-      <PanelTemplate name={ firstPanelName } clicked={()=>{this.onSelectTemplate(firstPanelTemplate)}}/>
-      <PanelTemplate name={ secondPanelName } clicked={()=>{this.onSelectTemplate(secondPanelTemplate)}}/>
+      <PanelTemplate name={ firstPanelName } clicked={()=>{onSelectTemplate(firstPanelTemplate)}}/>
+      <PanelTemplate name={ secondPanelName } clicked={()=>{onSelectTemplate(secondPanelTemplate)}}/>
 
       <br/>
       <br/>

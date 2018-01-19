@@ -46,8 +46,8 @@ class App extends Component {
     window.removeEventListener('resize', this.updateWindowDimensions)
   }
   updateWindowDimensions() {
-    this.setState({ 
-      windowWidth: window.innerWidth, 
+    this.setState({
+      windowWidth: window.innerWidth,
       windowHeight: window.innerHeight })
   }
   // END: code necessary for window size detection
@@ -103,7 +103,7 @@ class App extends Component {
       slots: this.state.slots,
       userId: this.state.decodedToken.sub     // as per passport documentation
     }
-    savePanel({ data })
+    savePanel({data})
     .then(() => {
       this.onExitPopUp(key)
     })
@@ -164,6 +164,7 @@ class App extends Component {
     })
   }
 
+
   updateIntrumentSelection = (type, brand, model) => {
       this.setState({
         selectedInstrumentType: type,
@@ -195,19 +196,20 @@ class App extends Component {
       decodedToken,
       saveRegister,
       signIn,
+      templateId,
       instruments,
       selectedSlot,
       selectedInstrumentType,
       selectedInstrumentBrand,
       templateId,
       slottedInstruments,
-      windowHeight,
       windowWidth,
+      windowHeight,
       error,
     } = this.state
 
     const signedIn = !!decodedToken
-       
+
     return (
       <Router>
         <div className="App">
@@ -220,7 +222,7 @@ class App extends Component {
             <Route path='/app' exact render={ () => (
              !!templateId ? (
                <div>
-                <Panel 
+                <Panel
                 type={templateId}
                 windowHeight={windowHeight}
                 windowWidth={windowWidth}
@@ -228,7 +230,7 @@ class App extends Component {
                 selectedSlot={selectedSlot}
                 selectSlot={ this.onSelectSlot }
                 />
-                <Button 
+                <Button
                   text={ "Clear all instruments" }
                   onToggle={ this.onClearCurrentPanel }
                 />
@@ -241,7 +243,7 @@ class App extends Component {
                   selectedInstrumentBrand={ selectedInstrumentBrand }
                   onSelect={ this.updateIntrumentSelection }
                   sidebarClose={ this.onSidebarClose }
-                /> 
+                />
 
                 { saveRegister &&
                   <SaveRegister
@@ -283,6 +285,7 @@ class App extends Component {
                   firstPanelTemplate="a22"
                   secondPanelName="Digital A-22 Panel"
                   secondPanelTemplate="a22Digital"
+                  onSelectTemplate={this.onSelectTemplate}
                 />
               )
             )}/>
@@ -291,24 +294,13 @@ class App extends Component {
               !!templateId ? (
                 <Redirect to='/app' />
                 ):(
-                <Fragment>
-                <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
-                <br/>
-                <h2>Choose a template to continue</h2>
-                <br/>
-
-                <PanelTemplate name="Analogue A-32 Panel" clicked={()=>{this.onSelectTemplate('a32')}}/>
-                <PanelTemplate name="Digital A-32 Panel" clicked={()=>{this.onSelectTemplate('a32Digital')}}/>
-
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <div>
-                  <Button text="Lost your panel URL?"/>
-                </div>
-              </Fragment>
+                <SelectPanelTemplatePage
+                firstPanelName="Analogue A-32 Panel"
+                firstPanelTemplate="a32"
+                secondPanelName="Digital A-32 Panel"
+                secondPanelTemplate="a32Digital"
+                onSelectTemplate={this.onSelectTemplate}
+                />
               )
             )}/>
 
