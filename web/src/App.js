@@ -8,10 +8,9 @@ import SelectPanelTemplatePage from './components/SelectPanelTemplatePage'
 import Button from './components/Button'
 import PanelTemplate from './components/PanelTemplate'
 import Sidebar from './components/sidebar/Sidebar'
-import SaveRegister from './components/SaveRegister'
 import { savePanel, updatePanel } from './api/panels'
 import Panel from './components/Panel'
-import SignIn from './components/SignIn'
+import ModalWindow from './components/ModalWindow'
 
 class App extends Component {
   state = {
@@ -24,8 +23,7 @@ class App extends Component {
     selectedInstrumentBrand: null,
     templateId: null,
     slottedInstruments: null,
-    saveRegister: false,
-    signIn: true,
+    modalWindow: null,
     error: null,
     windowWidth: 0,
     windowHeight: 0
@@ -35,7 +33,6 @@ class App extends Component {
   // (necessary for correct sizing of Panel component)
   constructor(props) {
     super(props);
-    this.state = { width: 0, height: 0 };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
   componentDidMount() {
@@ -52,51 +49,51 @@ class App extends Component {
   }
   // END: code necessary for window size detection
 
-  onSignIn = ({ key, email, password }) => {
+  onSignIn = ({ email, password }) => {
     this.setState({ error: null })
     signIn({ email, password })
     .then((decodedToken) => {
       this.setState({ decodedToken })
-      this.onExitPopUp(key)
+      this.onExitModal()
     })
     .catch((error) => {
       this.setState({ error })
     })
   }
 
-  onSaveRegister = ({ key, name, email, password }) => {
+  onSaveRegister = ({ name, email, password }) => {
     const signedIn = !!this.state.decodedToken
     this.setState({ error: null })
     if (!signedIn) {
       signUp({ email, password })
       .then((decodedToken) => {
         this.setState({ decodedToken, panelName: name })
-        this.doSave({key, name})
+        this.doSave({name})
       })
       .catch((error) => {
         // User already exists
         if (/ 403/.test(error.message)) {
-          signIn({ email, password })
+          return signIn({ email, password })
           .then((decodedToken) => {
             this.setState({ decodedToken })
-            this.doSave({key, name})
-          })
-          .catch((error) => {
-            this.setState({ error })
+            this.doSave({name})
           })
         }
         else {
-          this.setState({ error })
+          throw error
         }
+      })
+      .catch((error) => {
+        this.setState({ error })
       })
     }
     else {
       const panelName = this.state.panelName
-      this.doSave({ key, panelName })
+      this.doSave({ panelName })
     }
   }
 
-  doSave = ({ key, name }) => {
+  doSave = ({ name }) => {
     const data = {
       template: this.state.templateId,
       name: name,
@@ -105,19 +102,18 @@ class App extends Component {
     }
     savePanel({data})
     .then(() => {
-      this.onExitPopUp(key)
+      this.onExitModal()
     })
   }
 
   onSave = () => {
     const signedIn = !!this.state.decodedToken
     if (signedIn) {
-      const key = "saveRegister"
       const name = this.state.panelName
-      this.doSave({ key, name })
+      this.doSave({ name })
     }
     else {
-      this.setState({ saveRegister: true })
+      this.setState({ modalWindow: 'saveRegister' })
     }
   }
 
@@ -126,10 +122,13 @@ class App extends Component {
     this.setState({ decodedToken: null, error: null })
   }
 
-  onExitPopUp = ( key ) => {
-    this.setState({
-      [key]: false
-    })
+  doModalWindow = ({ name }) => {
+    console.log("doing modal window")
+    this.setState({ modalWindow: name })
+  }
+
+  onExitModal = () => {
+    this.setState({ modalWindow: null })
   }
 
   onSelectTemplate = (templateName) => {
@@ -193,8 +192,7 @@ class App extends Component {
   render() {
     const {
       decodedToken,
-      saveRegister,
-      signIn,
+      modalWindow,
       templateId,
       instruments,
       selectedSlot,
@@ -207,6 +205,7 @@ class App extends Component {
     } = this.state
 
     const signedIn = !!decodedToken
+    const modal = !!modalWindow
 
     return (
       <Router>
@@ -214,16 +213,11 @@ class App extends Component {
           <Switch>
 
             <Route path='/' exact render={ () => (
-              <Fragment>
               <WelcomePage
-                  onExit={ this.onExitPopUp }
-                  onSignIn={ this.onSignIn }
-                  errMsg={ !!error ? error.message : null }
-                  onSignOut={ this.onSignOut }
-                  signedIn={ signedIn }
+                onSignOut={ this.onSignOut }
+                doModalWindow={ this.doModalWindow }
+                signedIn={ signedIn }
               />
-
-              </Fragment>
             )}/>
 
             <Route path='/app' exact render={ () => (
@@ -251,14 +245,6 @@ class App extends Component {
                   onSelect={ this.updateIntrumentSelection }
                   sidebarClose={ this.onSidebarClose }
                 />
-
-                { saveRegister &&
-                  <SaveRegister
-                      onExit={ this.onExitPopUp }
-                      onSubmit={ this.onSaveRegister }
-                      errMsg={ !!error ? error.message : null }
-                  />
-                }
 
                 { signedIn &&
                   <Button
@@ -324,6 +310,16 @@ class App extends Component {
             )}/>
 
           </Switch>
+
+          { modal &&
+            <ModalWindow
+              window={ modalWindow }
+              onExit={ this.onExitModal }
+              onSignIn={ this.onSignIn }
+              onSaveRegister={ this.onSaveRegister }
+              errMsg={ !!error ? error.message : null }
+            />
+          }
         </div>
       </Router>
     )

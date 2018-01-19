@@ -2,9 +2,8 @@ import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import Button from './Button'
 import PlaneSelect from './PlaneSelect'
-import SignIn from './SignIn'
 
-function WelcomePage({ onExit, onSignIn, errMsg, onSignOut, signedIn }) {
+function WelcomePage({ onSignOut, doModalWindow, signedIn }) {
   return (
     <Fragment>
       <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
@@ -24,26 +23,23 @@ function WelcomePage({ onExit, onSignIn, errMsg, onSignOut, signedIn }) {
 
       <br/>
       <br/>
-      <br/>
-      <br/>
-      <br/>
 
       { !signedIn &&
-      <SignIn
-          onExit={ onExit }
-          onSubmit={ onSignIn }
-          errMsg={ errMsg }
+      <Button
+        text="Sign In"
+        onToggle = { (event) => {
+          doModalWindow({ name: 'signIn' })
+        } }
       />
       }
       { signedIn &&
         <Button
-        text="Sign Out"
-        onToggle={ onSignOut }
+          text="Sign Out"
+          onToggle={ onSignOut }
         />
-      }
       }
     </Fragment>
   )
 }
 
-  export default WelcomePage
+export default WelcomePage

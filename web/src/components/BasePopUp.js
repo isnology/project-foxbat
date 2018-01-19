@@ -1,12 +1,13 @@
 import React from 'react'
 import RoundExitButton from './RoundExitButton';
 
-function BasePopUp({ children, onExit, attribute, errMsg }) {
+function BasePopUp({ children, onExit, errMsg }) {
+  console.log("onExit", onExit)
   return (
     <div className="base-popup">
       <RoundExitButton
         onToggle = { (event) => {
-        onExit(attribute)
+          onExit()
         } }
       />
       { !!errMsg &&
