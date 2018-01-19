@@ -4,14 +4,13 @@ import { getDecodedToken } from './api/token'
 import './App.css'
 import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom'
 import WelcomePage from './components/WelcomePage'
+import SelectPanelTemplatePage from './components/SelectPanelTemplatePage'
 import Button from './components/Button'
 import PanelTemplate from './components/PanelTemplate'
 import Sidebar from './components/sidebar/Sidebar'
 import SaveRegister from './components/SaveRegister'
 import { savePanel, updatePanel } from './api/panels'
 import Panel from './components/Panel'
-import PlaneSelect from './components/PlaneSelect'
-import Form from './components/Form'
 import SignIn from './components/SignIn'
 
 class App extends Component {
@@ -19,17 +18,39 @@ class App extends Component {
     decodedToken: getDecodedToken(), // Restore the previous signed in data
     save: null,
     showConfigurator: true,
-    instruments: require('./data').instruments,
+    instruments: null,
     selectedSlot: null,
     selectedInstrumentType: "Altimeter",
     selectedInstrumentBrand: null,
     templateId: null,
     slottedInstruments: null,
-    welcome: false,
     saveRegister: false,
     signIn: false,
-    error: null
+    error: null,
+    windowWidth: 0,
+    windowHeight: 0
   }
+
+  // BEGIN: code necessary for window size detection
+  // (necessary for correct sizing of Panel component)
+  constructor(props) {
+    super(props);
+    this.state = { width: 0, height: 0 };
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  }
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions)
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions)
+  }
+  updateWindowDimensions() {
+    this.setState({ 
+      windowWidth: window.innerWidth, 
+      windowHeight: window.innerHeight })
+  }
+  // END: code necessary for window size detection
 
   onSignIn = ({ key, email, password }) => {
     signIn({ email, password })
@@ -101,9 +122,10 @@ class App extends Component {
     } else { //hardcoded for testing.
       slotins = require('./data').digitalSlottedInstruments
     }
-
+    //require get req for all intruments
     this.setState((prevState) => {
       return({
+        instruments: require('./data').instruments, // hard coded for testing
         templateId: templateName,
         slottedInstruments: slotins
       })
@@ -125,7 +147,7 @@ class App extends Component {
     })
   }
 
-  updateIntrumentSelection = (selection, type, brand, model) => {
+  updateIntrumentSelection = (type, brand, model) => {
       this.setState({
         selectedInstrumentType: type,
         selectedInstrumentBrand: brand,
@@ -141,22 +163,30 @@ class App extends Component {
     })
   }
 
+  onClearCurrentPanel = () => {
+    this.onSelectTemplate(this.state.templateId)
+    this.setState({
+      selectedSlot: null,
+      selectedInstrumentType: null,
+      selectedInstrumentBrand: null,
+      selectedInstrumentModel: null
+    })
+  }
+
   render() {
     const {
       decodedToken,
-      welcome,
       saveRegister,
-      showConfigurator,
       signIn,
       instruments,
       selectedSlot,
       selectedInstrumentType,
       selectedInstrumentBrand,
       templateId,
-      slottedInstruments
+      slottedInstruments,
+      windowHeight,
+      windowWidth
     } = this.state
-
-    console.log(instruments)
 
     const signedIn = !!decodedToken
        
@@ -174,12 +204,16 @@ class App extends Component {
                <div>
                 <Panel 
                 type={templateId}
-                height={640}
+                windowHeight={windowHeight}
+                windowWidth={windowWidth}
                 instruments={slottedInstruments}
                 selectedSlot={selectedSlot}
                 selectSlot={ this.onSelectSlot }
                 />
-
+                <Button 
+                  text={ "Clear all instruments" }
+                  onToggle={ this.onClearCurrentPanel }
+                />
                 <Sidebar
                   exitButton={ true }
                   backButton={ true }
@@ -214,24 +248,12 @@ class App extends Component {
               !!templateId ? (
               <Redirect to='/app' />
               ):(
-              <Fragment>
-                <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
-                <br/>
-                <h2>Choose a template to continue</h2>
-                <br/>
-
-                <PanelTemplate name="Analogue A-22 Panel" clicked={()=>{this.onSelectTemplate('a22')}}/>
-                <PanelTemplate name="Digital A-22 Panel" clicked={()=>{this.onSelectTemplate('a22Digital')}}/>
-
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <div>
-                  <Button text="Lost your panel URL?"/>
-                </div>
-              </Fragment>
+                <SelectPanelTemplatePage
+                  firstPanelName="Analogue A-22 Panel"
+                  firstPanelTemplate="a22"
+                  secondPanelName="Digital A-22 Panel"
+                  secondPanelTemplate="a22Digital"
+                />
               )
             )}/>
 

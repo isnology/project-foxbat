@@ -1,22 +1,24 @@
 import React from 'react'
 import Button from '../Button';
+var array = require('lodash/array')
 
 function allTypesFromInstruments(instruments) {
-  const typesArray = 
+  const allTypesArray = 
     instruments.map((instrument) => (
       instrument.instrumentClass
     ))
+  const typesArray = array.uniq(allTypesArray)
   return typesArray
 }
 
 function allBrandsForTypeFromInstruments(instruments, selectedInstrumentType) {
-  const typesArray = 
+  const allBrandsArray = 
     instruments.map((instrument) => (
       instrument.brand
     ))
-  return typesArray
+  const brandsArray = array.uniq(allBrandsArray)
+  return brandsArray
 }
-
 
 function InstrumentList({
   instruments,
@@ -38,7 +40,7 @@ function InstrumentList({
           <Button 
             key={ type }
             text={ type }
-            onToggle={ ()=>{ onSelect(selectedInstrumentType, type) } }
+            onToggle={ ()=>{ onSelect(type, null, null) } }
           />
         ))
       }

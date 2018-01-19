@@ -153,32 +153,32 @@ function A22Slots({
   ]
   const a22DigitalSlotRatios = [ //TODO: put controls in place to ensure the ordering is adhered to in the instruments array passed in.
     //column of the 2.25" (top to bottom)
-    {leftRatio: 0.3050,
-    bottomRatio: 0.8523,
-    diameterRatio: 0.191,
+    {leftRatio: 0.2896,
+    bottomRatio: 0.8095,
+    diameterRatio: 0.2073,
     circle: true},
-    {leftRatio: 0.3050,
-    bottomRatio: 0.5907,
-    diameterRatio: 0.191,
+    {leftRatio: 0.2896,
+    bottomRatio: 0.5610,
+    diameterRatio: 0.2073,
     circle: true},
 
     //Dynon big screen
-    {leftRatio: 0.5795,
-    bottomRatio: 0.9422,
-    width: 0.9230,
-    height: 0.6597,
+    {leftRatio: 0.5503,
+    bottomRatio: 0.8948,
+    width: 0.8765,
+    height: 0.6250,
     circle: false},
 
     //smaller Dynon Walkie-talkie things (top to bottom)
-    {leftRatio: 1.5441,
-    bottomRatio: 0.9518,
-    width: 0.1750,
-    height: 0.3387,
+    {leftRatio: 1.4665,
+    bottomRatio: 0.9040,
+    width: 0.1662,
+    height: 0.3064,
     circle: false},
-    {leftRatio: 1.5441,
-    bottomRatio: 0.6067,
-    width: 0.1750,
-    height: 0.3387,
+    {leftRatio: 1.4665,
+    bottomRatio: 0.5762,
+    width: 0.1662,
+    height: 0.3064,
     circle: false},
   ]
   let slotRatios = null
