@@ -5,7 +5,7 @@ const { requireJWT } = require('../middleware/auth')
 const router = new express.Router()
 
 // read
-router.get('/instruments', requireJWT, (req, res) => {
+router.get('/instruments', (req, res) => {
   Instrument.find()
   .then((instruments) => {
     res.json(instruments)
