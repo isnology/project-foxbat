@@ -23,7 +23,6 @@ class App extends Component {
     selectedInstrumentBrand: null,
     templateId: null,
     slottedInstruments: null,
-    welcome: false,
     saveRegister: false,
     signIn: false,
     error: null,
@@ -176,7 +175,6 @@ class App extends Component {
   render() {
     const {
       decodedToken,
-      welcome,
       saveRegister,
       signIn,
       instruments,
