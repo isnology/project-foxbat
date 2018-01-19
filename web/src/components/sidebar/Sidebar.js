@@ -25,10 +25,10 @@ function Sidebar({
    topHeading = sideBarMessages.selectInstrumentType
   }
   else if (!!selectedSlot && !!selectedInstrumentType && !selectedInstrumentBrand) {
-    topHeading = `Select a ${ selectedInstrumentType } brand`
+    topHeading = sideBarMessages.selectBrandOrModel + " " + selectedInstrumentType.toLowerCase()
   }
   else if (!!selectedSlot && !!selectedInstrumentType && !!selectedInstrumentBrand) {
-    topHeading = `Select a ${ selectedInstrumentType } model from ${ selectedInstrumentBrand }`
+    topHeading = sideBarMessages.selectBrandOrModel + " " + selectedInstrumentBrand
   }
 
   return (

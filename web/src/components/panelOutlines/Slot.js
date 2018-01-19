@@ -1,5 +1,5 @@
 import React from 'react'
-import './slot.css'
+import './panel.css'
 
 function Slot({
   instrument, //object representing the instrument occupying this slot
@@ -45,7 +45,7 @@ function Slot({
 
   return(
       <div className={classForSlot} id={slotNumber} style={slotStyle} onClick={onClick}>
-      <img src="http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/1/10-02259.jpg" width="100%"/>
+      {/* <img src="http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/1/10-02259.jpg" width="100%"/> */}
       </div>
   )}
 
