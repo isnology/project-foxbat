@@ -3,8 +3,9 @@
 
 .main-button {
   height: 45px;
-  background-color: #5E91CC;
-  border-radius: 5px; }
+  background-color: #306ACC;
+  border-radius: 5px;
+  cursor: pointer; }
 
 .button-text {
   text-align: center;
@@ -49,7 +50,7 @@
   padding: 10px;
   width: 100%;
   min-height: 100px;
-  background: #0A64CB;
+  background: #306ACC;
   color: #F5F5F5;
   font-family: 'Roboto', sans-serif; }
 
@@ -108,7 +109,8 @@
   font-size: 1.5em; }
 
 .sidebar .exit-button-X {
-  font-size: 1.5em; }
+  font-size: 1.5em;
+  cursor: pointer; }
 
 /*  MEDIA QUEEEEEEERIES */
 @media screen and (min-width: 1000px) {
@@ -146,7 +148,8 @@
   border: solid #6f7174 1px;
   background-color: #ACB3B8;
   overflow: hidden;
-  box-shadow: inset -1px -1px 1px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 1px 1px rgba(255, 255, 255, 0.2); }
+  box-shadow: inset -1px -1px 1px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 1px 1px rgba(255, 255, 255, 0.2);
+  cursor: pointer; }
 
 .selected-slot, .slot:hover {
   border-color: #23547c;
