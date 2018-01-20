@@ -1,0 +1,40 @@
+.save-form-button {
+  margin-top: 30px;
+}
+
+.main-button {
+  height: 45px; 
+  background-color: #5E91CC; 
+  border-radius: 5px;
+}
+
+.button-text {
+  text-align: center;
+  font-size: 2.4rem;
+  margin: 35px;
+}
+
+.btnimg {
+  display: block;
+  width: 50%;
+  margin: auto;
+}
+
+.round-exit-button {
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  background-color: #333333;
+  margin-top: -6.5%;
+  margin-left: calc(113.5% - 70px);
+}
+
+.exit-button-X {
+  font-size: 64px;
+  font-size: 6.4rem;
+  color: #F2F2F2;
+
+  position: relative;
+  top: -8px;
+  left: 1px;
+}

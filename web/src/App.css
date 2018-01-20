@@ -1,29 +1,214 @@
-#svgbox{
-  border: black solid 1px;
+.save-form-button {
+  margin-top: 30px; }
+
+.main-button {
+  height: 45px;
+  background-color: #5E91CC;
+  border-radius: 5px; }
+
+.button-text {
+  text-align: center;
+  font-size: 2.4rem;
+  margin: 35px; }
+
+.btnimg {
+  display: block;
+  width: 50%;
+  margin: auto; }
+
+.round-exit-button {
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  background-color: #333333;
+  margin-top: -6.5%;
+  margin-left: calc(113.5% - 70px); }
+
+.exit-button-X {
+  font-size: 64px;
+  font-size: 6.4rem;
+  color: #F2F2F2;
   position: relative;
-}
+  top: -8px;
+  left: 1px; }
+
+.sidebar {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 25%;
+  overflow-y: scroll; }
+
+.sidebar-top {
+  position: relative;
+  margin: 0;
+  padding: 10px;
+  width: 100%;
+  min-height: 100px;
+  background: #0A64CB;
+  color: #F5F5F5;
+  font-family: 'Roboto', sans-serif; }
+
+.sidebar-top-buttons {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  top: 0;
+  height: 50px;
+  padding: 5px 10px; }
+
+.sidebar-top h3 {
+  width: 100%;
+  margin: 20px auto 0 auto;
+  text-align: center;
+  font-size: 24px;
+  font-weight: normal; }
+
+.sidebar-lower {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 2px;
+  height: calc(100% - 100px);
+  background: #C4C4C4;
+  overflow-y: auto; }
+
+.sidebar-text {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: calc(100% - 100px);
+  margin: 0;
+  color: #1b1b1b;
+  font-family: 'Roboto', sans-serif;
+  text-align: left;
+  line-height: 150%; }
+
+.sidebar-text p {
+  font-size: 18px;
+  margin: 0 0 20px 0; }
+
+.instrument-list {
+  padding: 0 5px; }
+
+.instrument-list .main-button {
+  margin-top: 5px;
+  width: 100%;
+  height: fit-content;
+  cursor: pointer; }
+
+.instrument-list .button-text {
+  margin: auto;
+  font-size: 1.5em; }
+
+.sidebar .exit-button-X {
+  font-size: 1.5em; }
+
+/*  MEDIA QUEEEEEEERIES */
+@media screen and (min-width: 1000px) {
+  .sidebar-lower {
+    padding: 10px; }
+  .instrument-list {
+    padding: 0 20px; }
+  .instrument-list .main-button {
+    width: 100%;
+    height: fit-content;
+    margin-top: 10px; }
+  .instrument-list .button-text {
+    font-size: 2em; } }
+
+#svgbox {
+  /* border: black solid 1px; */
+  position: relative;
+  width: 80%; }
 
 .panel-svg .svg-line {
-stroke:red;
-stroke-width: 1px;
-fill: grey;
-}
+  stroke: #6f7174;
+  stroke-width: 1px;
+  fill: #ACB3B8; }
 
 #a22svg {
-width: 100%;
-height: auto;
-}
+  width: 100%;
+  height: auto; }
 
 #a32svg {
-width: 100%;
-height: auto;
-}
+  width: 100%;
+  height: auto; }
+
+.slot {
+  position: absolute;
+  border: solid #6f7174 1px;
+  background-color: #ACB3B8;
+  overflow: hidden;
+  box-shadow: inset -1px -1px 1px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 1px 1px rgba(255, 255, 255, 0.2); }
+
+.selected-slot, .slot:hover {
+  border-color: #23547c;
+  box-shadow: 0px 0px 5px 5px #23547c, inset 0px 0px 5px 5px #23547c; }
 
 .App {
-  text-align: center;
-}
+  text-align: center; }
 
-.plane-selector{
-  height:20rem;
-}
+.plane-selector {
+  height: 20rem; }
 
+.center {
+  text-align: center; }
+
+.template {
+  border: 1px solid black;
+  height: 128px;
+  width: 256px; }
+
+.template-with-text {
+  width: 256px;
+  display: inline-block;
+  margin: 20px; }
+
+.base-popup {
+  position: absolute;
+  top: 6%;
+  left: 6%;
+  width: 87.5%;
+  border: 1px solid black;
+  border-radius: 41px;
+  padding: 5%;
+  z-index: 10;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+  .base-popup form label {
+    height: 30px;
+    height: 3rem;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin: 25px;
+    margin: 2.5rem; }
+    .base-popup form label input {
+      background: lightyellow;
+      min-width: 50px;
+      min-width: 50rem;
+      height: 30px;
+      height: 3rem;
+      font-size: 20px;
+      font-size: 2rem; }
+  .base-popup .errmsg {
+    background: rgba(255, 0, 0, 0.27);
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 20px;
+    font-size: 2rem; }
+
+.form-text {
+  font-size: 36px;
+  font-size: 3.6rem;
+  text-align: left;
+  width: 100%; }

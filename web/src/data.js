@@ -3,19 +3,19 @@
 // model: { type: String },
 // partNo: { type: String },
 // text: { type: String },
-// pictureUrl: { type: String },
+// pictureURL: { type: String },
 // price: { type: Number },
 // size: { type: String },
 // instrumentClass: 
 
 const instruments = [
   {
-    name: "Alti 1000",
+    name: "Alti 1000-a",
     brand: "Falcon",
     model: "",
     partNo: "",
     text: "",
-    pictureUrl: "",
+    pictureURL: "http://www.umainstruments.com/images/Altimeter/3altimeter.jpg",
     price: 100.00,
     size: "3.125",
     instrumentClass: "Altimeter"
@@ -26,7 +26,7 @@ const instruments = [
     model: "",
     partNo: "",
     text: "",
-    pictureUrl: "",
+    pictureURL: "https://www.aircraftspruce.com/cache/370-320-/catalog/graphics/1/10-06256a.jpg",
     price: 100.00,
     size: "",
     instrumentClass: "Altimeter"
@@ -37,7 +37,7 @@ const instruments = [
     model: "",
     partNo: "",
     text: "",
-    pictureUrl: "",
+    pictureURL: "https://www.aircraftspruce.com/cache/370-320-/catalog/graphics/1/10-06283a.JPG",
     price: 100.00,
     size: "",
     instrumentClass: "Altimeter"
@@ -48,7 +48,7 @@ const instruments = [
     model: "",
     partNo: "",
     text: "",
-    pictureUrl: "",
+    pictureURL: "",
     price: 1000.00,
     size: "",
     instrumentClass: "Altimeter"
@@ -59,7 +59,7 @@ const instruments = [
     model: "",
     partNo: "",
     text: "",
-    pictureUrl: "",
+    pictureURL: "",
     price: 10.00,
     size: "",
     instrumentClass: "Altimeter"
@@ -70,7 +70,7 @@ const instruments = [
     model: "",
     partNo: "",
     text: "",
-    pictureUrl: "",
+    pictureURL: "",
     price: 100.00,
     size: "",
     instrumentClass: "Altimeter"
@@ -81,7 +81,7 @@ const instruments = [
     model: "",
     partNo: "",
     text: "",
-    pictureUrl: "",
+    pictureURL: "",
     price: 100.00,
     size: "",
     instrumentClass: "Altimeter"
@@ -92,7 +92,7 @@ const instruments = [
     model: "",
     partNo: "",
     text: "",
-    pictureUrl: "",
+    pictureURL: "",
     price: 100.00,
     size: "",
     instrumentClass: "Airspeed"
@@ -103,7 +103,7 @@ const instruments = [
     model: "",
     partNo: "",
     text: "",
-    pictureUrl: "",
+    pictureURL: "",
     price: 100.00,
     size: "",
     instrumentClass: "Airspeed"
@@ -114,7 +114,7 @@ const instruments = [
     model: "",
     partNo: "",
     text: "",
-    pictureUrl: "",
+    pictureURL: "",
     price: 100.00,
     size: "",
     instrumentClass: "Airspeed"
@@ -125,7 +125,7 @@ const instruments = [
     model: "",
     partNo: "",
     text: "",
-    pictureUrl: "",
+    pictureURL: "",
     price: 100.00,
     size: "",
     instrumentClass: "Airspeed"
@@ -136,7 +136,7 @@ const instruments = [
     model: "",
     partNo: "",
     text: "",
-    pictureUrl: "",
+    pictureURL: "",
     price: 100.00,
     size: "",
     instrumentClass: "Airspeed"
@@ -147,7 +147,7 @@ const instruments = [
     model: "",
     partNo: "",
     text: "",
-    pictureUrl: "",
+    pictureURL: "",
     price: 100.00,
     size: "",
     instrumentClass: "Airspeed"
@@ -158,7 +158,7 @@ const instruments = [
     model: "",
     partNo: "",
     text: "",
-    pictureUrl: "",
+    pictureURL: "",
     price: 100.00,
     size: "",
     instrumentClass: "Airspeed"
@@ -169,7 +169,7 @@ const instruments = [
     model: "",
     partNo: "",
     text: "",
-    pictureUrl: "",
+    pictureURL: "",
     price: 1000.00,
     size: "",
     instrumentClass: "Airspeed"

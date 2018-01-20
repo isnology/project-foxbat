@@ -1,7 +1,8 @@
 const sideBarMessages = {
   welcome: "Getting started:",
   selectInstrumentType: "Select instrument type",
-  selectBrandOrModel: "Select"
+  selectBrand: "Select brand of ",
+  selectModel: "Select "
 }
 
 module.exports = {
