@@ -18,3 +18,18 @@ Content-Type: application/json
 }
 
 ###
+
+GET http://localhost:7000/instruments
+
+###
+
+GET http://localhost:7000/templates
+
+###
+
+POST http://localhost:7000/panel
+
+###
+
+GET http://localhost:7000/instrumentclasses
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQG1haWwuY29tIiwiaWF0IjoxNTE2NDMxMzEzLCJleHAiOjE1MTcwMzYxMTMsInN1YiI6IjVhNjE3OTNhMmYxOTc2YTMxZGMzZjZmZCJ9.6KKz5DKTmqQSIpVEa2NXC3MRSGHLqmEOX36ec4zy38E
