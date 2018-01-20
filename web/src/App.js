@@ -10,6 +10,7 @@ import PanelTemplate from './components/PanelTemplate'
 import Sidebar from './components/sidebar/Sidebar'
 import SaveRegister from './components/SaveRegister'
 import { savePanel, updatePanel } from './api/panels'
+import { loadInstruments } from './api/instruments'
 import Panel from './components/Panel'
 import SignIn from './components/SignIn'
 
@@ -18,7 +19,7 @@ class App extends Component {
     decodedToken: getDecodedToken(), // Restore the previous signed in data
     save: null,
     showConfigurator: true,
-    instruments: null,
+    instruments: this.load(),
     selectedSlot: null,
     selectedInstrumentType: "Altimeter",
     selectedInstrumentBrand: null,
@@ -189,6 +190,13 @@ class App extends Component {
       selectedInstrumentBrand: null,
       selectedInstrumentModel: null
     })
+  }
+
+  load() {
+    loadInstruments()
+      .then(instruments => {
+        this.setState({ instruments })
+      })
   }
 
   render() {
