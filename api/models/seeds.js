@@ -406,6 +406,7 @@ Instrument.create([
 ])
   .then((instruments) => {
     console.log('Created instruments', instruments)
+    process.exit() //stop from hanging
   })
   .catch((error) => {
     console.error(error)
