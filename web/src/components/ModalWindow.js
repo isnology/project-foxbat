@@ -5,7 +5,6 @@ import SignIn from './SignIn'
 function ModalWindow({ window, onExit, onSignIn, onSaveRegister, errMsg }) {
   const signIn = (window === "signIn")
   const save = (window === "saveRegister")
-  console.log("modal is called:")
   return (
     <Fragment>
       { signIn &&

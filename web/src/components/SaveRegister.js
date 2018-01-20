@@ -3,7 +3,6 @@ import Button from './Button'
 import BasePopUp from './BasePopUp'
 
 function SaveRegister({ onExit, onSubmit, errMsg }) {
-  const key = "saveRegister"
   return (
     <BasePopUp onExit={ onExit } errMsg={ errMsg }>
       <p className="form-text">
@@ -54,8 +53,7 @@ function SaveRegister({ onExit, onSubmit, errMsg }) {
 
         <br/>
         <Button text="Save"
-                onToggle={ () => {
-                } }
+                onToggle={ () => {} }
         />
       </form>
     </BasePopUp>

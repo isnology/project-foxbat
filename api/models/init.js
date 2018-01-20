@@ -4,7 +4,8 @@ const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 
 // Connect to our local database
-mongoose.connect(process.env.MONGO_URI, { useMongoClient: true })
+console.log("mongo_uri: ", process.env.MONGO_URI)
+mongoose.connect( process.env.MONGO_URI, { useMongoClient: true } )
 .then(() => {
   console.log('Successfully connected to database')
 })

@@ -125,7 +125,6 @@ class App extends Component {
   }
 
   doModalWindow = ({ name }) => {
-    console.log("doing modal window")
     this.setState({ modalWindow: name })
   }
 
