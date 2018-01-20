@@ -201,7 +201,8 @@ function A22Slots({
       {
         instruments.map((instrument, index)=> (
           <Slot //if a digital [square] instrument is desired, the instrument object should contain a key called 'shape': 'circle' or 'square' ,or boolean key called 'circle':true or false
-            instrument = { !!instrument.instrument ? instrument.instrument : null}
+            key = { instrument.slotNumber }
+            instrument = { !!instrument.instrument ? instrument.instrument : null }
             panelHeight = {height} //necessary to readjust size and position appropriately
             slotNumber = {instrument.slotNumber} //assigned and tracked by the caller
             leftRatio = {slotRatios[index].leftRatio} //the left position of this slot as a ratio of the panel height

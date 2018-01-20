@@ -17,7 +17,7 @@ function NavList({
       {
         displayItems.map((item, index) => (
           <Button 
-            key={ item }
+            key={ index }
             text={ item }
             image= {validPicturesIncluded ? pictureItems[index] : ''}
             onToggle={ ()=>{ onSelect(item) } }

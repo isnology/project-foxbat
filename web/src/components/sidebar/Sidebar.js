@@ -26,7 +26,6 @@ function Sidebar({
   }
 
   function allBrandsForTypeFromInstruments(instruments, selectedInstrumentType) {
-    console.log('allBrandsForTypeFromInstruments running')
     const instrumentsWithType = instruments.filter((instrument) => {
       return instrument.instrumentClass === selectedInstrumentType
     })
@@ -36,10 +35,7 @@ function Sidebar({
     return uniqueBrands
   }
 
-  function allModelsForBrandsForTypeFromInstruments(instruments, selectedInstrumentType, selectedInstrumentBrand) {
-    console.log('allModelsForBrandsForTypeFromInstruments running')
-    console.log(instruments)
-    
+  function allModelsForBrandsForTypeFromInstruments(instruments, selectedInstrumentType, selectedInstrumentBrand) {    
     const instrumentsWithTypeAndBrand = instruments.filter((instrument) => {
       return instrument.instrumentClass === selectedInstrumentType && instrument.brand === selectedInstrumentBrand
     })
@@ -59,15 +55,12 @@ function Sidebar({
   else if (!!selectedSlot && !selectedInstrumentType) {
    topHeading = sideBarMessages.selectInstrumentType
    displayItems = allTypesFromInstruments(instruments)
-   console.log("in conditional: ",displayItems)
-   console.log("second if")
    onSelectItem = (type) => {
       onSelect(type)
    }
   }
   // Select slot and type
   else if (!!selectedSlot && !!selectedInstrumentType && !selectedInstrumentBrand) {
-    console.log('display items for selected slot and type')
     topHeading = sideBarMessages.selectBrand + selectedInstrumentType.toLowerCase()
     displayItems = allBrandsForTypeFromInstruments(instruments, selectedInstrumentType)
     onSelectItem = (brand) => {
@@ -95,7 +88,7 @@ function Sidebar({
    }
   }
 
-  console.log(displayItems)
+  console.log("Diplay items to be passed:", displayItems)
 
   return (
     <div className="sidebar">

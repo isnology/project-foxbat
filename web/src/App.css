@@ -12,7 +12,10 @@
   margin: 35px; }
 
 .btnimg {
-  width: 100%; }
+  display: block;
+  width: 50%;
+  text-align: center;
+  margin: auto; }
 
 .round-exit-button {
   height: 70px;
