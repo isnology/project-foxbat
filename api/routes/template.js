@@ -5,7 +5,7 @@ const { requireJWT } = require('../middleware/auth')
 const router = new express.Router()
 
 // read
-router.get('/templates', requireJWT, (req, res) => {
+router.get('/templates', (req, res) => {
   Template.find()
   .then((templates) => {
     res.json(templates)
