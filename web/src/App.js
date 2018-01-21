@@ -178,7 +178,7 @@ class App extends Component {
     //require get req for all intruments
     this.setState((prevState) => {
       return({
-        instruments: require('./data').instruments, // hard coded for testing
+        // instruments: require('./data').instruments, // hard coded for testing
         templateId: templateName,
         slots: slotins
       })
