@@ -2,6 +2,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
+const Template = require('./Template')
 const Instrument = require('./Instrument')
 const InstrumentClass = require('./InstrumentClass')
 
@@ -508,6 +509,35 @@ InstrumentClass.create([
   .catch((error) => {
     console.error(error)
   })
+})
+.catch((error) => {
+  console.error(error)
+})
+
+Template.create([
+  {
+    code: 'a22',
+    name: 'Analog A-22 Panel',
+    pictureUrl: 'images/a22.svg'
+  },
+  {
+    code: 'a22Digital',
+    name: 'Digital A-22 Panel',
+    pictureUrl: 'images/a22digital.svg'
+  },
+  {
+    code: 'a32',
+    name: 'Analog A-32 Panel',
+    pictureUrl: 'images/a32.svg'
+  },
+  {
+    code: 'a32Digital',
+    name: 'Digital A-32 Panel',
+    pictureUrl: 'images/a32digital.svg'
+  }
+])
+.then(() => {
+  console.log('Created Tempates')
 })
 .catch((error) => {
   console.error(error)

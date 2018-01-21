@@ -10,7 +10,7 @@ export function updateInstrument(id, data) {
   .then((res) => res.data)
 }
 
-export function createNewInstrument(id, data) {
+export function createInstrument(data) {
   return api.post(`/instruments`, data)
   .then((res) => res.data)
 }
