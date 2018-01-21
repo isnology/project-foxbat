@@ -18,8 +18,8 @@ class App extends Component {
     decodedToken: getDecodedToken(), // Restore the previous signed in data
     save: null,
     showConfigurator: true,
-    instruments: this.doLoadInstruments(),
-    templates: this.doLoadTemplates(),
+    instruments: null,
+    templates: null,
     selectedSlot: null,
     selectedInstrumentType: "Altimeter",
     selectedInstrumentBrand: null,
@@ -146,26 +146,6 @@ class App extends Component {
 
   onExitModal = () => {
     this.setState({ modalWindow: null })
-  }
-
-  doLoadInstruments() {
-    loadInstruments()
-    .then((instruments) => {
-      this.setState({ instruments })
-    })
-    .catch(() => {
-      this.setState({ instruments: null })
-    })
-  }
-
-  doLoadTemplates() {
-    loadTemplates()
-    .then((templates) => {
-      this.setState({ templates })
-    })
-    .catch(() => {
-      this.setState({ templates: null })
-    })
   }
 
   onSelectTemplate = (templateName) => {
@@ -373,6 +353,33 @@ class App extends Component {
       </Router>
     )
   }
+
+  doLoadInstruments() {
+    loadInstruments()
+    .then((instruments) => {
+      this.setState({ instruments })
+    })
+    .catch(() => {
+      this.setState({ instruments: null })
+    })
+  }
+
+  doLoadTemplates() {
+    loadTemplates()
+    .then((templates) => {
+      this.setState({ templates })
+    })
+    .catch(() => {
+      this.setState({ templates: null })
+    })
+  }
+
+  // When this App first appears on screen
+  componentDidMount() {
+    this.doLoadInstruments()
+    this.doLoadTemplates()
+  }
+
 }
 
 export default App;
