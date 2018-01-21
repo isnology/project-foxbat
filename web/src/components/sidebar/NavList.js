@@ -8,9 +8,9 @@ function NavList({
 }) {
   console.log(displayItems)
   const validPicturesIncluded = (!!pictureItems && displayItems.length === pictureItems.length)
-  if (validPicturesIncluded){
-    console.log("valid Pictures were included")
-  }
+  // if (validPicturesIncluded){
+  //   console.log("valid Pictures were included")
+  // }
 
   return (
     <div className="instrument-list">

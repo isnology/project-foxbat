@@ -75,20 +75,19 @@ function Sidebar({
 
     displayItems = modelObjects.map((instrument) => instrument.name)
     pictureItems = modelObjects.map((instrument) => instrument.pictureURL)
-    console.log('alex sanity check')
-    console.log('alex sanity check modelObjects')
+
     console.log(modelObjects)
-    console.log('alex sanity check displayItems')
-    console.log(displayItems)
-    console.log('alex sanity check pictureItems')
-    console.log(pictureItems)
-    console.log('END alex sanity check')
+    // console.log('alex sanity check displayItems')
+    // console.log(displayItems)
+    // console.log('alex sanity check pictureItems')
+    // console.log(pictureItems)
+    // console.log('END alex sanity check')
     onSelectItem = (model) => {
       onSelect(selectedInstrumentType, selectedInstrumentBrand, model)
    }
   }
 
-  console.log("Diplay items to be passed:", displayItems)
+  // console.log("Diplay items to be passed:", displayItems)
 
   return (
     <div className="sidebar">

@@ -45,6 +45,7 @@ If you clone this, to run it you have to:
 * Google drive for document storage (team minutes, notes etc.)
 * Slack for online team communication
 * Git and Github for source code version control
+* Sassy CSS (SCSS) for easier stylesheet scalability
 
 ## Team
 [Simon Dwyer](https://github.com/piratechicken/)

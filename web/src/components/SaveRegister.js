@@ -53,8 +53,7 @@ function SaveRegister({ onExit, onSubmit, errMsg }) {
 
         <br/>
         <Button text="Save"
-                onToggle={ () => {
-                } }
+                onToggle={ () => {} }
         />
       </form>
     </BasePopUp>

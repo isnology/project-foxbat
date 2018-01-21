@@ -7,8 +7,9 @@ import WelcomePage from './components/WelcomePage'
 import SelectPanelTemplatePage from './components/SelectPanelTemplatePage'
 import Button from './components/Button'
 import Sidebar from './components/sidebar/Sidebar'
-import { savePanel, updatePanel } from './api/panels'
+import { loadPanels, createPanel, updatePanel } from './api/panels'
 import { loadInstruments } from './api/instruments'
+import { loadTemplates } from './api/templates'
 import Panel from './components/Panel'
 import ModalWindow from './components/ModalWindow'
 
@@ -17,15 +18,14 @@ class App extends Component {
     decodedToken: getDecodedToken(), // Restore the previous signed in data
     save: null,
     showConfigurator: true,
-    instruments: this.load(),
+    instruments: this.doLoadInstruments(),
+    templates: this.doLoadTemplates(),
     selectedSlot: null,
     selectedInstrumentType: "Altimeter",
     selectedInstrumentBrand: null,
     templateId: null,
     modalWindow: null,
     slots: null,
-    saveRegister: false,
-    signIn: false,
     error: null,
     windowWidth: 0,
     windowHeight: 0
@@ -96,15 +96,31 @@ class App extends Component {
   }
 
   doSave = ({ name }) => {
+    this.setState({ error: null })
     const data = {
       template: this.state.templateId,
       name: name,
       slots: this.state.slots,
       userId: this.state.decodedToken.sub     // as per passport documentation
     }
-    savePanel({data})
+    updatePanel({data})
     .then(() => {
       this.onExitModal()
+    })
+    .catch((error) => {
+      // not found
+      if (/ 404/.test(error.message)) {
+        return createPanel({ data })
+        .then(() => {
+          this.onExitModal()
+        })
+      }
+      else {
+        throw error
+      }
+    })
+    .catch((error) => {
+      this.setState({ error })
     })
   }
 
@@ -125,12 +141,31 @@ class App extends Component {
   }
 
   doModalWindow = ({ name }) => {
-    console.log("doing modal window")
     this.setState({ modalWindow: name })
   }
 
   onExitModal = () => {
     this.setState({ modalWindow: null })
+  }
+
+  doLoadInstruments() {
+    loadInstruments()
+    .then((instruments) => {
+      this.setState({ instruments })
+    })
+    .catch(() => {
+      this.setState({ instruments: null })
+    })
+  }
+
+  doLoadTemplates() {
+    loadTemplates()
+    .then((templates) => {
+      this.setState({ templates })
+    })
+    .catch(() => {
+      this.setState({ templates: null })
+    })
   }
 
   onSelectTemplate = (templateName) => {
@@ -168,7 +203,6 @@ class App extends Component {
     })
   }
 
-
   assignInstrumentToSlot = (model) => {
     // Note: we must receive the model as a parameter
     // because we cannot rely on the state being updated
@@ -188,12 +222,12 @@ class App extends Component {
         this.assignInstrumentToSlot(model)
         //Note: we MUST pass it model, we CAN'T rely on the
         // function being able to grab it from the state
-        // even though we just set the state, because the 
-        // setState method is asynchronous, this means it 
+        // even though we just set the state, because the
+        // setState method is asynchronous, this means it
         // may not have actually been done yet by the time we call
         // this function.
       }
-    
+
     }
 
   onSidebarClose = () => {
@@ -212,13 +246,6 @@ class App extends Component {
       selectedInstrumentBrand: null,
       selectedInstrumentModel: null
     })
-  }
-
-  load() {
-    loadInstruments()
-      .then(instruments => {
-        this.setState({ instruments })
-      })
   }
 
   render() {
