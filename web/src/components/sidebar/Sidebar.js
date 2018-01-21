@@ -15,11 +15,10 @@ function Sidebar({
   onSelect, // (type?, brand?, model?) => {}
   sidebarClose
 }) { 
-
   function allTypesFromInstruments(instruments) {
     const allTypesArray = 
       instruments.map((instrument) => (
-        instrument.instrumentClass
+        instrument.instrumentClass_id.name
       ))
     const typesArray = _array.uniq(allTypesArray)
     return typesArray
@@ -27,7 +26,7 @@ function Sidebar({
 
   function allBrandsForTypeFromInstruments(instruments, selectedInstrumentType) {
     const instrumentsWithType = instruments.filter((instrument) => {
-      return instrument.instrumentClass === selectedInstrumentType
+      return instrument.instrumentClass_id.name === selectedInstrumentType
     })
     const allBrands = instrumentsWithType.map((instrument) => instrument.brand)
     const uniqueBrands = _array.uniq(allBrands)
@@ -37,7 +36,7 @@ function Sidebar({
 
   function allModelsForBrandsForTypeFromInstruments(instruments, selectedInstrumentType, selectedInstrumentBrand) {    
     const instrumentsWithTypeAndBrand = instruments.filter((instrument) => {
-      return instrument.instrumentClass === selectedInstrumentType && instrument.brand === selectedInstrumentBrand
+      return instrument.instrumentClass_id.name === selectedInstrumentType && instrument.brand === selectedInstrumentBrand
     })
     return instrumentsWithTypeAndBrand
   }
@@ -75,19 +74,10 @@ function Sidebar({
 
     displayItems = modelObjects.map((instrument) => instrument.name)
     pictureItems = modelObjects.map((instrument) => instrument.pictureURL)
-
-    console.log(modelObjects)
-    // console.log('alex sanity check displayItems')
-    // console.log(displayItems)
-    // console.log('alex sanity check pictureItems')
-    // console.log(pictureItems)
-    // console.log('END alex sanity check')
     onSelectItem = (model) => {
       onSelect(selectedInstrumentType, selectedInstrumentBrand, model)
    }
   }
-
-  // console.log("Diplay items to be passed:", displayItems)
 
   return (
     <div className="sidebar">
