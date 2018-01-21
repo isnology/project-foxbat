@@ -91,6 +91,31 @@
   cursor: pointer;
 }
 
+.instrument-details {
+  padding: 5px;
+  width: 100%;
+  background: $white-background;
+}
+
+.instrument-details p {
+  font-size: 1.5rem;
+  text-align: left;
+  line-height: 125%;
+}
+
+.instrument-preview {
+  margin: 3rem auto;
+}
+
+.instrument-preview p {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.instrument-preview img {
+  display: block;
+}
+
 /*  MEDIA QUEEEEEEERIES */
 @media screen and (min-width: 1000px) {
   .sidebar-lower {

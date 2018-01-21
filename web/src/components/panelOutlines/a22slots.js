@@ -7,7 +7,8 @@ function A22Slots({
   instruments, //array of objects commented out while component testing
   onClick, //callback function to pass back which slot was clicked
   template, //a22, a32, a22Digital, a32Digital
-  selectedSlot // for conditional formatting
+  selectedSlot, // for conditional formatting
+  slots
 }){
   
 
@@ -211,6 +212,7 @@ function A22Slots({
             heightRatio = {slotRatios[index].height}
             widthRatio = {slotRatios[index].width}
             onClick = {()=>{onClick(instrument.slotNumber)}} //each button will 
+            slots = { slots }
             selectedSlot={selectedSlot}
           />
         ))

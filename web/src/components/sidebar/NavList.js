@@ -4,26 +4,37 @@ import Button from '../Button';
 function NavList({
   displayItems,
   pictureItems,
+  modelObjects,
   onSelect
 }) {
   console.log(displayItems)
-  const validPicturesIncluded = (!!pictureItems && displayItems.length === pictureItems.length)
   // if (validPicturesIncluded){
   //   console.log("valid Pictures were included")
   // }
 
   return (
     <div className="instrument-list">
-      {
-        displayItems.map((item, index) => (
-          <Button 
-            key={ index }
-            text={ item }
-            image= {validPicturesIncluded ? pictureItems[index] : ''}
-            onToggle={ ()=>{ onSelect(item) } }
-            />
-          ))
-        }
+      { 
+        !!modelObjects ? (
+          modelObjects.map((object, index) => (
+            <Button 
+              key={ index }
+              text={ object.name }
+              image= {!!object.pictureURL ? object.pictureURL : ''}
+              onToggle={ ()=>{ onSelect(object) } }
+              />
+            ))
+        ) : (
+          displayItems.map((item, index) => (
+            <Button 
+              key={ index }
+              text={ item }
+              // image= {validPicturesIncluded ? pictureItems[index] : ''}
+              onToggle={ ()=>{ onSelect(item) } }
+              />
+            ))
+        )
+      }
     </div>
   )
 }
