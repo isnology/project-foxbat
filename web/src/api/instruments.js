@@ -5,12 +5,12 @@ export function loadInstruments() {
   .then((res) => res.data)
 }
 
-export function updateIntrument(id, data) {
+export function updateInstrument(id, data) {
   return api.put(`/instruments/${id}`, data)
   .then((res) => res.data)
 }
 
-export function createNewIntrument(id, data) {
+export function createNewInstrument(id, data) {
   return api.post(`/instruments`, data)
   .then((res) => res.data)
 }
