@@ -114,9 +114,6 @@ class App extends Component {
         .then(() => {
           this.onExitModal()
         })
-        .catch((error) => {
-          this.setState({ error })
-        })
       }
       else {
         throw error
