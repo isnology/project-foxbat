@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 const SlotSchema = new Schema({
   position: { type: String },
-  instrumentId: { type: Schema.ObjectId, ref: 'Instrument' },
+  instrument_id: { type: Schema.ObjectId, ref: 'Instrument' },
   size: { type: String }
 })
 
@@ -11,10 +11,10 @@ const panelSchema = new Schema({
   template: { type: Schema.ObjectId, ref: 'Template'},
   name: { type: String },
   slots: [SlotSchema],
-  userId: { type: Schema.ObjectId, ref: 'User'}
+  user_id: { type: Schema.ObjectId, ref: 'User'}
 })
 
-panelSchema.index({userId: 1, name: 1}, {unique: true});
+panelSchema.index({user_id: 1, name: 1}, {unique: true});
 
 const Panel = mongoose.model('Panel', panelSchema)
 

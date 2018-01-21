@@ -21,7 +21,7 @@ InstrumentClass.create([
       price: 17550,
       size: 'L',
       pictureURL: 'http://www.umainstruments.com/images/Altimeter/3altimeter.jpg',
-      InstrumentClassId: altimeter[0]._id
+      instrumentClass_id: altimeter[0]._id
     },
     {
       name: 'Altimeter and Barometer 3 1/8 INCH / 9-30 VDC',
@@ -32,7 +32,7 @@ InstrumentClass.create([
       price: 33671,
       size: 'L',
       pictureURL: 'https://www.aircraftspruce.com/cache/370-320-/catalog/graphics/1/10-06256a.jpg',
-      InstrumentClassId: altimeter[0]._id
+      instrumentClass_id: altimeter[0]._id
     },
     {
       name: 'Altimeter and Barometer 2 1/4 INCH / 9-30 VDC',
@@ -43,7 +43,7 @@ InstrumentClass.create([
       price: 16185,
       size: 'M',
       pictureURL: 'https://www.aircraftspruce.com/cache/370-320-/catalog/graphics/1/10-06283a.JPG',
-      InstrumentClassId: altimeter[0]._id
+      instrumentClass_id: altimeter[0]._id
     },
     {
       name: 'Radient Multi-function Instrument',
@@ -54,18 +54,18 @@ InstrumentClass.create([
       price: 27595,
       size: 'M',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/r/radiantmultifunction.jpg',
-      InstrumentClassId: altimeter[0]._id
+      instrumentClass_id: altimeter[0]._id
     },
     {
       name: 'Altimeter',
       brand: 'UMA Inc.',
-      model: '',
+      model: '1',
       partNo: '10-05125',
       text: 'https://www.aircraftspruce.com/catalog/inpages/UMA_altimeters2.php',
       price: 23586,
       size: 'L',
       pictureURL: 'https://www.aircraftspruce.com/catalog/graphics/10-22965.jpg',
-      InstrumentClassId: altimeter[0]._id
+      instrumentClass_id: altimeter[0]._id
     },
     {
       name: 'Radient Multi-function Instrument',
@@ -76,7 +76,7 @@ InstrumentClass.create([
       price: 27595,
       size: 'M',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/r/radiantmultifunction.jpg',
-      InstrumentClassId: altimeter[0]._id
+      instrumentClass_id: altimeter[0]._id
     },
     {
       name: 'Radient Multi-function Instrument',
@@ -87,7 +87,7 @@ InstrumentClass.create([
       price: 27595,
       size: 'M',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/r/radiantmultifunction.jpg',
-      InstrumentClassId: altimeter[0]._id
+      instrumentClass_id: altimeter[0]._id
     },
     {
       name: 'Radient Multi-function Instrument',
@@ -98,7 +98,7 @@ InstrumentClass.create([
       price: 27595,
       size: 'M',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/r/radiantmultifunction.jpg',
-      InstrumentClassId: altimeter[0]._id
+      instrumentClass_id: altimeter[0]._id
     },
     {
       name: '3-1/8 Gauge Non-sensitive Altimeter',
@@ -109,7 +109,7 @@ InstrumentClass.create([
       price: 21500,
       size: 'L',
       pictureURL: 'https://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-05100m.jpg',
-      InstrumentClassId: altimeter[0]._id
+      instrumentClass_id: altimeter[0]._id
     },
     {
       name: '3-1/8 Sensitive Altimeter',
@@ -120,7 +120,7 @@ InstrumentClass.create([
       price: 47900,
       size: 'L',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/1/10-02259.jpg',
-      InstrumentClassId: altimeter[0]._id
+      instrumentClass_id: altimeter[0]._id
     },
     {
       name: '2-1/4 Gauge Sensitive Altimeter',
@@ -131,7 +131,7 @@ InstrumentClass.create([
       price: 22500,
       size: 'M',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-02205m.jpg',
-      InstrumentClassId: altimeter[0]._id
+      instrumentClass_id: altimeter[0]._id
     },
     {
       name: '3-1/8 Non-sensitive Altimeter',
@@ -142,18 +142,18 @@ InstrumentClass.create([
       price: 22095,
       size: 'L',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-05100m.jpg',
-      InstrumentClassId: altimeter[0]._id
+      instrumentClass_id: altimeter[0]._id
     },
     {
       name: 'Altimeter',
       brand: 'UMA Inc.',
-      model: '',
+      model: '2',
       partNo: '10-05125',
       text: 'http://www.aircraftspruce.com/catalog/inpages/UMA_altimeters2.php',
       price: 19575,
       size: 'L',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-22965.jpg',
-      InstrumentClassId: altimeter[0]._id
+      instrumentClass_id: altimeter[0]._id
     },
     {
       name: 'Altimeter',
@@ -164,7 +164,7 @@ InstrumentClass.create([
       price: 36600,
       size: 'M',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-22965.jpg',
-      InstrumentClassId: altimeter[0]._id
+      instrumentClass_id: altimeter[0]._id
     },
     {
       name: '2-1/4 INCH Altimeter',
@@ -175,11 +175,11 @@ InstrumentClass.create([
       price: 46200,
       size: 'M',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/1/10-05634.jpg',
-      InstrumentClassId: altimeter[0]._id
+      instrumentClass_id: altimeter[0]._id
     }
   ])
-  .then((instruments) => {
-    console.log('Created instruments', instruments)
+  .then(() => {
+    console.log('Created altimeter instruments')
   })
   .catch((error) => {
     console.error(error)
@@ -206,7 +206,7 @@ InstrumentClass.create([
       price: 18995,
       size: 'M',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-04683x.jpg',
-      InstrumentClassId: airSpeedIndicator[0]._id
+      instrumentClass_id: airSpeedIndicator[0]._id
     },
     {
       name: 'Airspeed Indicator 0-120 MPH',
@@ -217,7 +217,7 @@ InstrumentClass.create([
       price: 18995,
       size: 'L',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-02915.jpg',
-      InstrumentClassId: airSpeedIndicator[0]._id
+      instrumentClass_id: airSpeedIndicator[0]._id
     },
     {
       name: 'Dual Dial Airspeed Indicator 20-160 MPH / 20-140 KNOTS',
@@ -228,7 +228,7 @@ InstrumentClass.create([
       price: 19995,
       size: 'L',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-02227.jpg',
-      InstrumentClassId: airSpeedIndicator[0]._id
+      instrumentClass_id: airSpeedIndicator[0]._id
     },
     {
       name: 'Airspeed Indicator 0-120 KNOTS',
@@ -239,7 +239,7 @@ InstrumentClass.create([
       price: 18995,
       size: 'L',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-02898.jpg',
-      InstrumentClassId: airSpeedIndicator[0]._id
+      instrumentClass_id: airSpeedIndicator[0]._id
     },
     {
       name: 'Airspeed Indicator 0-140 KNOTS',
@@ -250,7 +250,7 @@ InstrumentClass.create([
       price: 19995,
       size: 'L',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-02899.jpg',
-      InstrumentClassId: airSpeedIndicator[0]._id
+      instrumentClass_id: airSpeedIndicator[0]._id
     },
     {
       name: 'Airspeed Indicator 0-140 KNOTS',
@@ -261,7 +261,7 @@ InstrumentClass.create([
       price: 18995,
       size: 'L',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-02916.jpg',
-      InstrumentClassId: airSpeedIndicator[0]._id
+      instrumentClass_id: airSpeedIndicator[0]._id
     },
     {
       name: 'Minature Airspeed Indicator 0-120 KNOTS',
@@ -272,7 +272,7 @@ InstrumentClass.create([
       price: 17995,
       size: 'M',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-04069.jpg',
-      InstrumentClassId: airSpeedIndicator[0]._id
+      instrumentClass_id: airSpeedIndicator[0]._id
     },
     {
       name: 'Airspeed Indicator 0-120 KNOTS',
@@ -283,7 +283,7 @@ InstrumentClass.create([
       price: 18995,
       size: 'L',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-02625.jpg',
-      InstrumentClassId: airSpeedIndicator[0]._id
+      instrumentClass_id: airSpeedIndicator[0]._id
     },
     {
       name: 'Minature Airspeed Indicator 0-120 KPH',
@@ -294,7 +294,7 @@ InstrumentClass.create([
       price: 17995,
       size: 'M',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-02226.jpg',
-      InstrumentClassId: airSpeedIndicator[0]._id
+      instrumentClass_id: airSpeedIndicator[0]._id
     },
     {
       name: 'Airspeed Indicator 0-120 KNOTS with Pitot Kit',
@@ -305,11 +305,11 @@ InstrumentClass.create([
       price: 19995,
       size: 'L',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-02898.jpg',
-      InstrumentClassId: airSpeedIndicator[0]._id
+      instrumentClass_id: airSpeedIndicator[0]._id
     }
   ])
-  .then((instruments) => {
-    console.log('Created instruments', instruments)
+  .then(() => {
+    console.log('Created airSpeedIndicator instruments')
   })
   .catch((error) => {
     console.error(error)
@@ -337,7 +337,7 @@ InstrumentClass.create([
       price: 99500,
       size: 'L',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/1/11-12158.jpg',
-      InstrumentClassId: attitudeIndicator[0]._id
+      instrumentClass_id: attitudeIndicator[0]._id
     },
     {
       name: 'Avionics AV-2 Attitude Display',
@@ -348,7 +348,7 @@ InstrumentClass.create([
       price: 26000,
       size: 'L',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/11-05690.jpg',
-      InstrumentClassId: attitudeIndicator[0]._id
+      instrumentClass_id: attitudeIndicator[0]._id
     },
     {
       name: 'Electric Attitude Gyro',
@@ -359,7 +359,7 @@ InstrumentClass.create([
       price: 123600,
       size: 'L',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-02164-s.jpg',
-      InstrumentClassId: attitudeIndicator[0]._id
+      instrumentClass_id: attitudeIndicator[0]._id
     },
     {
       name: 'Electrical 14V Lighted Attitude Gyro with Connector and Clamp',
@@ -370,7 +370,7 @@ InstrumentClass.create([
       price: 126200,
       size: 'L',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-02164-s.jpg',
-      InstrumentClassId: attitudeIndicator[0]._id
+      instrumentClass_id: attitudeIndicator[0]._id
     },
     {
       name: 'Vacuum Attitude Gyro',
@@ -381,7 +381,7 @@ InstrumentClass.create([
       price: 51900,
       size: 'L',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-22955.jpg',
-      InstrumentClassId: attitudeIndicator[0]._id
+      instrumentClass_id: attitudeIndicator[0]._id
     },
     {
       name: 'Gemini ADI',
@@ -392,7 +392,7 @@ InstrumentClass.create([
       price: 97000,
       size: 'L',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/1/11-104512013.jpg',
-      InstrumentClassId: attitudeIndicator[0]._id
+      instrumentClass_id: attitudeIndicator[0]._id
     },
     {
       name: 'ADI2',
@@ -403,11 +403,11 @@ InstrumentClass.create([
       price: 126100,
       size: 'M',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/11-05735.jpg',
-      InstrumentClassId: attitudeIndicator[0]._id
+      instrumentClass_id: attitudeIndicator[0]._id
     }
   ])
-  .then((instruments) => {
-    console.log('Created instruments', instruments)
+  .then(() => {
+    console.log('Created attitudeIndicator instruments')
   })
   .catch((error) => {
     console.error(error)
@@ -433,7 +433,7 @@ InstrumentClass.create([
       price: 11995,
       size: 'M',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-04351x.jpg',
-      InstrumentClassId: verticalSpeedIndicator[0]._id
+      instrumentClass_id: verticalSpeedIndicator[0]._id
     },
     {
       name: 'Vertical Speed Indicator',
@@ -444,7 +444,7 @@ InstrumentClass.create([
       price: 22095,
       size: 'L',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/1/10-05352.jpg',
-      InstrumentClassId: verticalSpeedIndicator[0]._id
+      instrumentClass_id: verticalSpeedIndicator[0]._id
     },
     {
       name: '2-1/4 Vertical Speed Indicator - 2,000 FT / MIN',
@@ -455,7 +455,7 @@ InstrumentClass.create([
       price: 25795,
       size: 'M',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/1/10-05205.jpg',
-      InstrumentClassId: verticalSpeedIndicator[0]._id
+      instrumentClass_id: verticalSpeedIndicator[0]._id
     },
     {
       name: 'Vertical Speed Indicator - 3-1/8 INCH 10 METER RANGE',
@@ -466,7 +466,7 @@ InstrumentClass.create([
       price: 22395,
       size: 'L',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-02246.jpg',
-      InstrumentClassId: verticalSpeedIndicator[0]._id
+      instrumentClass_id: verticalSpeedIndicator[0]._id
     },
     {
       name: 'Vertical Speed Indicator - 3-1/8 INCH 3,000 FT RANGE',
@@ -477,7 +477,7 @@ InstrumentClass.create([
       price: 23995,
       size: 'L',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-05210.jpg',
-      InstrumentClassId: verticalSpeedIndicator[0]._id
+      instrumentClass_id: verticalSpeedIndicator[0]._id
     },
     {
       name: 'Vertical Speed Indicator - 2-1/4 INCH 10 METER RANGE',
@@ -488,7 +488,7 @@ InstrumentClass.create([
       price: 25795,
       size: 'M',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/1/10-00983.jpg',
-      InstrumentClassId: verticalSpeedIndicator[0]._id
+      instrumentClass_id: verticalSpeedIndicator[0]._id
     },
     {
       name: 'Non TSO 3-1/8 Vertical Speed Indicator 2K FT / MIN',
@@ -499,11 +499,11 @@ InstrumentClass.create([
       price: 27995,
       size: 'L',
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/1/10-05205.jpg',
-      InstrumentClassId: verticalSpeedIndicator[0]._id
+      instrumentClass_id: verticalSpeedIndicator[0]._id
     },
   ])
-  .then((instruments) => {
-    console.log('Created instruments', instruments)
+  .then(() => {
+    console.log('Created verticalSpeedIndicator instruments')
   })
   .catch((error) => {
     console.error(error)
