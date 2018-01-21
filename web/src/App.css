@@ -33,6 +33,9 @@
   top: -8px;
   left: 1px; }
 
+.landing-page-rectangle {
+  cursor: pointer; }
+
 .sidebar {
   position: absolute;
   z-index: 3;
@@ -179,7 +182,8 @@
   text-align: center; }
 
 .plane-selector {
-  height: 20rem; }
+  height: 20rem;
+  cursor: pointer; }
 
 .center {
   text-align: center; }
@@ -187,7 +191,8 @@
 .template {
   border: 1px solid black;
   height: 128px;
-  width: 256px; }
+  width: 256px;
+  cursor: pointer; }
 
 .template-with-text {
   width: 256px;
