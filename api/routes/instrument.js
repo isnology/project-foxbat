@@ -6,7 +6,7 @@ const router = new express.Router()
 
 // read
 router.get('/instruments', (req, res) => {
-  Instrument.find()
+  Instrument.find().populate('instrumentClass_id')
   .then((instruments) => {
     res.json(instruments)
   })
