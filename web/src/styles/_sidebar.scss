@@ -74,7 +74,10 @@
 .instrument-list {
   padding: 0 5px;
 }
+
 .instrument-list .main-button {
+  display: flex;
+  flex-direction: column;
   margin-top: 5px;
   width: 100%;
   height: fit-content;

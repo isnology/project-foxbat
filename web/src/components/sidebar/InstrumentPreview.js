@@ -20,10 +20,10 @@ const InstrumentPreview = ({
   return (
     <div>
       <div className="instrument-details">
-        <p><strong>Type:</strong> { selectedInstrumentModel.instrumentClass }</p>
+        <p><strong>Type:</strong> { selectedInstrumentModel.instrumentClass_id.name }</p>
         <p><strong>Model:</strong> { selectedInstrumentModel.model }</p>
         <p><strong>Part no:</strong> { selectedInstrumentModel.partNo }</p>
-        <p><strong>Size:</strong> { selectedInstrumentModel.size }"</p>
+        <p><strong>Size:</strong> { selectedInstrumentModel.size }</p>
         <p>{ selectedInstrumentModel.text }</p>
       </div>
       <div className="instrument-preview">

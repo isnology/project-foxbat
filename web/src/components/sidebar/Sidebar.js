@@ -115,7 +115,7 @@ function Sidebar({
   }
   // Select slot and type
   else if (!!selectedSlot && !!selectedInstrumentType && !selectedInstrumentBrand) {
-    topHeading = sideBarHeadings.selectBrand + selectedInstrumentType.toLowerCase()
+    topHeading = selectedInstrumentType + ": " + sideBarHeadings.selectBrand
     displayItems = allBrandsForTypeFromInstruments(instruments, selectedInstrumentType)
     onSelectItem = (brand) => {
       onSelect(selectedInstrumentType, brand)
