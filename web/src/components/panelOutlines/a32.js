@@ -1,5 +1,4 @@
 import React from 'react'
-import './panel.css'
 
 function A32outline({
   height,

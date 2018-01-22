@@ -2,10 +2,10 @@ import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import Button from './Button'
 import PlaneSelect from './PlaneSelect'
+import a22pic from '../img/a22.jpg'
+import a32pic from '../img/a32.jpg'
 
-function WelcomePage(
-
-) { 
+function WelcomePage({ onSignOut, doModalWindow, signedIn }) {
   return (
     <Fragment>
       <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
@@ -14,25 +14,35 @@ function WelcomePage(
       <br/>
 
       <Link to="/a32">
-        <PlaneSelect 
-        name="A32 Vixxen" imageURL="http://www.foxbat.com.au/public/editor_images/A32_04.jpg"/>
+        <PlaneSelect
+        name="A32 Vixxen" 
+        imageURL={ a32pic }/>
       </Link>
       <Link to="/a22">
-        <PlaneSelect 
+        <PlaneSelect
         name="A22 Foxbat/Kelpie"
-        imageURL="http://www.foxbat.com.au/public/editor_images/A22LS_yellow_01.jpg"/>
+        imageURL={ a22pic }/>
       </Link>
 
       <br/>
       <br/>
-      <br/>
-      <br/>
-      <br/>
-      <div>
-        <Button text="Lost your panel URL?"/>
-      </div>
+
+      { !signedIn &&
+      <Button
+        text="Sign In"
+        onToggle = { (event) => {
+          doModalWindow({ name: 'signIn' })
+        } }
+      />
+      }
+      { signedIn &&
+        <Button
+          text="Sign Out"
+          onToggle={ onSignOut }
+        />
+      }
     </Fragment>
   )
 }
 
-  export default WelcomePage
+export default WelcomePage

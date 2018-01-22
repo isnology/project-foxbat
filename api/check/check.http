@@ -1,0 +1,34 @@
+### register new user
+POST http://localhost:7000/auth/register
+Content-Type: application/json
+
+{
+  "email": "user1@mail.com",
+  "password": "password123"
+}
+
+### sign in
+
+POST http://localhost:7000/auth
+Content-Type: application/json
+
+{
+  "email": "user1@mail.com",
+  "password": "password123"
+}
+
+### Get list of all instruments
+
+GET http://localhost:7000/instruments
+
+### Get list of all the templates (the SVG outlines for the instrument panels)
+
+GET http://localhost:7000/templates
+
+### Save a Panel (users configuration) to the server
+
+POST http://localhost:7000/panel
+
+### Get a list of instrument classes
+GET http://localhost:7000/instrumentclasses
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQG1haWwuY29tIiwiaWF0IjoxNTE2NDQ4MjIzLCJleHAiOjE1MTcwNTMwMjMsInN1YiI6IjVhNWZlY2RmNWQwOGFhMTRiMjVkNTEwMyJ9.RCe6OfSdVrmcwrOhLaH-tng1wrmzcSJxBt4nI4HgCFo

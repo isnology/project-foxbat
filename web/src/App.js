@@ -2,16 +2,16 @@ import React, { Component, Fragment } from 'react'
 import { signIn, signUp, signOutNow } from './api/auth'
 import { getDecodedToken } from './api/token'
 import './App.css'
-import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import WelcomePage from './components/WelcomePage'
 import SelectPanelTemplatePage from './components/SelectPanelTemplatePage'
 import Button from './components/Button'
-import PanelTemplate from './components/PanelTemplate'
 import Sidebar from './components/sidebar/Sidebar'
-import SaveRegister from './components/SaveRegister'
-import { savePanel, updatePanel } from './api/panels'
+import { loadPanels, createPanel, updatePanel } from './api/panels'
+import { loadInstruments } from './api/instruments'
+import { loadTemplates } from './api/templates'
 import Panel from './components/Panel'
-import SignIn from './components/SignIn'
+import ModalWindow from './components/ModalWindow'
 
 class App extends Component {
   state = {
@@ -19,105 +19,100 @@ class App extends Component {
     save: null,
     showConfigurator: true,
     instruments: null,
+    templates: null,
     selectedSlot: null,
-    selectedInstrumentType: "Altimeter",
+    selectedInstrumentType: null,
     selectedInstrumentBrand: null,
+    selectedInstrumentModel: null,
     templateId: null,
-    slottedInstruments: null,
-    saveRegister: false,
-    signIn: false,
+    modalWindow: null,
+    slots: null,
     error: null,
     windowWidth: 0,
     windowHeight: 0
   }
 
-  // BEGIN: code necessary for window size detection
-  // (necessary for correct sizing of Panel component)
-  constructor(props) {
-    super(props);
-    this.state = { width: 0, height: 0 };
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-  }
-  componentDidMount() {
-    this.updateWindowDimensions();
-    window.addEventListener('resize', this.updateWindowDimensions)
-  }
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions)
-  }
-  updateWindowDimensions() {
-    this.setState({
-      windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight })
-  }
-  // END: code necessary for window size detection
-
-  onSignIn = ({ key, email, password }) => {
+  onSignIn = ({ email, password }) => {
     this.setState({ error: null })
     signIn({ email, password })
     .then((decodedToken) => {
       this.setState({ decodedToken })
-      this.onExitPopUp(key)
+      this.onExitModal()
     })
     .catch((error) => {
       this.setState({ error })
     })
   }
 
-  onSaveRegister = ({ key, name, email, password }) => {
+  onSaveRegister = ({ name, email, password }) => {
     const signedIn = !!this.state.decodedToken
     this.setState({ error: null })
     if (!signedIn) {
       signUp({ email, password })
       .then((decodedToken) => {
         this.setState({ decodedToken, panelName: name })
-        this.doSave({key, name})
+        this.doSave({name})
       })
       .catch((error) => {
         // User already exists
         if (/ 403/.test(error.message)) {
-          signIn({ email, password })
+          return signIn({ email, password })
           .then((decodedToken) => {
             this.setState({ decodedToken })
-            this.doSave({key, name})
-          })
-          .catch((error) => {
-            this.setState({ error })
+            this.doSave({name})
           })
         }
         else {
-          this.setState({ error })
+          throw error
         }
+      })
+      .catch((error) => {
+        this.setState({ error })
       })
     }
     else {
       const panelName = this.state.panelName
-      this.doSave({ key, panelName })
+      this.doSave({ panelName })
     }
   }
 
-  doSave = ({ key, name }) => {
+  doSave = ({ name }) => {
+    this.setState({ error: null })
     const data = {
       template: this.state.templateId,
       name: name,
       slots: this.state.slots,
       userId: this.state.decodedToken.sub     // as per passport documentation
     }
-    savePanel({data})
+    updatePanel({data})
     .then(() => {
-      this.onExitPopUp(key)
+      this.onExitModal()
+    })
+    .catch((error) => {
+      // not found
+      if (/ 404/.test(error.message)) {
+        return createPanel({ data })
+        .then(() => {
+          this.onExitModal()
+        })
+      }
+      else {
+        throw error
+      }
+    })
+    .catch((error) => {
+      this.setState({ error })
     })
   }
 
   onSave = () => {
     const signedIn = !!this.state.decodedToken
     if (signedIn) {
-      const key = "saveRegister"
       const name = this.state.panelName
-      this.doSave({ key, name })
+      this.doSave({ name })
     }
     else {
-      this.setState({ saveRegister: true })
+      this.setState({ modalWindow: 'saveRegister' })
     }
   }
 
@@ -126,10 +121,12 @@ class App extends Component {
     this.setState({ decodedToken: null, error: null })
   }
 
-  onExitPopUp = ( key ) => {
-    this.setState({
-      [key]: false
-    })
+  doModalWindow = ({ name }) => {
+    this.setState({ modalWindow: name })
+  }
+
+  onExitModal = () => {
+    this.setState({ modalWindow: null })
   }
 
   onSelectTemplate = (templateName) => {
@@ -142,9 +139,9 @@ class App extends Component {
     //require get req for all intruments
     this.setState((prevState) => {
       return({
-        instruments: require('./data').instruments, // hard coded for testing
+        // instruments: require('./data').instruments, // hard coded for testing
         templateId: templateName,
-        slottedInstruments: slotins
+        slots: slotins
       })
     })
 
@@ -160,18 +157,55 @@ class App extends Component {
       newSlot = slot
     }
     this.setState({
-      selectedSlot: newSlot
+      selectedSlot: newSlot,
+      selectedInstrumentType: null,
+      selectedInstrumentBrand: null,
+      selectedInstrumentModel: null
     })
   }
 
+  assignInstrumentToSlot = (model) => {
+    // Note: we must receive the model as a parameter
+    // because we cannot rely on the state being updated
+    // when this runs. However we can rely on it being correct
+    // for the currently selected slot.
+    console.log(model.name, ' has been assigned to slot: ', this.state.selectedSlot)
+    // let slotIndex = this.state.slots.findIndex(this.findSlot)
+    // console.log('slotindex', slotIndex)
+    let newSlots = this.state.slots.map(slot => {
+      if (slot.slotNumber === this.state.selectedSlot) {
+        !!slot.instrument ? (slot.instrument = null) : (slot.instrument = model)
+        return slot
+      }
+      else {
+        return slot
+      }
+    })
+    this.setState({
+      slots: newSlots,
+      selectedSlot: null,
+      selectedInstrumentType: null,
+      selectedInstrumentBrand: null,
+      selectedInstrumentModel: null
+    })
+  }
 
   updateIntrumentSelection = (type, brand, model) => {
-      this.setState({
-        selectedInstrumentType: type,
-        selectedInstrumentBrand: brand,
-        selectedInstrumentModel: model
-      })
-    }
+    this.setState({
+      selectedInstrumentType: type,
+      selectedInstrumentBrand: brand,
+      selectedInstrumentModel: model
+    })
+      // if(!!model){
+      //   this.assignInstrumentToSlot(model)
+      //   //Note: we MUST pass it model, we CAN'T rely on the
+      //   // function being able to grab it from the state
+      //   // even though we just set the state, because the
+      //   // setState method is asynchronous, this means it
+      //   // may not have actually been done yet by the time we call
+      //   // this function.
+      // }
+  }
 
   onSidebarClose = () => {
     this.setState({
@@ -194,20 +228,21 @@ class App extends Component {
   render() {
     const {
       decodedToken,
-      saveRegister,
-      signIn,
+      modalWindow,
       templateId,
       instruments,
       selectedSlot,
       selectedInstrumentType,
       selectedInstrumentBrand,
-      slottedInstruments,
+      selectedInstrumentModel,
+      slots,
       windowWidth,
       windowHeight,
       error,
     } = this.state
 
     const signedIn = !!decodedToken
+    const modal = !!modalWindow
 
     return (
       <Router>
@@ -215,19 +250,24 @@ class App extends Component {
           <Switch>
 
             <Route path='/' exact render={ () => (
-              <WelcomePage />
+              <WelcomePage
+                onSignOut={ this.onSignOut }
+                doModalWindow={ this.doModalWindow }
+                signedIn={ signedIn }
+              />
             )}/>
 
             <Route path='/app' exact render={ () => (
              !!templateId ? (
                <div>
                 <Panel
-                type={templateId}
-                windowHeight={windowHeight}
-                windowWidth={windowWidth}
-                instruments={slottedInstruments}
-                selectedSlot={selectedSlot}
-                selectSlot={ this.onSelectSlot }
+                  type={templateId}
+                  windowHeight={windowHeight}
+                  windowWidth={windowWidth}
+                  instruments={slots}
+                  selectedSlot={selectedSlot}
+                  slots={ slots }
+                  selectSlot={ this.onSelectSlot }
                 />
                 <Button
                   text={ "Clear all instruments" }
@@ -237,28 +277,16 @@ class App extends Component {
                   exitButton={ true }
                   backButton={ true }
                   instruments={ instruments }
+                  slots={ slots }
                   selectedSlot={ selectedSlot }
                   selectedInstrumentType={ selectedInstrumentType }
                   selectedInstrumentBrand={ selectedInstrumentBrand }
+                  selectedInstrumentModel={ selectedInstrumentModel }
                   onSelect={ this.updateIntrumentSelection }
+                  assignInstrumentToSlot={ this.assignInstrumentToSlot }
                   sidebarClose={ this.onSidebarClose }
                 />
 
-                { saveRegister &&
-                  <SaveRegister
-                      onExit={ this.onExitPopUp }
-                      onSubmit={ this.onSaveRegister }
-                      errMsg={ !!error ? error.message : null }
-                  />
-                }
-
-                { signIn &&
-                  <SignIn
-                      onExit={ this.onExitPopUp }
-                      onSubmit={ this.onSignIn }
-                      errMsg={ !!error ? error.message : null }
-                  />
-                }
                 { signedIn &&
                   <Button
                     text="Sign Out"
@@ -294,11 +322,11 @@ class App extends Component {
                 <Redirect to='/app' />
                 ):(
                 <SelectPanelTemplatePage
-                firstPanelName="Analogue A-32 Panel"
-                firstPanelTemplate="a32"
-                secondPanelName="Digital A-32 Panel"
-                secondPanelTemplate="a32Digital"
-                onSelectTemplate={this.onSelectTemplate}
+                  firstPanelName="Analogue A-32 Panel"
+                  firstPanelTemplate="a32"
+                  secondPanelName="Digital A-32 Panel"
+                  secondPanelTemplate="a32Digital"
+                  onSelectTemplate={this.onSelectTemplate}
                 />
               )
             )}/>
@@ -313,10 +341,67 @@ class App extends Component {
             )}/>
 
           </Switch>
+
+          { modal &&
+            <ModalWindow
+              window={ modalWindow }
+              onExit={ this.onExitModal }
+              onSignIn={ this.onSignIn }
+              onSaveRegister={ this.onSaveRegister }
+              errMsg={ !!error ? error.message : null }
+            />
+          }
         </div>
       </Router>
     )
   }
+
+  // BEGIN: code necessary for window size detection
+  // (necessary for correct sizing of Panel component)
+  constructor(props) {
+    super(props);
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions)
+  }
+
+  updateWindowDimensions() {
+    this.setState({
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight })
+  }
+  // END: code necessary for window size detection
+
+  doLoadInstruments() {
+    loadInstruments()
+    .then((instruments) => {
+      this.setState({ instruments })
+    })
+    .catch(() => {
+      this.setState({ instruments: null })
+    })
+  }
+
+  doLoadTemplates() {
+    loadTemplates()
+    .then((templates) => {
+      this.setState({ templates })
+    })
+    .catch(() => {
+      this.setState({ templates: null })
+    })
+  }
+
+  // When this App first appears on screen
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions)
+    this.doLoadInstruments()
+    this.doLoadTemplates()
+  }
+
 }
 
 export default App;

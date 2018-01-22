@@ -1,6 +1,11 @@
 import api from './init'
 
-export function savePanel(data) {
+export function loadPanels() {
+  return api.get('/panels')
+  .then((res) => res.data)
+}
+
+export function createPanel(data) {
   return api.post('/panels', data)
   .then((res) => res.data)
 }

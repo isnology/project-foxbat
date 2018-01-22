@@ -3,178 +3,178 @@
 // model: { type: String },
 // partNo: { type: String },
 // text: { type: String },
-// pictureUrl: { type: String },
+// pictureURL: { type: String },
 // price: { type: Number },
 // size: { type: String },
 // instrumentClass: 
 
-const instruments = [
-  {
-    name: "Alti 1000",
-    brand: "Falcon",
-    model: "",
-    partNo: "",
-    text: "",
-    pictureUrl: "",
-    price: 100.00,
-    size: "3.125",
-    instrumentClass: "Altimeter"
-  },
-  {
-    name: "Alti2000",
-    brand: "Falcon",
-    model: "",
-    partNo: "",
-    text: "",
-    pictureUrl: "",
-    price: 100.00,
-    size: "",
-    instrumentClass: "Altimeter"
-  },
-  {
-    name: "Alti5000",
-    brand: "IMB",
-    model: "",
-    partNo: "",
-    text: "",
-    pictureUrl: "",
-    price: 100.00,
-    size: "",
-    instrumentClass: "Altimeter"
-  },
-  {
-    name: "Alti5000-a",
-    brand: "IMB",
-    model: "",
-    partNo: "",
-    text: "",
-    pictureUrl: "",
-    price: 1000.00,
-    size: "",
-    instrumentClass: "Altimeter"
-  },
-  {
-    name: "Alti1000",
-    brand: "IMB",
-    model: "",
-    partNo: "",
-    text: "",
-    pictureUrl: "",
-    price: 10.00,
-    size: "",
-    instrumentClass: "Altimeter"
-  },
-  {
-    name: "Heightometer",
-    brand: "Swit",
-    model: "",
-    partNo: "",
-    text: "",
-    pictureUrl: "",
-    price: 100.00,
-    size: "",
-    instrumentClass: "Altimeter"
-  },
-  {
-    name: "SuperUppyTron",
-    brand: "Swift",
-    model: "",
-    partNo: "",
-    text: "",
-    pictureUrl: "",
-    price: 100.00,
-    size: "",
-    instrumentClass: "Altimeter"
-  },
-  {
-    name: "Pewpewsofast!",
-    brand: "Falcon",
-    model: "",
-    partNo: "",
-    text: "",
-    pictureUrl: "",
-    price: 100.00,
-    size: "",
-    instrumentClass: "Airspeed"
-  },
-  {
-    name: "Fastometer",
-    brand: "Falcon",
-    model: "",
-    partNo: "",
-    text: "",
-    pictureUrl: "",
-    price: 100.00,
-    size: "",
-    instrumentClass: "Airspeed"
-  },
-  {
-    name: "FalconSpeed",
-    brand: "Falcon",
-    model: "",
-    partNo: "",
-    text: "",
-    pictureUrl: "",
-    price: 100.00,
-    size: "",
-    instrumentClass: "Airspeed"
-  },
-  {
-    name: "Speedo for Ido",
-    brand: "IMB",
-    model: "",
-    partNo: "",
-    text: "",
-    pictureUrl: "",
-    price: 100.00,
-    size: "",
-    instrumentClass: "Airspeed"
-  },
-  {
-    name: "Whoosh Gauge",
-    brand: "IMB",
-    model: "",
-    partNo: "",
-    text: "",
-    pictureUrl: "",
-    price: 100.00,
-    size: "",
-    instrumentClass: "Airspeed"
-  },
-  {
-    name: "ThrottleUp!",
-    brand: "IMB",
-    model: "",
-    partNo: "",
-    text: "",
-    pictureUrl: "",
-    price: 100.00,
-    size: "",
-    instrumentClass: "Airspeed"
-  },
-  {
-    name: "Swifty's swift",
-    brand: "Swift",
-    model: "",
-    partNo: "",
-    text: "",
-    pictureUrl: "",
-    price: 100.00,
-    size: "",
-    instrumentClass: "Airspeed"
-  },
-  {
-    name: "SuperAccurometer",
-    brand: "Swift",
-    model: "",
-    partNo: "",
-    text: "",
-    pictureUrl: "",
-    price: 1000.00,
-    size: "",
-    instrumentClass: "Airspeed"
-  }
-]
+// const instruments = [
+//   {
+//     name: "Alti 1000-a",
+//     brand: "Falcon",
+//     model: "",
+//     partNo: "",
+//     text: "",
+//     pictureURL: "http://www.umainstruments.com/images/Altimeter/3altimeter.jpg",
+//     price: 100.00,
+//     size: "3.125",
+//     instrumentClass: "Altimeter"
+//   },
+//   {
+//     name: "Alti2000",
+//     brand: "Falcon",
+//     model: "",
+//     partNo: "",
+//     text: "",
+//     pictureURL: "https://www.aircraftspruce.com/cache/370-320-/catalog/graphics/1/10-06256a.jpg",
+//     price: 100.00,
+//     size: "",
+//     instrumentClass: "Altimeter"
+//   },
+//   {
+//     name: "Alti5000",
+//     brand: "IMB",
+//     model: "",
+//     partNo: "",
+//     text: "",
+//     pictureURL: "https://www.aircraftspruce.com/cache/370-320-/catalog/graphics/1/10-06283a.JPG",
+//     price: 100.00,
+//     size: "",
+//     instrumentClass: "Altimeter"
+//   },
+//   {
+//     name: "Alti5000-a",
+//     brand: "IMB",
+//     model: "",
+//     partNo: "",
+//     text: "",
+//     pictureURL: "",
+//     price: 1000.00,
+//     size: "",
+//     instrumentClass: "Altimeter"
+//   },
+//   {
+//     name: "Alti1000",
+//     brand: "IMB",
+//     model: "",
+//     partNo: "",
+//     text: "",
+//     pictureURL: "",
+//     price: 10.00,
+//     size: "",
+//     instrumentClass: "Altimeter"
+//   },
+//   {
+//     name: "Heightometer",
+//     brand: "Swit",
+//     model: "",
+//     partNo: "",
+//     text: "",
+//     pictureURL: "",
+//     price: 100.00,
+//     size: "",
+//     instrumentClass: "Altimeter"
+//   },
+//   {
+//     name: "SuperUppyTron",
+//     brand: "Swift",
+//     model: "",
+//     partNo: "",
+//     text: "",
+//     pictureURL: "",
+//     price: 100.00,
+//     size: "",
+//     instrumentClass: "Altimeter"
+//   },
+//   {
+//     name: "Pewpewsofast!",
+//     brand: "Falcon",
+//     model: "",
+//     partNo: "",
+//     text: "",
+//     pictureURL: "",
+//     price: 100.00,
+//     size: "",
+//     instrumentClass: "Airspeed"
+//   },
+//   {
+//     name: "Fastometer",
+//     brand: "Falcon",
+//     model: "",
+//     partNo: "",
+//     text: "",
+//     pictureURL: "",
+//     price: 100.00,
+//     size: "",
+//     instrumentClass: "Airspeed"
+//   },
+//   {
+//     name: "FalconSpeed",
+//     brand: "Falcon",
+//     model: "",
+//     partNo: "",
+//     text: "",
+//     pictureURL: "",
+//     price: 100.00,
+//     size: "",
+//     instrumentClass: "Airspeed"
+//   },
+//   {
+//     name: "Speedo for Ido",
+//     brand: "IMB",
+//     model: "",
+//     partNo: "",
+//     text: "",
+//     pictureURL: "",
+//     price: 100.00,
+//     size: "",
+//     instrumentClass: "Airspeed"
+//   },
+//   {
+//     name: "Whoosh Gauge",
+//     brand: "IMB",
+//     model: "",
+//     partNo: "",
+//     text: "",
+//     pictureURL: "",
+//     price: 100.00,
+//     size: "",
+//     instrumentClass: "Airspeed"
+//   },
+//   {
+//     name: "ThrottleUp!",
+//     brand: "IMB",
+//     model: "",
+//     partNo: "",
+//     text: "",
+//     pictureURL: "",
+//     price: 100.00,
+//     size: "",
+//     instrumentClass: "Airspeed"
+//   },
+//   {
+//     name: "Swifty's swift",
+//     brand: "Swift",
+//     model: "",
+//     partNo: "",
+//     text: "",
+//     pictureURL: "",
+//     price: 100.00,
+//     size: "",
+//     instrumentClass: "Airspeed"
+//   },
+//   {
+//     name: "SuperAccurometer",
+//     brand: "Swift",
+//     model: "",
+//     partNo: "",
+//     text: "",
+//     pictureURL: "",
+//     price: 1000.00,
+//     size: "",
+//     instrumentClass: "Airspeed"
+//   }
+// ]
 
 const analogSlottedInstruments = [
   
@@ -206,7 +206,6 @@ const analogSlottedInstruments = [
 
 
     const digitalSlottedInstruments = [
-  
       {instrument:null,
       slotNumber:'slot1'},
       {instrument:null,
@@ -218,8 +217,9 @@ const analogSlottedInstruments = [
       {instrument:null,
       slotNumber:'slot5'}
       ] //testing purposes
+
 module.exports = {
-  instruments,
+  // instruments,
   analogSlottedInstruments,
   digitalSlottedInstruments
 

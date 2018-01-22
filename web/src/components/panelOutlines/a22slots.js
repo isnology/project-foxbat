@@ -7,7 +7,8 @@ function A22Slots({
   instruments, //array of objects commented out while component testing
   onClick, //callback function to pass back which slot was clicked
   template, //a22, a32, a22Digital, a32Digital
-  selectedSlot // for conditional formatting
+  selectedSlot, // for conditional formatting
+  slots
 }){
   
 
@@ -201,7 +202,8 @@ function A22Slots({
       {
         instruments.map((instrument, index)=> (
           <Slot //if a digital [square] instrument is desired, the instrument object should contain a key called 'shape': 'circle' or 'square' ,or boolean key called 'circle':true or false
-            instrument = { !!instrument.instrument ? instrument.instrument : null}
+            key = { instrument.slotNumber }
+            instrument = { !!instrument.instrument ? instrument.instrument : null }
             panelHeight = {height} //necessary to readjust size and position appropriately
             slotNumber = {instrument.slotNumber} //assigned and tracked by the caller
             leftRatio = {slotRatios[index].leftRatio} //the left position of this slot as a ratio of the panel height
@@ -210,6 +212,7 @@ function A22Slots({
             heightRatio = {slotRatios[index].height}
             widthRatio = {slotRatios[index].width}
             onClick = {()=>{onClick(instrument.slotNumber)}} //each button will 
+            slots = { slots }
             selectedSlot={selectedSlot}
           />
         ))

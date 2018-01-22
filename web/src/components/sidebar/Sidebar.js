@@ -1,39 +1,147 @@
 import React from 'react'
-import ExitButton from '../ExitButton';
-import InstrumentList from './InstrumentList';
-import SidebarText from './SidebarText';
-import { sideBarMessages } from '../../constants/messages';
-import './sidebar.css';
+import ExitButton from '../ExitButton'
+import NavList from './NavList'
+import SidebarText from './SidebarText'
+import InstrumentPreview from './InstrumentPreview'
+import { sideBarHeadings } from '../../constants/messages'
+var _array = require('lodash/array') // Lodash array methods
 
 function Sidebar({
   exitButton,
   backButton,
   instruments,
-  selectedSlot, 
+  slots,
+  selectedSlot,
   selectedInstrumentType,
   selectedInstrumentBrand,
-  onSelect,
+  selectedInstrumentModel, // This is an object
+  onSelect, // (type?, brand?, model?) => {}
+  assignInstrumentToSlot, // Must be given the object
   sidebarClose
-}) { 
+}) {
+
+  function allTypesFromInstruments(instruments) {
+    const allTypesArray =
+      instruments.map((instrument) => (
+        instrument.instrumentClass_id.name
+      ))
+    const typesArray = _array.uniq(allTypesArray)
+    return typesArray
+  }
+
+  function allBrandsForTypeFromInstruments(instruments, selectedInstrumentType) {
+    const instrumentsWithType = instruments.filter((instrument) => {
+      return instrument.instrumentClass_id.name === selectedInstrumentType
+    })
+    const allBrands = instrumentsWithType.map((instrument) => instrument.brand)
+    const uniqueBrands = _array.uniq(allBrands)
+
+    return uniqueBrands
+  }
+
+  function allModelsForBrandsForTypeFromInstruments(instruments, selectedInstrumentType, selectedInstrumentBrand) {
+    const instrumentsWithTypeAndBrand = instruments.filter((instrument) => {
+      return instrument.instrumentClass_id.name === selectedInstrumentType && instrument.brand === selectedInstrumentBrand
+    })
+    return instrumentsWithTypeAndBrand
+  }
+
+  function RenderToSidebar() {
+    if (!!selectedSlot && !selectedInstrumentModel) {
+      let activeSlot = slots.find(function(slot) {
+        return slot.slotNumber === selectedSlot;
+      })
+      // Is there an instrument already in the slot?
+      return (
+        !!activeSlot.instrument ? (
+          <InstrumentPreview
+            slots={ slots }
+            selectedSlot={ selectedSlot }
+            selectedInstrumentModel={ activeSlot.instrument }
+            toggleInstrumentToSlot={ assignInstrumentToSlot }
+          />
+        ) : (
+          <NavList
+            displayItems={ displayItems }
+            pictureItems={ pictureItems }
+            modelObjects={ modelObjects }
+            onSelect={ onSelectItem }
+          />
+        )
+      )
+    }
+    else if ((!!selectedInstrumentModel)) {
+      return (
+        <InstrumentPreview
+          slots={ slots }
+          selectedSlot={ selectedSlot }
+          selectedInstrumentModel={ selectedInstrumentModel }
+          toggleInstrumentToSlot={ assignInstrumentToSlot }
+        />
+      )
+    }
+    // else if (!selectedInstrumentModel && !!selectedSlot) {
+    //   return (
+    //     <NavList
+    //       displayItems={ displayItems }
+    //       pictureItems={ pictureItems }
+    //       modelObjects={ modelObjects }
+    //       onSelect={ onSelectItem }
+    //     />
+    //   )
+    // }
+    else if (!selectedSlot) {
+      return <SidebarText />
+    }
+  }
 
   let topHeading
+  let displayItems
+  let pictureItems
+  let onSelectItem
+  let modelObjects
 
+  // Nothing selected
   if (!selectedSlot) {
-    topHeading = sideBarMessages.welcome
+    topHeading = sideBarHeadings.welcome
   }
+  // Selected a slot
   else if (!!selectedSlot && !selectedInstrumentType) {
-   topHeading = sideBarMessages.selectInstrumentType
+    topHeading = sideBarHeadings.selectInstrumentType
+    displayItems = allTypesFromInstruments(instruments)
+    onSelectItem = (type) => {
+      onSelect(type)
+    }
   }
+  // Select slot and type
   else if (!!selectedSlot && !!selectedInstrumentType && !selectedInstrumentBrand) {
-    topHeading = sideBarMessages.selectBrandOrModel + " " + selectedInstrumentType.toLowerCase()
+    topHeading = selectedInstrumentType + ": " + sideBarHeadings.selectBrand
+    displayItems = allBrandsForTypeFromInstruments(instruments, selectedInstrumentType)
+    onSelectItem = (brand) => {
+      onSelect(selectedInstrumentType, brand)
+   }
   }
-  else if (!!selectedSlot && !!selectedInstrumentType && !!selectedInstrumentBrand) {
-    topHeading = sideBarMessages.selectBrandOrModel + " " + selectedInstrumentBrand
+  // Select slot, type, and brand
+  else if (!!selectedSlot && !!selectedInstrumentType && !!selectedInstrumentBrand && !selectedInstrumentModel) {
+    topHeading = sideBarHeadings.selectModel + selectedInstrumentBrand + " " + selectedInstrumentType.toLowerCase()
+
+    modelObjects = allModelsForBrandsForTypeFromInstruments(instruments, selectedInstrumentType, selectedInstrumentBrand)
+
+    // displayItems = modelObjects.map((instrument) => instrument.name)
+    // pictureItems = modelObjects.map((instrument) => instrument.pictureURL)
+
+    onSelectItem = (model) => {
+      onSelect(selectedInstrumentType, selectedInstrumentBrand, model)
+   }
+  }
+  else if (!!selectedSlot && !!selectedInstrumentType && !!selectedInstrumentBrand && !!selectedInstrumentModel) {
+    // Now passing objects
+    topHeading = `${selectedInstrumentModel.name} (${selectedInstrumentModel.brand})`
   }
 
   return (
     <div className="sidebar">
-      
+
       <div className="sidebar-top">
         <div className="sidebar-top-buttons">
           { exitButton && <ExitButton onToggle={ sidebarClose }/>}
@@ -42,16 +150,7 @@ function Sidebar({
       </div>
 
       <div className="sidebar-lower">
-        {
-          (!!instruments && !!selectedSlot) ? 
-            <InstrumentList 
-              instruments={ instruments }
-              selectedInstrumentType={ selectedInstrumentType }
-              selectedInstrumentBrand={ selectedInstrumentType }
-              onSelect={ onSelect }
-            /> : 
-            <SidebarText /> 
-        }
+        <RenderToSidebar />
       </div>
     </div>
   )
