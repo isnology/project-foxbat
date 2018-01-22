@@ -20,7 +20,8 @@ class App extends Component {
     showConfigurator: true,
     instruments: null,
     templates: null,
-    panelName: null,
+    panelName: null, //title user gave their panel
+    panel_id: null, // db id of users retrieved panel
     selectedSlot: null,
     selectedInstrumentType: null,
     selectedInstrumentBrand: null,
@@ -102,25 +103,39 @@ class App extends Component {
       userId: this.state.decodedToken.sub     // as per passport documentation
     }
     console.log("Data sending to POST /panel",data)
-    updatePanel({data})
-    .then(() => {
-      this.onExitModal()
-    })
-    .catch((error) => {
-      // not found
-      if (/ 404/.test(error.message)) {
-        return createPanel({ data })
-        .then(() => {
-          this.onExitModal()
-        })
-      }
-      else {
-        throw error
-      }
-    })
-    .catch((error) => {
-      this.setState({ error })
-    })
+    if (!!this.state.panel_id){
+      const id=this.state.panel_id
+      updatePanel({id, data})
+      .then(() => {
+        this.onExitModal()
+      })
+      .catch((error) => {
+        this.setState({ error })
+      })
+    } else {
+      createPanel({data})
+      .then(() => {
+        this.onExitModal()
+      })
+      .catch((error) => {
+        this.setState({ error })
+      })
+    }
+
+    
+    // .catch((error) => {
+    //   // not found
+    //   if (/ 404/.test(error.message)) {
+    //     return createPanel({ data })
+    //     .then(() => {
+    //       this.onExitModal()
+    //     })
+    //   }
+    //   else {
+    //     throw error
+    //   }
+    // })
+    
   }
 
   onSave = () => {
