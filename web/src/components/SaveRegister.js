@@ -3,9 +3,8 @@ import Button from './Button'
 import BasePopUp from './BasePopUp'
 
 function SaveRegister({ onExit, onSubmit, errMsg }) {
-  const key = "saveRegister"
   return (
-    <BasePopUp onExit={ onExit } attribute={ key } errMsg={ errMsg }>
+    <BasePopUp onExit={ onExit } errMsg={ errMsg }>
       <p className="form-text">
         Please give your panel a name and enter your email address and a password to save
         (so it can be re-called latter using these).
@@ -23,7 +22,7 @@ function SaveRegister({ onExit, onSubmit, errMsg }) {
             const name = elements.name.value
 
             // Pass this information along to the parent component
-            onSubmit({ key, name, email, password })
+            onSubmit({ name, email, password })
           } }
       >
         <label>
@@ -54,8 +53,7 @@ function SaveRegister({ onExit, onSubmit, errMsg }) {
 
         <br/>
         <Button text="Save"
-                onToggle={ () => {
-                } }
+                onToggle={ () => {} }
         />
       </form>
     </BasePopUp>

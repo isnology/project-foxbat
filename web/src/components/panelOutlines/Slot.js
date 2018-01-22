@@ -1,5 +1,4 @@
 import React from 'react'
-import './panel.css'
 
 function Slot({
   instrument, //object representing the instrument occupying this slot
@@ -11,6 +10,7 @@ function Slot({
   heightRatio,
   widthRatio,
   selectedSlot,
+  slots,
   onClick //callback function to pass back which slot was clicked
 }){
   let slotWidth
@@ -43,9 +43,14 @@ function Slot({
     classForSlot = classForSlot + " selected-slot"
   }
 
+  var thisSlot = slots.filter((slot) => 
+    slot.slotNumber === slotNumber
+  )
+  // console.log('thisslot', thisSlot)
+
   return(
       <div className={classForSlot} id={slotNumber} style={slotStyle} onClick={onClick}>
-      {/* <img src="http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/1/10-02259.jpg" width="100%"/> */}
+      { !!thisSlot[0].instrument ? <img src={thisSlot[0].instrument.pictureURL} width="100%"/> : '' }
       </div>
   )}
 
