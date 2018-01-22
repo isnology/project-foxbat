@@ -17,7 +17,6 @@ router.get('/panels', requireJWT, (req, res) => {
 
 // create
 router.post('/panels', requireJWT, (req, res) => {
-  console.log("I just got a request to save a panel:", req.body)
   Panel.create(req.body.data)
   .then((panel) => {
     res.status(201).json(panel)
@@ -30,7 +29,8 @@ router.post('/panels', requireJWT, (req, res) => {
 // Update
 router.put('/panels/:id', requireJWT, (req, res) => {
   const { id } = req.params
-  Panel.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
+   
+  Panel.findByIdAndUpdate(id, req.body.data, { new: true, runValidators: true })
   .then((panel) => {
     if (panel) {
       res.json(panel)

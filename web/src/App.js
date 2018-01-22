@@ -17,20 +17,20 @@ class App extends Component {
     decodedToken: getDecodedToken(), // Restore the previous signed in data
     save: null,
     showConfigurator: true,
-    instruments: null,
+    instruments: null, //list of all instruments from server
     templates: null,
     panelName: null, //title user gave their panel
-    panel_id: null, // db id of users retrieved panel
-    selectedSlot: null,
+    panel_id: null, // db id of users retrieved/saved panel
+    selectedSlot: null, 
     selectedInstrumentType: null,
     selectedInstrumentBrand: null,
     selectedInstrumentModel: null,
-    templateId: null,
-    modalWindow: null,
-    slots: null,
-    error: null,
-    windowWidth: 0,
-    windowHeight: 0
+    templateId: null, //which template? a22, a22digital, a32, a32digital
+    modalWindow: null, //display sign in/up to save panel window
+    slots: null, //state of the users panel slots
+    error: null, //for displaying any errors recieved from the server
+    windowWidth: 0, //for adaptive sizing of configurator panel
+    windowHeight: 0 //for adaptive sizing of configurator panel
   }
 
   onSignIn = ({ email, password }) => {
@@ -73,18 +73,12 @@ class App extends Component {
     }
     else {
       const panelName = this.state.panelName
-      this.doSave({ panelName })
+      this.doSave({ name: panelName })
     }
   }
 
   doSave = ({ name }) => {
     this.setState({ error: null })
-  //   position: { type: String },
-  // instrument_id: { type: Schema.ObjectId, ref: 'Instrument' },
-  // size: { type: String }
-    console.log("first slot object",this.state.slots[0])
-    console.log("slotnumber of first slot", this.state.slots[0].slotNumber)
-
     const backendSlots = this.state.slots.map((slot)=>(
       {
         position: slot.slotNumber,
@@ -95,7 +89,6 @@ class App extends Component {
     ).filter((slot)=>(
       !!slot.instrument_id
     ))
-    console.log("backendSlots adding to data:",backendSlots)
     const data = {
       
       template: this.state.templateId,
@@ -103,11 +96,11 @@ class App extends Component {
       slots: backendSlots,
       userId: this.state.decodedToken.sub     // as per passport documentation
     }
-    console.log("Data sending to POST /panel",data)
     if (!!this.state.panel_id){
       const id=this.state.panel_id
-      updatePanel({id, data})
-      .then(() => {
+      updatePanel(id, {data})
+      .then((panel) => {
+        console.log("server responded with a successful update:", panel)
         this.onExitModal()
       })
       .catch((error) => {
@@ -115,28 +108,18 @@ class App extends Component {
       })
     } else {
       createPanel({data})
-      .then(() => {
+      .then((panel) => {
+        console.log("server responded with a successful save:", panel)
+        this.setState({
+          panel_id: panel._id,
+          panelName: panel.name
+        })
         this.onExitModal()
       })
       .catch((error) => {
         this.setState({ error })
       })
-    }
-
-    
-    // .catch((error) => {
-    //   // not found
-    //   if (/ 404/.test(error.message)) {
-    //     return createPanel({ data })
-    //     .then(() => {
-    //       this.onExitModal()
-    //     })
-    //   }
-    //   else {
-    //     throw error
-    //   }
-    // })
-    
+    }    
   }
 
   onSave = () => {
@@ -163,23 +146,30 @@ class App extends Component {
     this.setState({ modalWindow: null })
   }
 
+  onClearCurrentPanel = () => {
+    this.clearInstrumentsFromSlots()
+    this.onSelectTemplate(this.state.templateId)
+    this.setState({
+      selectedSlot: null,
+      selectedInstrumentType: null,
+      selectedInstrumentBrand: null,
+      selectedInstrumentModel: null
+    })
+  }
+
   onSelectTemplate = (templateName) => {
     let slotins
     if (templateName==='a22' || templateName === 'a32'){
       slotins = require('./data').analogSlottedInstruments
-    } else { //hardcoded for testing.
+    } else {
       slotins = require('./data').digitalSlottedInstruments
     }
-    //require get req for all intruments
     this.setState((prevState) => {
       return({
-        // instruments: require('./data').instruments, // hard coded for testing
         templateId: templateName,
         slots: slotins
       })
     })
-
-    //return
   }
 
   onSelectSlot = (slot) => {
@@ -198,16 +188,24 @@ class App extends Component {
     })
   }
 
-  assignInstrumentToSlot = (model) => {
+  clearInstrumentsFromSlots = () => {
+    let newSlots = this.state.slots.map(slot => {
+        slot.instrument = null
+        return slot
+    })
+    this.setState({
+      slots: newSlots
+    })
+  }
+
+  assignInstrumentToSlot = (model, slotNumber) => {
+    console.log(model.name, ' is being assigned to slot: ', slotNumber)
     // Note: we must receive the model as a parameter
     // because we cannot rely on the state being updated
     // when this runs. However we can rely on it being correct
     // for the currently selected slot.
-    console.log(model.name, ' has been assigned to slot: ', this.state.selectedSlot)
-    // let slotIndex = this.state.slots.findIndex(this.findSlot)
-    // console.log('slotindex', slotIndex)
     let newSlots = this.state.slots.map(slot => {
-      if (slot.slotNumber === this.state.selectedSlot) {
+      if (slot.slotNumber === slotNumber) {
         !!slot.instrument ? (slot.instrument = null) : (slot.instrument = model)
         return slot
       }
@@ -223,6 +221,10 @@ class App extends Component {
       selectedInstrumentModel: null
     })
   }
+  
+  assignInstrumentToSelectedSlot = (model) => {
+    this.assignInstrumentToSlot(model, this.state.selectedSlot)
+  }
 
   updateIntrumentSelection = (type, brand, model) => {
     this.setState({
@@ -230,15 +232,6 @@ class App extends Component {
       selectedInstrumentBrand: brand,
       selectedInstrumentModel: model
     })
-      // if(!!model){
-      //   this.assignInstrumentToSlot(model)
-      //   //Note: we MUST pass it model, we CAN'T rely on the
-      //   // function being able to grab it from the state
-      //   // even though we just set the state, because the
-      //   // setState method is asynchronous, this means it
-      //   // may not have actually been done yet by the time we call
-      //   // this function.
-      // }
   }
 
   onSidebarClose = () => {
@@ -273,15 +266,6 @@ class App extends Component {
     }
   }
 
-  onClearCurrentPanel = () => {
-    this.onSelectTemplate(this.state.templateId)
-    this.setState({
-      selectedSlot: null,
-      selectedInstrumentType: null,
-      selectedInstrumentBrand: null,
-      selectedInstrumentModel: null
-    })
-  }
 
   render() {
     const {
@@ -333,7 +317,7 @@ class App extends Component {
                   onClearPanel={ this.onClearCurrentPanel }
                   onSignOut={ this.onSignOut }
                   onSelect={ this.updateIntrumentSelection }
-                  assignInstrumentToSlot={ this.assignInstrumentToSlot }
+                  assignInstrumentToSelectedSlot={ this.assignInstrumentToSelectedSlot }
                   sidebarClose={ this.onSidebarClose }
                   onBackClick={ this.onBackClick }
                 />
@@ -395,23 +379,21 @@ class App extends Component {
     )
   }
 
-  // BEGIN: code necessary for window size detection
-  // (necessary for correct sizing of Panel component)
-  constructor(props) {
+  constructor(props) {// code necessary for window size detection
     super(props);
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-  }
+  }// (necessary for correct sizing of Panel component)
 
-  componentWillUnmount() {
+  componentWillUnmount() {// code necessary for window size detection
     window.removeEventListener('resize', this.updateWindowDimensions)
-  }
+  }// (necessary for correct sizing of Panel component)
 
-  updateWindowDimensions() {
+  updateWindowDimensions() {// code necessary for window size detection
     this.setState({
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight })
-  }
-  // END: code necessary for window size detection
+  }// (necessary for correct sizing of Panel component)
+  
 
   doLoadInstruments() {
     loadInstruments()
@@ -440,7 +422,6 @@ class App extends Component {
     this.doLoadInstruments()
     this.doLoadTemplates()
   }
-
 }
 
 export default App;
