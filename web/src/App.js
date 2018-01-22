@@ -93,7 +93,9 @@ class App extends Component {
         size: slot.slotNumber.substring(0,1)
       }
     )
-    )
+    ).filter((slot)=>(
+      !!slot.instrument_id
+    ))
     console.log("backendSlots adding to data:",backendSlots)
     const data = {
       

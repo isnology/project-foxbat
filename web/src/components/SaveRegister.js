@@ -30,7 +30,7 @@ function SaveRegister({ onExit, onSubmit, errMsg }) {
           <input
               type='text'
               name='name'
-              defaultValue={ " " }
+              defaultValue={ "" }
           />
         </label>
 
@@ -39,7 +39,7 @@ function SaveRegister({ onExit, onSubmit, errMsg }) {
           <input
               type='email'
               name='email'
-              defaultValue={ " " }
+              defaultValue={ "" }
           />
         </label>
 

@@ -18,7 +18,7 @@ router.get('/panels', requireJWT, (req, res) => {
 // create
 router.post('/panels', requireJWT, (req, res) => {
   console.log("I just got a request to save a panel:", req.body)
-  Panel.create(req.body)
+  Panel.create(req.body.data)
   .then((panel) => {
     res.status(201).json(panel)
   })
