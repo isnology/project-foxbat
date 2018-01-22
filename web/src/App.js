@@ -5,8 +5,6 @@ import './App.css'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import WelcomePage from './components/WelcomePage'
 import SelectPanelTemplatePage from './components/SelectPanelTemplatePage'
-import Button from './components/Button'
-import Sidebar from './components/sidebar/Sidebar'
 import { loadPanels, createPanel, updatePanel } from './api/panels'
 import { loadInstruments } from './api/instruments'
 import { loadTemplates } from './api/templates'
@@ -323,7 +321,6 @@ class App extends Component {
                   type={templateId}
                   windowHeight={windowHeight}
                   windowWidth={windowWidth}
-                  instruments={slots}
                   instruments={ instruments }
                   slots={ slots }
                   selectedSlot={ selectedSlot }
