@@ -8,7 +8,7 @@ const SlotSchema = new Schema({
 })
 
 const panelSchema = new Schema({
-  template: { type: Schema.ObjectId, ref: 'Template'},
+  template: { type: String },
   name: { type: String },
   slots: [SlotSchema],
   user_id: { type: Schema.ObjectId, ref: 'User'}
