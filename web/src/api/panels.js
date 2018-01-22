@@ -11,6 +11,6 @@ export function createPanel(data) {
 }
 
 export function updatePanel(id, data) {
-  return api.put(`/products/${id}`, data)
+  return api.put(`/panels/${id}`, data)
   .then((res) => res.data)
 }

@@ -20,6 +20,7 @@ class App extends Component {
     showConfigurator: true,
     instruments: null,
     templates: null,
+    panelName: null,
     selectedSlot: null,
     selectedInstrumentType: null,
     selectedInstrumentBrand: null,
@@ -78,12 +79,29 @@ class App extends Component {
 
   doSave = ({ name }) => {
     this.setState({ error: null })
+  //   position: { type: String },
+  // instrument_id: { type: Schema.ObjectId, ref: 'Instrument' },
+  // size: { type: String }
+    console.log("first slot object",this.state.slots[0])
+    console.log("slotnumber of first slot", this.state.slots[0].slotNumber)
+
+    const backendSlots = this.state.slots.map((slot)=>(
+      {
+        position: slot.slotNumber,
+        instrument_id: !!slot.instrument ? slot.instrument._id : null,
+        size: slot.slotNumber.substring(0,1)
+      }
+    )
+    )
+    console.log("backendSlots adding to data:",backendSlots)
     const data = {
+      
       template: this.state.templateId,
       name: name,
-      slots: this.state.slots,
+      slots: backendSlots,
       userId: this.state.decodedToken.sub     // as per passport documentation
     }
+    console.log("Data sending to POST /panel",data)
     updatePanel({data})
     .then(() => {
       this.onExitModal()
