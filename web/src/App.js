@@ -21,8 +21,9 @@ class App extends Component {
     instruments: null,
     templates: null,
     selectedSlot: null,
-    selectedInstrumentType: "Altimeter",
+    selectedInstrumentType: null,
     selectedInstrumentBrand: null,
+    selectedInstrumentModel: null,
     templateId: null,
     modalWindow: null,
     slots: null,
@@ -30,26 +31,6 @@ class App extends Component {
     windowWidth: 0,
     windowHeight: 0
   }
-
-  // BEGIN: code necessary for window size detection
-  // (necessary for correct sizing of Panel component)
-  constructor(props) {
-    super(props);
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-  }
-  componentDidMount() {
-    this.updateWindowDimensions();
-    window.addEventListener('resize', this.updateWindowDimensions)
-  }
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions)
-  }
-  updateWindowDimensions() {
-    this.setState({
-      windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight })
-  }
-  // END: code necessary for window size detection
 
   onSignIn = ({ email, password }) => {
     this.setState({ error: null })
@@ -188,27 +169,43 @@ class App extends Component {
     // because we cannot rely on the state being updated
     // when this runs. However we can rely on it being correct
     // for the currently selected slot.
-    console.log(model, ' has been assigned to slot: ', this.state.selectedSlot)
+    console.log(model.name, ' has been assigned to slot: ', this.state.selectedSlot)
+    // let slotIndex = this.state.slots.findIndex(this.findSlot)
+    // console.log('slotindex', slotIndex)
+    let newSlots = this.state.slots.map(slot => {
+      if (slot.slotNumber === this.state.selectedSlot) {
+        !!slot.instrument ? (slot.instrument = null) : (slot.instrument = model)
+        return slot
+      }
+      else {
+        return slot
+      }
+    })
+    this.setState({
+      slots: newSlots,
+      selectedSlot: null,
+      selectedInstrumentType: null,
+      selectedInstrumentBrand: null,
+      selectedInstrumentModel: null
+    })
   }
 
   updateIntrumentSelection = (type, brand, model) => {
-
-      this.setState({
-        selectedInstrumentType: type,
-        selectedInstrumentBrand: brand,
-        selectedInstrumentModel: model
-      })
-      if(!!model){
-        this.assignInstrumentToSlot(model)
-        //Note: we MUST pass it model, we CAN'T rely on the
-        // function being able to grab it from the state
-        // even though we just set the state, because the
-        // setState method is asynchronous, this means it
-        // may not have actually been done yet by the time we call
-        // this function.
-      }
-
-    }
+    this.setState({
+      selectedInstrumentType: type,
+      selectedInstrumentBrand: brand,
+      selectedInstrumentModel: model
+    })
+      // if(!!model){
+      //   this.assignInstrumentToSlot(model)
+      //   //Note: we MUST pass it model, we CAN'T rely on the
+      //   // function being able to grab it from the state
+      //   // even though we just set the state, because the
+      //   // setState method is asynchronous, this means it
+      //   // may not have actually been done yet by the time we call
+      //   // this function.
+      // }
+  }
 
   onSidebarClose = () => {
     this.setState({
@@ -237,6 +234,7 @@ class App extends Component {
       selectedSlot,
       selectedInstrumentType,
       selectedInstrumentBrand,
+      selectedInstrumentModel,
       slots,
       windowWidth,
       windowHeight,
@@ -263,12 +261,13 @@ class App extends Component {
              !!templateId ? (
                <div>
                 <Panel
-                type={templateId}
-                windowHeight={windowHeight}
-                windowWidth={windowWidth}
-                instruments={slots}
-                selectedSlot={selectedSlot}
-                selectSlot={ this.onSelectSlot }
+                  type={templateId}
+                  windowHeight={windowHeight}
+                  windowWidth={windowWidth}
+                  instruments={slots}
+                  selectedSlot={selectedSlot}
+                  slots={ slots }
+                  selectSlot={ this.onSelectSlot }
                 />
                 <Button
                   text={ "Clear all instruments" }
@@ -278,10 +277,13 @@ class App extends Component {
                   exitButton={ true }
                   backButton={ true }
                   instruments={ instruments }
+                  slots={ slots }
                   selectedSlot={ selectedSlot }
                   selectedInstrumentType={ selectedInstrumentType }
                   selectedInstrumentBrand={ selectedInstrumentBrand }
+                  selectedInstrumentModel={ selectedInstrumentModel }
                   onSelect={ this.updateIntrumentSelection }
+                  assignInstrumentToSlot={ this.assignInstrumentToSlot }
                   sidebarClose={ this.onSidebarClose }
                 />
 
@@ -354,6 +356,24 @@ class App extends Component {
     )
   }
 
+  // BEGIN: code necessary for window size detection
+  // (necessary for correct sizing of Panel component)
+  constructor(props) {
+    super(props);
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions)
+  }
+
+  updateWindowDimensions() {
+    this.setState({
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight })
+  }
+  // END: code necessary for window size detection
+
   doLoadInstruments() {
     loadInstruments()
     .then((instruments) => {
@@ -376,6 +396,8 @@ class App extends Component {
 
   // When this App first appears on screen
   componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions)
     this.doLoadInstruments()
     this.doLoadTemplates()
   }

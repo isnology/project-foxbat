@@ -35,6 +35,7 @@ function Panel({
   windowWidth,
   instruments,
   selectedSlot,
+  slots,
   selectSlot
 }) { 
   let optimalDimensions
@@ -62,6 +63,7 @@ function Panel({
         template={type} 
         instruments={instruments}
         selectedSlot={selectedSlot}
+        slots={ slots }
         onClick={selectSlot}
       />
 

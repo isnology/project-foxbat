@@ -4,7 +4,7 @@
 
 .main-button {
   height: 45px; 
-  background-color: $foxbat-blue; 
+  background-color: $foxbat-light-blue; 
   border-radius: 5px;
   cursor: pointer;
 }
@@ -38,4 +38,8 @@
   position: relative;
   top: -8px;
   left: 1px;
+}
+
+.landing-page-rectangle {
+  cursor: pointer;
 }

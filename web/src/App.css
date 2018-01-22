@@ -3,7 +3,7 @@
 
 .main-button {
   height: 45px;
-  background-color: #306ACC;
+  background-color: #428bca;
   border-radius: 5px;
   cursor: pointer; }
 
@@ -32,6 +32,9 @@
   position: relative;
   top: -8px;
   left: 1px; }
+
+.landing-page-rectangle {
+  cursor: pointer; }
 
 .sidebar {
   position: absolute;
@@ -112,6 +115,26 @@
   font-size: 1.5em;
   cursor: pointer; }
 
+.instrument-details {
+  padding: 5px;
+  width: 100%;
+  background: #e6e6e6; }
+
+.instrument-details p {
+  font-size: 1.5rem;
+  text-align: left;
+  line-height: 125%; }
+
+.instrument-preview {
+  margin: 3rem auto; }
+
+.instrument-preview p {
+  font-size: 2rem;
+  text-align: center; }
+
+.instrument-preview img {
+  display: block; }
+
 /*  MEDIA QUEEEEEEERIES */
 @media screen and (min-width: 1000px) {
   .sidebar-lower {
@@ -159,7 +182,8 @@
   text-align: center; }
 
 .plane-selector {
-  height: 20rem; }
+  height: 20rem;
+  cursor: pointer; }
 
 .center {
   text-align: center; }
@@ -167,7 +191,8 @@
 .template {
   border: 1px solid black;
   height: 128px;
-  width: 256px; }
+  width: 256px;
+  cursor: pointer; }
 
 .template-with-text {
   width: 256px;
