@@ -15,7 +15,7 @@ function Sidebar({
   selectedInstrumentBrand,
   selectedInstrumentModel, // This is an object
   onSelect, // (type?, brand?, model?) => {}
-  assignInstrumentToSlot, // Must be given the object
+  assignInstrumentToSelectedSlot, // Must be given the object
   sidebarClose,
   onBackClick
 }) {
@@ -58,7 +58,7 @@ function Sidebar({
             slots={ slots }
             selectedSlot={ selectedSlot }
             selectedInstrumentModel={ activeSlot.instrument }
-            toggleInstrumentToSlot={ assignInstrumentToSlot }
+            toggleInstrumentToSlot={ assignInstrumentToSelectedSlot }
           />
         ) : (
           <NavList
@@ -76,7 +76,7 @@ function Sidebar({
           slots={ slots }
           selectedSlot={ selectedSlot }
           selectedInstrumentModel={ selectedInstrumentModel }
-          toggleInstrumentToSlot={ assignInstrumentToSlot }
+          toggleInstrumentToSlot={ assignInstrumentToSelectedSlot }
         />
       )
     }

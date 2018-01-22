@@ -20,7 +20,7 @@ function Configurator({
   onClearPanel,
   onSignOut,
   onSelect,
-  assignInstrumentToSlot,
+  assignInstrumentToSelectedSlot,
   sidebarClose,
   onBackClick
 }) {
@@ -61,7 +61,7 @@ function Configurator({
         selectedInstrumentBrand={ selectedInstrumentBrand }
         selectedInstrumentModel={ selectedInstrumentModel }
         onSelect={ onSelect }
-        assignInstrumentToSlot={ assignInstrumentToSlot }
+        assignInstrumentToSelectedSlot={ assignInstrumentToSelectedSlot }
         sidebarClose={ sidebarClose }
         onBackClick={ onBackClick }
       />

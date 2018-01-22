@@ -148,6 +148,17 @@ class App extends Component {
     this.setState({ modalWindow: null })
   }
 
+  onClearCurrentPanel = () => {
+    this.clearInstrumentsFromSlots()
+    this.onSelectTemplate(this.state.templateId)
+    this.setState({
+      selectedSlot: null,
+      selectedInstrumentType: null,
+      selectedInstrumentBrand: null,
+      selectedInstrumentModel: null
+    })
+  }
+
   onSelectTemplate = (templateName) => {
     let slotins
     if (templateName==='a22' || templateName === 'a32'){
@@ -178,15 +189,25 @@ class App extends Component {
       selectedInstrumentModel: null
     })
   }
-  
-  assignInstrumentToSlot = (model) => {
-    console.log(model.name, ' is being assigned to slot: ', this.state.selectedSlot)
+
+  clearInstrumentsFromSlots = () => {
+    let newSlots = this.state.slots.map(slot => {
+        slot.instrument = null
+        return slot
+    })
+    this.setState({
+      slots: newSlots
+    })
+  }
+
+  assignInstrumentToSlot = (model, slotNumber) => {
+    console.log(model.name, ' is being assigned to slot: ', slotNumber)
     // Note: we must receive the model as a parameter
     // because we cannot rely on the state being updated
     // when this runs. However we can rely on it being correct
     // for the currently selected slot.
     let newSlots = this.state.slots.map(slot => {
-      if (slot.slotNumber === this.state.selectedSlot) {
+      if (slot.slotNumber === slotNumber) {
         !!slot.instrument ? (slot.instrument = null) : (slot.instrument = model)
         return slot
       }
@@ -201,6 +222,10 @@ class App extends Component {
       selectedInstrumentBrand: null,
       selectedInstrumentModel: null
     })
+  }
+  
+  assignInstrumentToSelectedSlot = (model) => {
+    this.assignInstrumentToSlot(model, this.state.selectedSlot)
   }
 
   updateIntrumentSelection = (type, brand, model) => {
@@ -243,15 +268,6 @@ class App extends Component {
     }
   }
 
-  onClearCurrentPanel = () => {
-    this.onSelectTemplate(this.state.templateId)
-    this.setState({
-      selectedSlot: null,
-      selectedInstrumentType: null,
-      selectedInstrumentBrand: null,
-      selectedInstrumentModel: null
-    })
-  }
 
   render() {
     const {
@@ -304,7 +320,7 @@ class App extends Component {
                   onClearPanel={ this.onClearCurrentPanel }
                   onSignOut={ this.onSignOut }
                   onSelect={ this.updateIntrumentSelection }
-                  assignInstrumentToSlot={ this.assignInstrumentToSlot }
+                  assignInstrumentToSelectedSlot={ this.assignInstrumentToSelectedSlot }
                   sidebarClose={ this.onSidebarClose }
                   onBackClick={ this.onBackClick }
                 />
