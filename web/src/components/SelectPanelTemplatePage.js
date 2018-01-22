@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import Button from './Button'
 import PanelTemplate from './PanelTemplate'
+import FoxbatLogo from './FoxbatLogo'
 
 function SelectPanelTemplatePage({
   firstPanelName,
@@ -11,15 +12,19 @@ function SelectPanelTemplatePage({
 }) { 
   return (
     <Fragment>
-      <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
-      <h2>Choose a template to continue</h2>
+      <FoxbatLogo />
 
-      <div className="selection-images">
-        <PanelTemplate name={ firstPanelName } clicked={()=>{onSelectTemplate(firstPanelTemplate)}}/>
-        <PanelTemplate name={ secondPanelName } clicked={()=>{onSelectTemplate(secondPanelTemplate)}}/>
+      <div className="welcome-container">
+        <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
+        <h2>Choose a template to continue</h2>
+
+        <div className="selection-images">
+          <PanelTemplate name={ firstPanelName } clicked={()=>{onSelectTemplate(firstPanelTemplate)}}/>
+          <PanelTemplate name={ secondPanelName } clicked={()=>{onSelectTemplate(secondPanelTemplate)}}/>
+        </div>
+
+        <Button text="What is this button??"/>
       </div>
-
-      <Button text="What is this button??"/>
 
     </Fragment>
   )

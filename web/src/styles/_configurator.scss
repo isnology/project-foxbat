@@ -5,6 +5,14 @@
   min-height: 100vh;
 }
 
+.configurator-header {
+  position: relative;
+  left: 0;
+  top: 0;
+  text-align: left;
+  border-bottom: solid 1px black;
+}
+
 // LEFT SIDE
 .panel-container {
   display: flex;

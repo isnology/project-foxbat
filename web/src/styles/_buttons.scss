@@ -3,7 +3,9 @@
 }
 
 .main-button {
+  margin: 2rem auto;
   height: 45px; 
+  max-width: 400px;
   background-color: $foxbat-light-blue; 
   border-radius: 5px;
   cursor: pointer;

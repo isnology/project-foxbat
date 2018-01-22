@@ -3,7 +3,9 @@ import logo from '../img/foxbatlogo.png'
 
 function FoxbatLogo() { 
   return (
-    <img src={ logo } alt="foxbat logo" className="foxbat-logo"/>
+    <div className="logo-div">
+      <img src={ logo } alt="foxbat logo" className="foxbat-logo"/>
+    </div>
   )
 }
 

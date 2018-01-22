@@ -211,8 +211,32 @@ class App extends Component {
     this.setState({
       selectedSlot: null,
       selectedInstrumentType: null,
-      selectedInstrumentBrand: null
+      selectedInstrumentBrand: null,
+      selectedInstrumentModel: null
     })
+  }
+
+  onBackClick = () => {
+    if (this.state.selectedInstrumentModel) {
+      this.setState({
+        selectedInstrumentModel: null
+      })
+    }
+    else if (this.state.selectedInstrumentBrand) {
+      this.setState({
+        selectedInstrumentBrand: null
+      })
+    }
+    else if (this.state.selectedInstrumentType) {
+      this.setState({
+        selectedInstrumentType: null
+      })
+    }
+    else if (this.state.selectedSlot) {
+      this.setState({
+        selectedSlot: null
+      })
+    }
   }
 
   onClearCurrentPanel = () => {
@@ -260,6 +284,7 @@ class App extends Component {
             <Route path='/app' exact render={ () => (
               !!templateId ? (
                 <div className="configurator">
+                  <div className="configurator-header">Foxbat Australia Instrument Panel Configurator</div>
                   <div className="panel-container">
                     <Panel
                       type={templateId}
@@ -288,7 +313,6 @@ class App extends Component {
                     </div>
                   </div>
                   <Sidebar
-                    exitButton={ true }
                     backButton={ true }
                     instruments={ instruments }
                     slots={ slots }
@@ -299,6 +323,7 @@ class App extends Component {
                     onSelect={ this.updateIntrumentSelection }
                     assignInstrumentToSlot={ this.assignInstrumentToSlot }
                     sidebarClose={ this.onSidebarClose }
+                    onBackClick={ this.onBackClick }
                   />
                 </div>
             ):(

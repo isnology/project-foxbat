@@ -1,5 +1,6 @@
 import React from 'react'
 import ExitButton from '../ExitButton'
+import BackButton from '../BackButton'
 import NavList from './NavList'
 import SidebarText from './SidebarText'
 import InstrumentPreview from './InstrumentPreview'
@@ -7,8 +8,6 @@ import { sideBarHeadings } from '../../constants/messages'
 var _array = require('lodash/array') // Lodash array methods
 
 function Sidebar({
-  exitButton,
-  backButton,
   instruments,
   slots,
   selectedSlot,
@@ -17,7 +16,8 @@ function Sidebar({
   selectedInstrumentModel, // This is an object
   onSelect, // (type?, brand?, model?) => {}
   assignInstrumentToSlot, // Must be given the object
-  sidebarClose
+  sidebarClose,
+  onBackClick
 }) {
 
   function allTypesFromInstruments(instruments) {
@@ -80,16 +80,6 @@ function Sidebar({
         />
       )
     }
-    // else if (!selectedInstrumentModel && !!selectedSlot) {
-    //   return (
-    //     <NavList
-    //       displayItems={ displayItems }
-    //       pictureItems={ pictureItems }
-    //       modelObjects={ modelObjects }
-    //       onSelect={ onSelectItem }
-    //     />
-    //   )
-    // }
     else if (!selectedSlot) {
       return <SidebarText />
     }
@@ -100,10 +90,14 @@ function Sidebar({
   let pictureItems
   let onSelectItem
   let modelObjects
+  let exitButton = true
+  let backButton = true
 
   // Nothing selected
   if (!selectedSlot) {
     topHeading = sideBarHeadings.welcome
+    exitButton = false
+    backButton = false
   }
   // Selected a slot
   else if (!!selectedSlot && !selectedInstrumentType) {
@@ -144,7 +138,8 @@ function Sidebar({
 
       <div className="sidebar-top">
         <div className="sidebar-top-buttons">
-          { exitButton && <ExitButton onToggle={ sidebarClose }/>}
+          { exitButton ? <ExitButton onToggle={ sidebarClose }/> : <span></span>}
+          { backButton && <BackButton onBack={ onBackClick }/> }
         </div>
         <h3>{ topHeading }</h3>
       </div>
