@@ -21,6 +21,7 @@ class App extends Component {
     showConfigurator: true,
     instruments: null, //list of all instruments from server
     templates: null,
+    userPanels:null, // panels made by the signed in user
     panelName: null, //title user gave their panel
     panel_id: null, // db id of users retrieved/saved panel
     selectedSlot: null, 
@@ -40,11 +41,24 @@ class App extends Component {
     signIn({ email, password })
     .then((decodedToken) => {
       this.setState({ decodedToken })
+      this.loadUserPanels()
       this.onExitModal()
     })
     .catch((error) => {
       this.setState({ error })
     })
+  }
+  
+  loadUserPanels = () => {
+    loadPanels()
+    .then((panels) =>{
+      console.log("I was able to load your panels because you signed in.",panels)
+      this.setState({userPanels: panels})
+    })
+    .catch((error) => {
+      this.setState({ error })
+    })
+
   }
 
   onSaveRegister = ({ name, email, password }) => {
