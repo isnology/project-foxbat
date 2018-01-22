@@ -117,7 +117,7 @@ function Sidebar({
   }
   // Select slot, type, and brand
   else if (!!selectedSlot && !!selectedInstrumentType && !!selectedInstrumentBrand && !selectedInstrumentModel) {
-    topHeading = sideBarHeadings.selectModel + selectedInstrumentBrand + " " + selectedInstrumentType.toLowerCase()
+    topHeading =  selectedInstrumentBrand + " " + selectedInstrumentType.toLowerCase() + sideBarHeadings.selectModel
 
     modelObjects = allModelsForBrandsForTypeFromInstruments(instruments, selectedInstrumentType, selectedInstrumentBrand)
 

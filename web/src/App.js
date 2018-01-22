@@ -12,7 +12,7 @@ import { loadInstruments } from './api/instruments'
 import { loadTemplates } from './api/templates'
 import Panel from './components/Panel'
 import ModalWindow from './components/ModalWindow'
-import logo from './img/foxbatlogo.png'
+import Configurator from './components/Configurator'
 
 class App extends Component {
   state = {
@@ -319,52 +319,30 @@ class App extends Component {
 
             <Route path='/app' exact render={ () => (
               !!templateId ? (
-                <div className="configurator">
-                  <img src={ logo } alt="Foxbat logo" className="configurator-logo" />
-                  <div className="panel-container">
-                    <Panel
-                      type={templateId}
-                      windowHeight={windowHeight}
-                      windowWidth={windowWidth}
-                      instruments={slots}
-                      selectedSlot={selectedSlot}
-                      slots={ slots }
-                      selectSlot={ this.onSelectSlot }
-                    />
-                    <div className="panel-button-group">
-                      <Button
-                        text={ "Clear panel" }
-                        onToggle={ this.onClearCurrentPanel }
-                      />     
-                      { signedIn &&
-                        <Button
-                          text="Sign Out"
-                          onToggle={ this.onSignOut }
-                        />
-                      }
-                      <Button
-                        text="Save"
-                        onToggle={ this.onSave }
-                      />
-                    </div>
-                  </div>
-                  <Sidebar
-                    backButton={ true }
-                    instruments={ instruments }
-                    slots={ slots }
-                    selectedSlot={ selectedSlot }
-                    selectedInstrumentType={ selectedInstrumentType }
-                    selectedInstrumentBrand={ selectedInstrumentBrand }
-                    selectedInstrumentModel={ selectedInstrumentModel }
-                    onSelect={ this.updateIntrumentSelection }
-                    assignInstrumentToSlot={ this.assignInstrumentToSlot }
-                    sidebarClose={ this.onSidebarClose }
-                    onBackClick={ this.onBackClick }
-                  />
-                </div>
-            ):(
-              <Redirect to='/' />
-            )
+                <Configurator 
+                  type={templateId}
+                  windowHeight={windowHeight}
+                  windowWidth={windowWidth}
+                  instruments={slots}
+                  instruments={ instruments }
+                  slots={ slots }
+                  selectedSlot={ selectedSlot }
+                  selectedInstrumentType={ selectedInstrumentType }
+                  selectedInstrumentBrand={ selectedInstrumentBrand }
+                  selectedInstrumentModel={ selectedInstrumentModel }
+                  signedIn={ signedIn }
+                  onSave={ this.onSave }
+                  selectSlot={ this.onSelectSlot }
+                  onClearPanel={ this.onClearCurrentPanel }
+                  onSignOut={ this.onSignOut }
+                  onSelect={ this.updateIntrumentSelection }
+                  assignInstrumentToSlot={ this.assignInstrumentToSlot }
+                  sidebarClose={ this.onSidebarClose }
+                  onBackClick={ this.onBackClick }
+                />
+              ):(
+                <Redirect to='/' />
+              )
             )}/>
 
             <Route path='/a22' exact render={ () => (

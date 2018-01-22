@@ -4,7 +4,6 @@ import Slot from './Slot'
 function A22Slots({
   height,
   // width
-  instruments, //array of objects
   onClick, //callback function to pass back which slot was clicked
   template, //a22, a32, a22Digital, a32Digital
   selectedSlot, // for conditional formatting
@@ -200,7 +199,7 @@ function A22Slots({
   return(
     <Fragment>
       {
-        instruments.map((instrument, index)=> (
+        slots.map((instrument, index)=> (
           <Slot //if a digital [square] instrument is desired, the instrument object should contain a key called 'shape': 'circle' or 'square' ,or boolean key called 'circle':true or false
             key = { instrument.slotNumber }
             instrument = { !!instrument.instrument ? instrument.instrument : null }

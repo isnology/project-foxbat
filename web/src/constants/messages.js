@@ -1,8 +1,8 @@
 const sideBarHeadings = {
-  welcome: "Getting started:",
+  welcome: "Getting started",
   selectInstrumentType: "Select instrument type",
-  selectBrand: "Select brand",
-  selectModel: "Select "
+  selectBrand: "select brand",
+  selectModel: ": select model"
 }
 
 const sideBarMessages = {

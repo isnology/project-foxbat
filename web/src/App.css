@@ -174,7 +174,7 @@
 
 .instrument-list .button-text {
   margin: auto;
-  font-size: 1.5em; }
+  font-size: 1.6rem; }
 
 .sidebar .exit-button-X {
   font-size: 1.5em;
@@ -211,7 +211,7 @@
     height: fit-content;
     margin-top: 10px; }
   .instrument-list .button-text {
-    font-size: 2em; } }
+    font-size: 1.6rem; } }
 
 .App {
   text-align: center;

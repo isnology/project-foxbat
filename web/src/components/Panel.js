@@ -33,7 +33,6 @@ function Panel({
   slotClicked, //tell the parent which slot was clicked
   windowHeight,
   windowWidth,
-  instruments,
   selectedSlot,
   slots,
   selectSlot
@@ -61,7 +60,6 @@ function Panel({
       <A22Slots 
         height={height} 
         template={type} 
-        instruments={instruments}
         selectedSlot={selectedSlot}
         slots={ slots }
         onClick={selectSlot}
