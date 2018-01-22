@@ -56,7 +56,7 @@ function Panel({
     <div 
       id = "svgbox"
       style = {svgContainerStyle}
-      >
+    >
 
       <A22Slots 
         height={height} 

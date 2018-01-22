@@ -1,10 +1,50 @@
 @import 'styles/constants';
 @import 'styles/buttons';
-@import 'styles/sidebar';
-@import 'styles/panel';
+@import 'styles/configurator';
 
 .App {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   text-align: center;
+  min-height: 100vh;
+  background: white;
+}
+
+h1 {
+  margin: 5rem auto;
+  font-family: sans-serif;
+  font-size: 3.2rem;
+}
+
+h2 {
+  margin: 2rem auto;
+  font-family: sans-serif;
+  font-size: 2.4rem;
+}
+
+h3 {
+  margin: 1rem auto;
+  font-family: sans-serif;
+  font-size: 2rem;
+  font-weight: normal;
+}
+
+.foxbat-logo {
+  top: 0;
+  margin: auto;
+  width: 400px;
+}
+
+.selection-images {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.landing-page-rectangle {
+  margin: 2rem;
+  padding: 0;
 }
 
 .plane-selector{

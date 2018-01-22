@@ -258,46 +258,49 @@ class App extends Component {
             )}/>
 
             <Route path='/app' exact render={ () => (
-             !!templateId ? (
-               <div>
-                <Panel
-                  type={templateId}
-                  windowHeight={windowHeight}
-                  windowWidth={windowWidth}
-                  instruments={slots}
-                  selectedSlot={selectedSlot}
-                  slots={ slots }
-                  selectSlot={ this.onSelectSlot }
-                />
-                <Button
-                  text={ "Clear all instruments" }
-                  onToggle={ this.onClearCurrentPanel }
-                />
-                <Sidebar
-                  exitButton={ true }
-                  backButton={ true }
-                  instruments={ instruments }
-                  slots={ slots }
-                  selectedSlot={ selectedSlot }
-                  selectedInstrumentType={ selectedInstrumentType }
-                  selectedInstrumentBrand={ selectedInstrumentBrand }
-                  selectedInstrumentModel={ selectedInstrumentModel }
-                  onSelect={ this.updateIntrumentSelection }
-                  assignInstrumentToSlot={ this.assignInstrumentToSlot }
-                  sidebarClose={ this.onSidebarClose }
-                />
-
-                { signedIn &&
-                  <Button
-                    text="Sign Out"
-                    onToggle={ this.onSignOut }
+              !!templateId ? (
+                <div className="configurator">
+                  <div className="panel-container">
+                    <Panel
+                      type={templateId}
+                      windowHeight={windowHeight}
+                      windowWidth={windowWidth}
+                      instruments={slots}
+                      selectedSlot={selectedSlot}
+                      slots={ slots }
+                      selectSlot={ this.onSelectSlot }
+                    />
+                    <div className="panel-button-group">
+                      <Button
+                        text={ "Clear panel" }
+                        onToggle={ this.onClearCurrentPanel }
+                      />     
+                      { signedIn &&
+                        <Button
+                          text="Sign Out"
+                          onToggle={ this.onSignOut }
+                        />
+                      }
+                      <Button
+                        text="Save"
+                        onToggle={ this.onSave }
+                      />
+                    </div>
+                  </div>
+                  <Sidebar
+                    exitButton={ true }
+                    backButton={ true }
+                    instruments={ instruments }
+                    slots={ slots }
+                    selectedSlot={ selectedSlot }
+                    selectedInstrumentType={ selectedInstrumentType }
+                    selectedInstrumentBrand={ selectedInstrumentBrand }
+                    selectedInstrumentModel={ selectedInstrumentModel }
+                    onSelect={ this.updateIntrumentSelection }
+                    assignInstrumentToSlot={ this.assignInstrumentToSlot }
+                    sidebarClose={ this.onSidebarClose }
                   />
-                }
-                <Button
-                  text="Save"
-                  onToggle={ this.onSave }
-                />
-              </div>
+                </div>
             ):(
               <Redirect to='/' />
             )

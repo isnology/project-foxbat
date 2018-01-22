@@ -36,6 +36,53 @@
 .landing-page-rectangle {
   cursor: pointer; }
 
+.configurator {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh; }
+
+.panel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 0;
+  width: 75vw;
+  text-align: center; }
+
+#svgbox {
+  /* border: black solid 1px; */
+  position: relative;
+  width: 75%; }
+
+.panel-svg .svg-line {
+  stroke: #6f7174;
+  stroke-width: 1px;
+  fill: #ACB3B8; }
+
+#a22svg {
+  width: 100%;
+  height: auto; }
+
+#a32svg {
+  width: 100%;
+  height: auto; }
+
+.slot {
+  position: absolute;
+  border: solid #6f7174 1px;
+  background-color: #ACB3B8;
+  overflow: hidden;
+  box-shadow: inset -1px -1px 1px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 1px 1px rgba(255, 255, 255, 0.2);
+  cursor: pointer; }
+
+.selected-slot, .slot:hover {
+  border-color: #23547c;
+  box-shadow: 0px 0px 5px 5px #23547c, inset 0px 0px 5px 5px #23547c; }
+
+.panel-button-group button {
+  width: 20rem; }
+
 .sidebar {
   position: absolute;
   z-index: 3;
@@ -43,8 +90,8 @@
   flex-direction: column;
   right: 0;
   top: 0;
-  height: 100%;
-  width: 25%;
+  height: 100vh;
+  width: 25vw;
   overflow-y: scroll; }
 
 .sidebar-top {
@@ -105,9 +152,13 @@
   display: flex;
   flex-direction: column;
   margin-top: 5px;
+  padding: 5px;
   width: 100%;
   height: fit-content;
   cursor: pointer; }
+
+.instrument-list .btnimg {
+  margin: 5px auto; }
 
 .instrument-list .button-text {
   margin: auto;
@@ -150,38 +201,43 @@
   .instrument-list .button-text {
     font-size: 2em; } }
 
-#svgbox {
-  /* border: black solid 1px; */
-  position: relative;
-  width: 80%; }
-
-.panel-svg .svg-line {
-  stroke: #6f7174;
-  stroke-width: 1px;
-  fill: #ACB3B8; }
-
-#a22svg {
-  width: 100%;
-  height: auto; }
-
-#a32svg {
-  width: 100%;
-  height: auto; }
-
-.slot {
-  position: absolute;
-  border: solid #6f7174 1px;
-  background-color: #ACB3B8;
-  overflow: hidden;
-  box-shadow: inset -1px -1px 1px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 1px 1px rgba(255, 255, 255, 0.2);
-  cursor: pointer; }
-
-.selected-slot, .slot:hover {
-  border-color: #23547c;
-  box-shadow: 0px 0px 5px 5px #23547c, inset 0px 0px 5px 5px #23547c; }
-
 .App {
-  text-align: center; }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: center;
+  min-height: 100vh;
+  background: white; }
+
+h1 {
+  margin: 5rem auto;
+  font-family: sans-serif;
+  font-size: 3.2rem; }
+
+h2 {
+  margin: 2rem auto;
+  font-family: sans-serif;
+  font-size: 2.4rem; }
+
+h3 {
+  margin: 1rem auto;
+  font-family: sans-serif;
+  font-size: 2rem;
+  font-weight: normal; }
+
+.foxbat-logo {
+  top: 0;
+  margin: auto;
+  width: 400px; }
+
+.selection-images {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; }
+
+.landing-page-rectangle {
+  margin: 2rem;
+  padding: 0; }
 
 .plane-selector {
   height: 20rem;
