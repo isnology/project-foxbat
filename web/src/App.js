@@ -12,6 +12,7 @@ import { loadInstruments } from './api/instruments'
 import { loadTemplates } from './api/templates'
 import Panel from './components/Panel'
 import ModalWindow from './components/ModalWindow'
+import logo from './img/foxbatlogo.png'
 
 class App extends Component {
   state = {
@@ -284,7 +285,7 @@ class App extends Component {
             <Route path='/app' exact render={ () => (
               !!templateId ? (
                 <div className="configurator">
-                  <div className="configurator-header">Foxbat Australia Instrument Panel Configurator</div>
+                  <img src={ logo } alt="Foxbat logo" className="configurator-logo" />
                   <div className="panel-container">
                     <Panel
                       type={templateId}

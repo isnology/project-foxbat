@@ -1,21 +1,22 @@
 .configurator {
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: center;
   min-height: 100vh;
 }
 
-.configurator-header {
-  position: relative;
-  left: 0;
+.configurator-logo {
+  position: absolute;
   top: 0;
-  text-align: left;
-  border-bottom: solid 1px black;
+  left: 0;
+  height: 9rem;
 }
 
 // LEFT SIDE
 .panel-container {
   display: flex;
+  margin-top: 9rem;
   flex-direction: column;
   align-items: center;
   padding: 3rem 0;
@@ -75,7 +76,7 @@ height: auto;
   flex-direction: column;
   right: 0;
   top: 0;
-  height: 100vh;
+  height: 100%;
   width: 25vw;
   overflow-y: scroll;
 }
@@ -88,7 +89,6 @@ height: auto;
   min-height: 100px;
   background: $foxbat-blue;
   color: #F5F5F5;
-  font-family: 'Roboto', sans-serif;
 }
 
 .sidebar-top-buttons {
@@ -96,23 +96,23 @@ height: auto;
   flex-direction: row-reverse;
   justify-content: space-between;
   top: 0;
-  height: 50px;
+  height: 30px;
   padding: 5px 10px;
 }
 
 .sidebar-top h3 {
   width: 100%;
-  margin: 20px auto 0 auto;
+  margin: 2rem auto 1rem auto;
   text-align: center;
-  font-size: 24px;
-  font-weight: normal;
+  font-size: 2rem;
+  color: #F2F2F2;
 }
 
 .sidebar-lower {
   display: flex;
   flex-direction: column;
   margin: 0;
-  padding: 2px;
+  padding: 5px;
   height: calc(100% - 100px);
   background: #C4C4C4;
   overflow-y: auto;
@@ -127,7 +127,6 @@ height: auto;
   height: calc(100% - 100px); 
   margin: 0;
   color: #1b1b1b;
-  font-family: 'Roboto', sans-serif;
   text-align: left;
   line-height: 150%;
 }

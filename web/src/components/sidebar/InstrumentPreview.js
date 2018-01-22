@@ -14,7 +14,7 @@ const InstrumentPreview = ({
 
   let buttonLabel
 
-  !!activeSlot.instrument ? (buttonLabel = "Remove instrument") : (buttonLabel = "Add instrument")
+  !!activeSlot.instrument ? (buttonLabel = "Remove") : (buttonLabel = "Add")
   console.log("button label", buttonLabel)
 
   return (
