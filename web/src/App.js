@@ -340,7 +340,7 @@ class App extends Component {
     this.setState({
       panelName: null,
       panel_id: null,
-      selectedSlot: null, 
+      selectedSlot: null,
       selectedInstrumentType: null,
       selectedInstrumentBrand: null,
       selectedInstrumentModel: null,
@@ -378,11 +378,14 @@ class App extends Component {
           <Switch>
 
             <Route path='/' exact render={ () => (
-              <WelcomePage
-                onSignOut={ this.onSignOut }
-                doModalWindow={ this.doModalWindow }
-                signedIn={ signedIn }
-              />
+              !templateId ? (
+                <WelcomePage
+                  onSignOut={ this.onSignOut }
+                  doModalWindow={ this.doModalWindow }
+                  signedIn={ signedIn }
+                /> ) : (
+                  <Redirect to='/' />
+                )
             )}/>
 
             <Route path='/app' exact render={ () => (
