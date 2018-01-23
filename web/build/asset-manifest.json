@@ -1,8 +1,12 @@
 {
-  "main.css": "static/css/main.cfc75e73.css",
-  "main.css.map": "static/css/main.cfc75e73.css.map",
-  "main.js": "static/js/main.10354015.js",
-  "main.js.map": "static/js/main.10354015.js.map",
-  "static/media/a22.jpg": "static/media/a22.85f60d56.jpg",
-  "static/media/a32.jpg": "static/media/a32.f49a3ad9.jpg"
+  "main.css": "static/css/main.93c939fe.css",
+  "main.css.map": "static/css/main.93c939fe.css.map",
+  "main.js": "static/js/main.080c29b7.js",
+  "main.js.map": "static/js/main.080c29b7.js.map",
+  "static/media/a22.png": "static/media/a22.8cd5a559.png",
+  "static/media/a22digital.png": "static/media/a22digital.92ac5b9b.png",
+  "static/media/a32.jpg": "static/media/a32.f49a3ad9.jpg",
+  "static/media/a32.png": "static/media/a32.6ded1a9b.png",
+  "static/media/a32digital.png": "static/media/a32digital.bd5d8361.png",
+  "static/media/foxbatlogo.png": "static/media/foxbatlogo.b458ca86.png"
 }
