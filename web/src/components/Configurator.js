@@ -4,6 +4,7 @@ import Button from './Button'
 import Sidebar from './sidebar/Sidebar'
 import Panel from './Panel'
 import logo from '../img/foxbatlogo.png'
+import numeral from 'numeral'
 
 function Configurator({
   type,
@@ -42,7 +43,7 @@ function Configurator({
     <div className="configurator">
       <img src={ logo } alt="Foxbat logo" className="configurator-logo" />
       <div className="panel-container">
-        <div className="running-cost">Current cost (USD): ${ totalCost() }</div>
+        <div className="running-cost">Current cost (USD): ${ numeral(totalCost()).format('0,0.00') }</div>
         <Panel
           type={ type }
           windowHeight={ windowHeight }
@@ -65,9 +66,9 @@ function Configurator({
           <Button
             text={ "Clear panel" }
             onToggle={ onClearPanel }
-          />     
+          />
           <Link to="/" onClick={ onRefreshApp }>
-            <Button 
+            <Button
               text="Back to start"
             />
           </Link>

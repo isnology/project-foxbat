@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from '../Button';
+import numeral from "numeral";
 
 const InstrumentPreview = ({
   slots,
@@ -26,10 +27,10 @@ const InstrumentPreview = ({
         <p>{ selectedInstrumentModel.text }</p>
       </div>
       <div className="instrument-preview">
-        <p>{ selectedInstrumentModel.price/100 } USD</p>
+        <p>{ numeral(selectedInstrumentModel.price/100).format('$0,0.00') } USD</p>
         { !!selectedInstrumentModel.pictureURL ? (<img src={ selectedInstrumentModel.pictureURL } alt="instrument" className="btnimg"/>) : ('') }
       </div>
-      <Button 
+      <Button
         text={ buttonLabel }
         onToggle={ ()=>{ toggleInstrumentToSlot(selectedInstrumentModel) } }
       />
