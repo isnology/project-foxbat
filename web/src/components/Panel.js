@@ -33,7 +33,6 @@ function Panel({
   slotClicked, //tell the parent which slot was clicked
   windowHeight,
   windowWidth,
-  instruments,
   selectedSlot,
   slots,
   selectSlot
@@ -45,7 +44,7 @@ function Panel({
     optimalDimensions = optimalPanelDimensions(windowWidth, windowHeight, A32_SVG_HEIGHT_RATIO)
   }
   // const width = (type === 'a22' || type === 'a22Digital') ? height*A22_SVG_HEIGHT_RATIO : height*A32_SVG_HEIGHT_RATIO
-  const imagePath = (type === 'a22') ? 'images/a22.svg' : 'images/a32.svg'
+  // const imagePath = (type === 'a22') ? 'images/a22.svg' : 'images/a32.svg'
   const height = optimalDimensions.height
   const width = optimalDimensions.width
   const svgContainerStyle = {
@@ -56,12 +55,11 @@ function Panel({
     <div 
       id = "svgbox"
       style = {svgContainerStyle}
-      >
+    >
 
       <A22Slots 
         height={height} 
         template={type} 
-        instruments={instruments}
         selectedSlot={selectedSlot}
         slots={ slots }
         onClick={selectSlot}

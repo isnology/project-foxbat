@@ -6,7 +6,7 @@ function PlaneSelect({
 }) { 
   return (
     <button className="landing-page-rectangle">
-      <h1>{ name }</h1>
+      <h3>{ name }</h3>
       <img src={ imageURL } alt="foxbat plane" className='plane-selector'/>
     </button>
   )

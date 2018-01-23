@@ -50,7 +50,11 @@ function Slot({
 
   return(
       <div className={classForSlot} id={slotNumber} style={slotStyle} onClick={onClick}>
-      { !!thisSlot[0].instrument ? <img src={thisSlot[0].instrument.pictureURL} width="100%"/> : '' }
+        { !!thisSlot[0].instrument ? 
+          <div className="slot-label">
+            {`${thisSlot[0].instrument.name} (${thisSlot[0].instrument.brand})`}
+          </div> : '' }
+        { !!thisSlot[0].instrument ? <img src={thisSlot[0].instrument.pictureURL} width="100%" alt={thisSlot[0].instrument.name}/> : '' }
       </div>
   )}
 
