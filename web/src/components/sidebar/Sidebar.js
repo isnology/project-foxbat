@@ -1,5 +1,6 @@
 import React from 'react'
 import ExitButton from '../ExitButton'
+import BackButton from '../BackButton'
 import NavList from './NavList'
 import SidebarText from './SidebarText'
 import InstrumentPreview from './InstrumentPreview'
@@ -7,8 +8,6 @@ import { sideBarHeadings } from '../../constants/messages'
 var _array = require('lodash/array') // Lodash array methods
 
 function Sidebar({
-  exitButton,
-  backButton,
   instruments,
   slots,
   selectedSlot,
@@ -16,8 +15,9 @@ function Sidebar({
   selectedInstrumentBrand,
   selectedInstrumentModel, // This is an object
   onSelect, // (type?, brand?, model?) => {}
-  assignInstrumentToSlot, // Must be given the object
-  sidebarClose
+  assignInstrumentToSelectedSlot, // Must be given the object
+  sidebarClose,
+  onBackClick
 }) {
 
   function allTypesFromInstruments(instruments) {
@@ -28,6 +28,8 @@ function Sidebar({
     const typesArray = _array.uniq(allTypesArray)
     return typesArray
   }
+
+  // size: slot.slotNumber.substring(0,1)
 
   function allBrandsForTypeFromInstruments(instruments, selectedInstrumentType) {
     const instrumentsWithType = instruments.filter((instrument) => {
@@ -58,7 +60,7 @@ function Sidebar({
             slots={ slots }
             selectedSlot={ selectedSlot }
             selectedInstrumentModel={ activeSlot.instrument }
-            toggleInstrumentToSlot={ assignInstrumentToSlot }
+            toggleInstrumentToSlot={ assignInstrumentToSelectedSlot }
           />
         ) : (
           <NavList
@@ -76,20 +78,10 @@ function Sidebar({
           slots={ slots }
           selectedSlot={ selectedSlot }
           selectedInstrumentModel={ selectedInstrumentModel }
-          toggleInstrumentToSlot={ assignInstrumentToSlot }
+          toggleInstrumentToSlot={ assignInstrumentToSelectedSlot }
         />
       )
     }
-    // else if (!selectedInstrumentModel && !!selectedSlot) {
-    //   return (
-    //     <NavList
-    //       displayItems={ displayItems }
-    //       pictureItems={ pictureItems }
-    //       modelObjects={ modelObjects }
-    //       onSelect={ onSelectItem }
-    //     />
-    //   )
-    // }
     else if (!selectedSlot) {
       return <SidebarText />
     }
@@ -100,10 +92,14 @@ function Sidebar({
   let pictureItems
   let onSelectItem
   let modelObjects
+  let exitButton = true
+  let backButton = true
 
   // Nothing selected
   if (!selectedSlot) {
     topHeading = sideBarHeadings.welcome
+    exitButton = false
+    backButton = false
   }
   // Selected a slot
   else if (!!selectedSlot && !selectedInstrumentType) {
@@ -123,7 +119,7 @@ function Sidebar({
   }
   // Select slot, type, and brand
   else if (!!selectedSlot && !!selectedInstrumentType && !!selectedInstrumentBrand && !selectedInstrumentModel) {
-    topHeading = sideBarHeadings.selectModel + selectedInstrumentBrand + " " + selectedInstrumentType.toLowerCase()
+    topHeading =  selectedInstrumentBrand + " " + selectedInstrumentType.toLowerCase() + sideBarHeadings.selectModel
 
     modelObjects = allModelsForBrandsForTypeFromInstruments(instruments, selectedInstrumentType, selectedInstrumentBrand)
 
@@ -144,7 +140,8 @@ function Sidebar({
 
       <div className="sidebar-top">
         <div className="sidebar-top-buttons">
-          { exitButton && <ExitButton onToggle={ sidebarClose }/>}
+          { exitButton ? <ExitButton onToggle={ sidebarClose }/> : <span></span>}
+          { backButton && <BackButton onBack={ onBackClick }/> }
         </div>
         <h3>{ topHeading }</h3>
       </div>
