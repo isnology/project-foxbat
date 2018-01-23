@@ -1,35 +1,22 @@
 import React, {Fragment} from 'react'
+import BasePopUp from './BasePopUp'
 
-function MyPanels({arrayofpanels}) {
-
+function MyPanels({ panelList, onExit, onSubmit, errMsg }) {
   return (
-    <Fragment>
-    <FoxbatLogo />
-    
-    <div className="welcome-container">
-      <h1>Welcome back the Foxbat Instrument Panel Configurator</h1>
-      <h2>Saved panels for {email}</h2>
+    <BasePopUp onExit={ onExit } errMsg={ errMsg } >
 
-      { !signedIn &&
-      <Button
-        text="Sign In"
-        onToggle = { (event) => {
-          doModalWindow({ name: 'signIn' })
-        } }
-      />
-      }
-      { signedIn &&
-        <Button
-          text="Sign Out"
-          onToggle={ onSignOut }
-        />
-      }
-    </div>
-  </Fragment>
+      <h1>Welcome back the <strong>Foxbat</strong> Instrument Panel Configurator</h1>
+      <h2>Click the instrument panel name to continue editing</h2>
+      <p>OR</p>
+      <h2>exit to start a new instrument panel</h2>
 
-    My saved panels
-    arrayofpanels.map panel
-    panel.type, panel.name, panel.integer
+      <select onChange={ (event) => { onSubmit(event.target.value) } } size="5" >
+        {!!panelList && panelList.map((panel) => (
+            <option key={panel._id} value={ JSON.stringify(panel) } >{ panel.name }</option>
+        ))}
+      </select>
+
+    </BasePopUp>
   )
 }
 

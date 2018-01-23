@@ -309,6 +309,8 @@ h3 {
   display: flex;
   flex-direction: column;
   align-items: center; }
+  .base-popup h1 strong {
+    color: #306ACC; }
   .base-popup form label {
     height: 30px;
     height: 3rem;
@@ -325,6 +327,15 @@ h3 {
       height: 3rem;
       font-size: 20px;
       font-size: 2rem; }
+  .base-popup select {
+    border: 2px solid #306ACC; }
+  .base-popup option {
+    min-width: 40rem;
+    text-align: center;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 20px;
+    font-size: 2rem; }
   .base-popup .errmsg {
     background: rgba(255, 0, 0, 0.27);
     padding-left: 20px;

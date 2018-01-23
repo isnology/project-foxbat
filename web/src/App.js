@@ -11,6 +11,7 @@ import { loadTemplates } from './api/templates'
 import Panel from './components/Panel'
 import ModalWindow from './components/ModalWindow'
 import Configurator from './components/Configurator'
+import _forEach from 'lodash/forEach'
 
 class App extends Component {
   state = {
@@ -21,7 +22,8 @@ class App extends Component {
     templates: null,
     panelName: null, //title user gave their panel
     panel_id: null, // db id of users retrieved/saved panel
-    selectedSlot: null, 
+    panelList: null,
+    selectedSlot: null,
     selectedInstrumentType: null,
     selectedInstrumentBrand: null,
     selectedInstrumentModel: null,
@@ -37,8 +39,15 @@ class App extends Component {
     this.setState({ error: null })
     signIn({ email, password })
     .then((decodedToken) => {
-      this.setState({ decodedToken })
-      this.onExitModal()
+      this.setState({ decodedToken, modalWindow: "selectPanel"})
+      //this.onExitModal()
+      loadPanels({user: this.state.decodedToken.sub})
+      .then((panelList) => {
+        this.setState({ panelList: panelList})
+      })
+      .catch((error) => {
+        this.setState({ error })
+      })
     })
     .catch((error) => {
       this.setState({ error })
@@ -90,17 +99,16 @@ class App extends Component {
       !!slot.instrument_id
     ))
     const data = {
-      
+
       template: this.state.templateId,
       name: name,
       slots: backendSlots,
-      userId: this.state.decodedToken.sub     // as per passport documentation
+      user_id: this.state.decodedToken.sub     // as per passport documentation
     }
     if (!!this.state.panel_id){
       const id=this.state.panel_id
       updatePanel(id, {data})
       .then((panel) => {
-        console.log("server responded with a successful update:", panel)
         this.onExitModal()
       })
       .catch((error) => {
@@ -109,7 +117,6 @@ class App extends Component {
     } else {
       createPanel({data})
       .then((panel) => {
-        console.log("server responded with a successful save:", panel)
         this.setState({
           panel_id: panel._id,
           panelName: panel.name
@@ -119,7 +126,7 @@ class App extends Component {
       .catch((error) => {
         this.setState({ error })
       })
-    }    
+    }
   }
 
   onSave = () => {
@@ -135,7 +142,9 @@ class App extends Component {
 
   onSignOut = () => {
     signOutNow()
-    this.setState({ decodedToken: null, error: null })
+    this.setState({ decodedToken: null, error: null, templateId: null, panelName: null, panel_id: null })
+    const key = "paneldata"
+    localStorage.removeItem(key)
   }
 
   doModalWindow = ({ name }) => {
@@ -158,18 +167,24 @@ class App extends Component {
   }
 
   onSelectTemplate = (templateName) => {
-    let slotins
-    if (templateName==='a22' || templateName === 'a32'){
-      slotins = require('./data').analogSlottedInstruments
-    } else {
-      slotins = require('./data').digitalSlottedInstruments
-    }
+    let slotins = this.setSlots(templateName)
+
     this.setState((prevState) => {
       return({
         templateId: templateName,
         slots: slotins
       })
     })
+  }
+
+  setSlots = (templateName) => {
+    let slotins
+    if (templateName==='a22' || templateName === 'a32'){
+      slotins = require('./data').analogSlottedInstruments
+    } else {
+      slotins = require('./data').digitalSlottedInstruments
+    }
+    return slotins
   }
 
   onSelectSlot = (slot) => {
@@ -221,7 +236,7 @@ class App extends Component {
       selectedInstrumentModel: null
     })
   }
-  
+
   assignInstrumentToSelectedSlot = (model) => {
     this.assignInstrumentToSlot(model, this.state.selectedSlot)
   }
@@ -266,6 +281,49 @@ class App extends Component {
     }
   }
 
+  onSelectPanel = (panel) => {
+    const panelObj = JSON.parse(panel)
+    console.log(panelObj)
+
+    let slots = this.setSlots(panelObj.template)
+    let instrumentObj
+    panelObj.slots.map(dbSlot => {
+      _forEach(this.state.instruments, (instrument) => {
+        if ( instrument._id === dbSlot.instrument_id) {
+          instrumentObj = instrument
+          return false
+        }
+      })
+      console.log("instrument object:", instrumentObj)
+
+      slots.map(slot => {
+        if (slot.slotNumber === dbSlot.position) {
+          slot.instrument = instrumentObj
+          return slot
+        }
+        else {
+          return slot
+        }
+      })
+    })
+
+    this.setState({
+      templateId: panelObj.template,
+      panelName: panelObj.name,
+      panel_id: panelObj._id,
+      slots: slots,
+    })
+    const obj = {
+      templateId: panelObj.template,
+      panelName: panelObj.name,
+      panel_id: panelObj._id,
+      slots: slots
+    }
+    const key = "paneldata"
+    localStorage.setItem(key, JSON.stringify(obj))
+    this.onExitModal()
+  }
+
 
   render() {
     const {
@@ -292,16 +350,19 @@ class App extends Component {
           <Switch>
 
             <Route path='/' exact render={ () => (
+              !templateId ? (
               <WelcomePage
                 onSignOut={ this.onSignOut }
                 doModalWindow={ this.doModalWindow }
                 signedIn={ signedIn }
-              />
+              /> ) : (
+                <Redirect to='/app' />
+              )
             )}/>
 
             <Route path='/app' exact render={ () => (
               !!templateId ? (
-                <Configurator 
+                <Configurator
                   type={templateId}
                   windowHeight={windowHeight}
                   windowWidth={windowWidth}
@@ -311,6 +372,7 @@ class App extends Component {
                   selectedInstrumentType={ selectedInstrumentType }
                   selectedInstrumentBrand={ selectedInstrumentBrand }
                   selectedInstrumentModel={ selectedInstrumentModel }
+                  restorePanel={this.state.restorePanel}
                   signedIn={ signedIn }
                   onSave={ this.onSave }
                   selectSlot={ this.onSelectSlot }
@@ -371,6 +433,8 @@ class App extends Component {
               onExit={ this.onExitModal }
               onSignIn={ this.onSignIn }
               onSaveRegister={ this.onSaveRegister }
+              panelList={ this.state.panelList }
+              onSelectPanel={ this.onSelectPanel }
               errMsg={ !!error ? error.message : null }
             />
           }
@@ -393,7 +457,7 @@ class App extends Component {
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight })
   }// (necessary for correct sizing of Panel component)
-  
+
 
   doLoadInstruments() {
     loadInstruments()
@@ -405,14 +469,18 @@ class App extends Component {
     })
   }
 
-  doLoadTemplates() {
-    loadTemplates()
-    .then((templates) => {
-      this.setState({ templates })
-    })
-    .catch(() => {
-      this.setState({ templates: null })
-    })
+  restoreFromLocalStorage() {
+    let obj
+    if (!!this.state.decodedToken) {
+      const key = "paneldata"
+      obj = JSON.parse(localStorage.getItem(key))
+      !!obj && this.setState({
+        templateId: obj.templateId,
+        panelName: obj.panelName,
+        panel_id: obj.panel_id,
+        slots: obj.slots
+      })
+    }
   }
 
   // When this App first appears on screen
@@ -420,7 +488,7 @@ class App extends Component {
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions)
     this.doLoadInstruments()
-    this.doLoadTemplates()
+    this.restoreFromLocalStorage()
   }
 }
 

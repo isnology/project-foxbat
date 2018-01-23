@@ -6,7 +6,7 @@ const router = new express.Router()
 
 // read
 router.get('/panels', requireJWT, (req, res) => {
-  Panel.find({ User: req.user })
+  Panel.find({ user_id: req.user })
   .then((panels) => {
     res.json(panels)
   })
@@ -29,7 +29,7 @@ router.post('/panels', requireJWT, (req, res) => {
 // Update
 router.put('/panels/:id', requireJWT, (req, res) => {
   const { id } = req.params
-   
+
   Panel.findByIdAndUpdate(id, req.body.data, { new: true, runValidators: true })
   .then((panel) => {
     if (panel) {
