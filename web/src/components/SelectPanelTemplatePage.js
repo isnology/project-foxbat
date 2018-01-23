@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { Link } from 'react-router-dom'
 import Button from './Button'
 import PanelTemplate from './PanelTemplate'
 import FoxbatLogo from './FoxbatLogo'
@@ -12,6 +13,12 @@ function SelectPanelTemplatePage({
   secondPanelImage,
   onSelectTemplate
 }) { 
+
+  function returnToRoot() {
+    console.log("running")
+    window.location = "/" 
+  }
+
   return (
     <Fragment>
       <FoxbatLogo />
@@ -25,7 +32,12 @@ function SelectPanelTemplatePage({
           <PanelTemplate name={ secondPanelName } image={secondPanelImage} clicked={()=>{onSelectTemplate(secondPanelTemplate)}}/>
         </div>
 
-        <Button text="What is this button??"/>
+        <Link to="/">
+          <Button 
+            text="Back"
+          />
+        </Link>
+
       </div>
 
     </Fragment>

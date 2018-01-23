@@ -67,6 +67,12 @@ As your mongo database will initially be empty, start with a user login:
 * Sassy CSS (SCSS) for easier stylesheet scalability
 * JWT for user authentication middleware (verification cookies)
 * dotenv for development runtime environment variables
+* Now from zeit.co
+
+## Deployment Notes
+We couldn't find a way to seed our database that was being hosted by mLab so decided to add some self seeding abilities to our server which were introduced in [this commit](https://github.com/isnology/project-foxbat/commit/abf427aa3d85c60b1b261718c963c527872391ab)
+
+Another issue we had was with the backend server talking with the hosted database, and the reason was that we were failing to issue the environment variables option on every time we ran the `now` deployment command.
 
 ## Team
 [Simon Dwyer](https://github.com/piratechicken/)

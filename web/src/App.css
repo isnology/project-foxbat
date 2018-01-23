@@ -5,7 +5,7 @@
   margin: 2rem auto;
   height: 45px;
   max-width: 400px;
-  background-color: #306ACC;
+  background-color: #0A64CB;
   border-radius: 5px;
   color: #f5f5f5f5;
   cursor: pointer; }
@@ -128,7 +128,7 @@
   padding: 10px;
   width: 100%;
   min-height: 100px;
-  background: #306ACC;
+  background: #0A64CB;
   color: #F5F5F5; }
 
 .sidebar-top-buttons {
@@ -315,7 +315,7 @@ h3 {
   flex-direction: column;
   align-items: center; }
   .base-popup h1 strong {
-    color: #306ACC; }
+    color: #0A64CB; }
   .base-popup form label {
     height: 30px;
     height: 3rem;
@@ -333,7 +333,7 @@ h3 {
       font-size: 20px;
       font-size: 2rem; }
   .base-popup select {
-    border: 2px solid #306ACC; }
+    border: 2px solid #0A64CB; }
   .base-popup option {
     min-width: 40rem;
     text-align: center;

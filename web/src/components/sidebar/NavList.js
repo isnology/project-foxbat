@@ -3,7 +3,6 @@ import Button from '../Button';
 
 function NavList({
   displayItems,
-  pictureItems,
   modelObjects,
   onSelect
 }) {

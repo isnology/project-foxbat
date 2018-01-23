@@ -75,7 +75,7 @@ class App extends Component {
           return signIn({ email, password })
           .then((decodedToken) => {
             this.setState({ decodedToken })
-            this.doSave({name})
+            this.doSave({ name })
           })
         }
         else {
@@ -86,9 +86,12 @@ class App extends Component {
         this.setState({ error })
       })
     }
-    else {
+    else if (signedIn && !!this.state.panelName) {
       const panelName = this.state.panelName
       this.doSave({ name: panelName })
+    }
+    else {
+      this.doSave({ name })
     }
   }
 
@@ -105,7 +108,6 @@ class App extends Component {
       !!slot.instrument_id
     ))
     const data = {
-
       template: this.state.templateId,
       name: name,
       slots: backendSlots,
@@ -137,7 +139,8 @@ class App extends Component {
 
   onSave = () => {
     const signedIn = !!this.state.decodedToken
-    if (signedIn) {
+    const panelName = !!this.state.panelName
+    if (signedIn && panelName) {
       const name = this.state.panelName
       this.doSave({ name })
     }
@@ -324,6 +327,30 @@ class App extends Component {
     this.setState({
       slots: clearedSlots
     })
+    const key = "paneldata"
+    let localSlots = JSON.parse(localStorage.getItem(key))
+    localSlots.slots.map(slot => {
+      slot.instrument = null
+      return slot
+    })
+    localStorage.setItem(key, JSON.stringify(localSlots))
+  }
+
+  onRefreshApp = () => {
+    this.setState({
+      panelName: null,
+      panel_id: null,
+      selectedSlot: null,
+      selectedInstrumentType: null,
+      selectedInstrumentBrand: null,
+      selectedInstrumentModel: null,
+      templateId: null,
+      modalWindow: null,
+      slots: null
+    })
+    // *****
+    // Do we need to remove local stored data??
+    // *****
   }
 
   render() {
@@ -352,18 +379,13 @@ class App extends Component {
 
             <Route path='/' exact render={ () => (
               !templateId ? (
-              <div>
                 <WelcomePage
                   onSignOut={ this.onSignOut }
                   doModalWindow={ this.doModalWindow }
                   signedIn={ signedIn }
-                />
-                <img src={a22Thumb}/>
-              </div> ) : (
-                <Redirect to='/app' />
-              )
-
-
+                /> ) : (
+                  <Redirect to='/app' />
+                )
             )}/>
 
             <Route path='/app' exact render={ () => (
@@ -387,6 +409,7 @@ class App extends Component {
                   assignInstrumentToSelectedSlot={ this.assignInstrumentToSelectedSlot }
                   sidebarClose={ this.onSidebarClose }
                   onBackClick={ this.onBackClick }
+                  onRefreshApp={ this.onRefreshApp }
                 />
               ):(
                 <Redirect to='/' />
