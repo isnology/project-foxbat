@@ -14,11 +14,6 @@ function SelectPanelTemplatePage({
   onSelectTemplate
 }) { 
 
-  function returnToRoot() {
-    console.log("running")
-    window.location = "/" 
-  }
-
   return (
     <Fragment>
       <FoxbatLogo />

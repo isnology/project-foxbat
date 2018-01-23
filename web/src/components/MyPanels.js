@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import BasePopUp from './BasePopUp'
 
 function MyPanels({ panelList, onExit, onSubmit, errMsg }) {

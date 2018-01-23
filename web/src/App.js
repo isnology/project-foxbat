@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { signIn, signUp, signOutNow } from './api/auth'
 import { getDecodedToken } from './api/token'
 import './App.css'
@@ -7,7 +7,6 @@ import WelcomePage from './components/WelcomePage'
 import SelectPanelTemplatePage from './components/SelectPanelTemplatePage'
 import { loadPanels, createPanel, updatePanel } from './api/panels'
 import { loadInstruments } from './api/instruments'
-import Panel from './components/Panel'
 import ModalWindow from './components/ModalWindow'
 import Configurator from './components/Configurator'
 import _lang from 'lodash/lang'
@@ -444,15 +443,6 @@ class App extends Component {
                   onSelectTemplate={this.onSelectTemplate}
                 />
               )
-            )}/>
-
-            <Route path='/alextest' exact render={ () => (
-              <Fragment>
-                <h1>Alex testing components page</h1>
-                <Panel
-                type="a22"
-                height={400}/>
-              </Fragment>
             )}/>
 
           </Switch>
