@@ -62,14 +62,22 @@ function Sidebar({
     })
     const allBrands = instrumentsWithType.map((instrument) => instrument.brand)
     const uniqueBrands = _array.uniq(allBrands)
-
+    uniqueBrands.push(`All models`)
     return uniqueBrands
   }
 
   function allModelsForBrandsForTypeFromInstruments(instruments, selectedInstrumentType, selectedInstrumentBrand) {
-    const instrumentsWithTypeAndBrand = instruments.filter((instrument) => {
-      return instrument.instrumentClass_id.name === selectedInstrumentType && instrument.brand === selectedInstrumentBrand && canItGoThere(instrument.size) === true
-    })
+    let instrumentsWithTypeAndBrand
+    if (selectedInstrumentBrand == "All models") {
+      instrumentsWithTypeAndBrand = instruments.filter((instrument) => {
+        return instrument.instrumentClass_id.name === selectedInstrumentType && canItGoThere(instrument.size) === true
+      })
+    }
+    else {
+      instrumentsWithTypeAndBrand = instruments.filter((instrument) => {
+        return instrument.instrumentClass_id.name === selectedInstrumentType && instrument.brand === selectedInstrumentBrand && canItGoThere(instrument.size) === true
+      })
+    } 
     return instrumentsWithTypeAndBrand
   }
 
