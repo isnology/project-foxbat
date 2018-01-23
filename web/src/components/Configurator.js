@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Button from './Button'
 import Sidebar from './sidebar/Sidebar'
 import Panel from './Panel'
@@ -22,7 +23,8 @@ function Configurator({
   onSelect,
   assignInstrumentToSelectedSlot,
   sidebarClose,
-  onBackClick
+  onBackClick,
+  onRefreshApp
 }) {
 
   function add(a, b) {
@@ -50,20 +52,25 @@ function Configurator({
           selectSlot={ selectSlot } // This is the function
         />
         <div className="panel-button-group">
-          <Button
-            text={ "Clear panel" }
-            onToggle={ onClearPanel }
-          />     
           { signedIn &&
             <Button
-              text="Sign Out"
-              onToggle={ onSignOut }
+            text="Sign Out"
+            onToggle={ onSignOut }
             />
           }
           <Button
             text="Save"
             onToggle={ onSave }
           />
+          <Button
+            text={ "Clear panel" }
+            onToggle={ onClearPanel }
+          />     
+          <Link to="/" onClick={ onRefreshApp }>
+            <Button 
+              text="Back to start"
+            />
+          </Link>
         </div>
       </div>
       <Sidebar
