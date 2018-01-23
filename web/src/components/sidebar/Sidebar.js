@@ -92,7 +92,6 @@ function Sidebar({
         ) : (
           <NavList
             displayItems={ displayItems }
-            pictureItems={ pictureItems }
             modelObjects={ modelObjects }
             onSelect={ onSelectItem }
           />
@@ -116,7 +115,6 @@ function Sidebar({
 
   let topHeading
   let displayItems
-  let pictureItems
   let onSelectItem
   let modelObjects
   let exitButton = true
@@ -149,9 +147,6 @@ function Sidebar({
     topHeading =  selectedInstrumentBrand + " " + selectedInstrumentType.toLowerCase() + sideBarHeadings.selectModel
 
     modelObjects = allModelsForBrandsForTypeFromInstruments(instruments, selectedInstrumentType, selectedInstrumentBrand)
-
-    // displayItems = modelObjects.map((instrument) => instrument.name)
-    // pictureItems = modelObjects.map((instrument) => instrument.pictureURL)
 
     onSelectItem = (model) => {
       onSelect(selectedInstrumentType, selectedInstrumentBrand, model)
