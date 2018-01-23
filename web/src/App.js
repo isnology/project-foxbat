@@ -75,7 +75,7 @@ class App extends Component {
           return signIn({ email, password })
           .then((decodedToken) => {
             this.setState({ decodedToken })
-            this.doSave({name})
+            this.doSave({ name })
           })
         }
         else {
@@ -86,9 +86,12 @@ class App extends Component {
         this.setState({ error })
       })
     }
-    else {
+    else if (signedIn && !!this.state.panelName) {
       const panelName = this.state.panelName
       this.doSave({ name: panelName })
+    }
+    else {
+      this.doSave({ name })
     }
   }
 
@@ -105,7 +108,6 @@ class App extends Component {
       !!slot.instrument_id
     ))
     const data = {
-
       template: this.state.templateId,
       name: name,
       slots: backendSlots,
@@ -137,7 +139,8 @@ class App extends Component {
 
   onSave = () => {
     const signedIn = !!this.state.decodedToken
-    if (signedIn) {
+    const panelName = !!this.state.panelName
+    if (signedIn && panelName) {
       const name = this.state.panelName
       this.doSave({ name })
     }
