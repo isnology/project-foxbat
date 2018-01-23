@@ -20,20 +20,50 @@ function Sidebar({
   onBackClick
 }) {
 
+  if (!!selectedSlot && !selectedInstrumentModel) {
+    var activeSlot = slots.find(function(slot) {
+      return slot.slotNumber === selectedSlot;
+    })
+    var activeSlotSize = activeSlot.slotNumber.substring(0,1)
+  }
+
+  // console.log(activeSlot)
+  // console.log(activeSlotSize)
+
+  function canItGoThere(instSize) {
+    if (activeSlotSize === 'L' && (instSize === 'L' || instSize === 'M' || instSize === 'S' )) {
+      return true
+    }
+    else if (activeSlotSize === 'M' && (instSize === 'M' || instSize === 'S' )) {
+      return true
+    }
+    else if (activeSlotSize === 'S' && (instSize === 'S' )) {
+      return true
+    }
+    else {
+      return false
+    }
+  }
+
   function allTypesFromInstruments(instruments) {
-    const allTypesArray =
-      instruments.map((instrument) => (
-        instrument.instrumentClass_id.name
-      ))
+    const allTypesArray = instruments.filter((instrument) => {
+      return canItGoThere(instrument.size) === true
+    }).map((instrument) => (
+      instrument.instrumentClass_id.name
+    ))
+
+    // const allTypesArray =
+    //   instruments.map((instrument) => (
+    //     instrument.instrumentClass_id.name
+    //   ))
     const typesArray = _array.uniq(allTypesArray)
+    console.log(typesArray)
     return typesArray
   }
 
-  // size: slot.slotNumber.substring(0,1)
-
   function allBrandsForTypeFromInstruments(instruments, selectedInstrumentType) {
     const instrumentsWithType = instruments.filter((instrument) => {
-      return instrument.instrumentClass_id.name === selectedInstrumentType
+      return instrument.instrumentClass_id.name === selectedInstrumentType && canItGoThere(instrument.size) === true
     })
     const allBrands = instrumentsWithType.map((instrument) => instrument.brand)
     const uniqueBrands = _array.uniq(allBrands)
@@ -43,17 +73,14 @@ function Sidebar({
 
   function allModelsForBrandsForTypeFromInstruments(instruments, selectedInstrumentType, selectedInstrumentBrand) {
     const instrumentsWithTypeAndBrand = instruments.filter((instrument) => {
-      return instrument.instrumentClass_id.name === selectedInstrumentType && instrument.brand === selectedInstrumentBrand
+      return instrument.instrumentClass_id.name === selectedInstrumentType && instrument.brand === selectedInstrumentBrand && canItGoThere(instrument.size) === true
     })
     return instrumentsWithTypeAndBrand
   }
 
   function RenderToSidebar() {
     if (!!selectedSlot && !selectedInstrumentModel) {
-      let activeSlot = slots.find(function(slot) {
-        return slot.slotNumber === selectedSlot;
-      })
-      // Is there an instrument already in the slot?
+            // Is there an instrument already in the slot?
       return (
         !!activeSlot.instrument ? (
           <InstrumentPreview

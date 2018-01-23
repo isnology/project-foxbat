@@ -329,6 +329,23 @@ class App extends Component {
     })
   }
 
+  onRefreshApp = () => {
+    this.setState({
+      panelName: null,
+      panel_id: null,
+      selectedSlot: null, 
+      selectedInstrumentType: null,
+      selectedInstrumentBrand: null,
+      selectedInstrumentModel: null,
+      templateId: null,
+      modalWindow: null,
+      slots: null
+    })
+    // *****
+    // Do we need to remove local stored data??
+    // *****
+  }
+
   render() {
     const {
       decodedToken,
@@ -354,19 +371,11 @@ class App extends Component {
           <Switch>
 
             <Route path='/' exact render={ () => (
-              !templateId ? (
-              <div>
-                <WelcomePage
-                  onSignOut={ this.onSignOut }
-                  doModalWindow={ this.doModalWindow }
-                  signedIn={ signedIn }
-                />
-                <img src={a22Thumb}/>
-              </div> ) : (
-                <Redirect to='/app' />
-              )
-
-
+              <WelcomePage
+                onSignOut={ this.onSignOut }
+                doModalWindow={ this.doModalWindow }
+                signedIn={ signedIn }
+              />
             )}/>
 
             <Route path='/app' exact render={ () => (
@@ -390,6 +399,7 @@ class App extends Component {
                   assignInstrumentToSelectedSlot={ this.assignInstrumentToSelectedSlot }
                   sidebarClose={ this.onSidebarClose }
                   onBackClick={ this.onBackClick }
+                  onRefreshApp={ this.onRefreshApp }
                 />
               ):(
                 <Redirect to='/' />
