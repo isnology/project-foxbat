@@ -11,6 +11,12 @@ import { loadTemplates } from './api/templates'
 import Panel from './components/Panel'
 import ModalWindow from './components/ModalWindow'
 import Configurator from './components/Configurator'
+import _lang from 'lodash/lang'
+import a22Thumb from './img/a22.png'
+import a22DigitalThumb from './img/a22digital.png'
+import a32Thumb from './img/a32.png'
+import a32DigitalThumb from './img/a32digital.png'
+
 import _forEach from 'lodash/forEach'
 
 class App extends Component {
@@ -203,22 +209,8 @@ class App extends Component {
     })
   }
 
-  clearInstrumentsFromSlots = () => {
-    let newSlots = this.state.slots.map(slot => {
-        slot.instrument = null
-        return slot
-    })
-    this.setState({
-      slots: newSlots
-    })
-  }
-
   assignInstrumentToSlot = (model, slotNumber) => {
-    console.log(model.name, ' is being assigned to slot: ', slotNumber)
-    // Note: we must receive the model as a parameter
-    // because we cannot rely on the state being updated
-    // when this runs. However we can rely on it being correct
-    // for the currently selected slot.
+    // console.log(model.name, ' has been assigned to slot: ', this.state.selectedSlot)
     let newSlots = this.state.slots.map(slot => {
       if (slot.slotNumber === slotNumber) {
         !!slot.instrument ? (slot.instrument = null) : (slot.instrument = model)
@@ -259,22 +251,22 @@ class App extends Component {
   }
 
   onBackClick = () => {
-    if (this.state.selectedInstrumentModel) {
+    if (!!this.state.selectedInstrumentModel) {
       this.setState({
         selectedInstrumentModel: null
       })
     }
-    else if (this.state.selectedInstrumentBrand) {
+    else if (!!this.state.selectedInstrumentBrand) {
       this.setState({
         selectedInstrumentBrand: null
       })
     }
-    else if (this.state.selectedInstrumentType) {
+    else if (!!this.state.selectedInstrumentType) {
       this.setState({
         selectedInstrumentType: null
       })
     }
-    else if (this.state.selectedSlot) {
+    else if (!!this.state.selectedSlot) {
       this.setState({
         selectedSlot: null
       })
@@ -324,6 +316,15 @@ class App extends Component {
     this.onExitModal()
   }
 
+  onClearCurrentPanel = () => {
+    this.onSidebarClose()
+    let clearedSlots = _lang.cloneDeep(this.state.slots)
+    clearedSlots.forEach(slot => slot.instrument = null)
+
+    this.setState({
+      slots: clearedSlots
+    })
+  }
 
   render() {
     const {
@@ -351,13 +352,18 @@ class App extends Component {
 
             <Route path='/' exact render={ () => (
               !templateId ? (
-              <WelcomePage
-                onSignOut={ this.onSignOut }
-                doModalWindow={ this.doModalWindow }
-                signedIn={ signedIn }
-              /> ) : (
+              <div>
+                <WelcomePage
+                  onSignOut={ this.onSignOut }
+                  doModalWindow={ this.doModalWindow }
+                  signedIn={ signedIn }
+                />
+                <img src={a22Thumb}/>
+              </div> ) : (
                 <Redirect to='/app' />
               )
+
+
             )}/>
 
             <Route path='/app' exact render={ () => (
@@ -372,7 +378,6 @@ class App extends Component {
                   selectedInstrumentType={ selectedInstrumentType }
                   selectedInstrumentBrand={ selectedInstrumentBrand }
                   selectedInstrumentModel={ selectedInstrumentModel }
-                  restorePanel={this.state.restorePanel}
                   signedIn={ signedIn }
                   onSave={ this.onSave }
                   selectSlot={ this.onSelectSlot }
@@ -395,8 +400,10 @@ class App extends Component {
                 <SelectPanelTemplatePage
                   firstPanelName="Analogue A-22 Panel"
                   firstPanelTemplate="a22"
+                  firstPanelImage={ a22Thumb }
                   secondPanelName="Digital A-22 Panel"
                   secondPanelTemplate="a22Digital"
+                  secondPanelImage={ a22DigitalThumb }
                   onSelectTemplate={this.onSelectTemplate}
                 />
               )
@@ -409,8 +416,10 @@ class App extends Component {
                 <SelectPanelTemplatePage
                   firstPanelName="Analogue A-32 Panel"
                   firstPanelTemplate="a32"
+                  firstPanelImage={ a32Thumb }
                   secondPanelName="Digital A-32 Panel"
                   secondPanelTemplate="a32Digital"
+                  secondPanelImage={ a32DigitalThumb }
                   onSelectTemplate={this.onSelectTemplate}
                 />
               )

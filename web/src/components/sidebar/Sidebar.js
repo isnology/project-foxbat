@@ -29,6 +29,8 @@ function Sidebar({
     return typesArray
   }
 
+  // size: slot.slotNumber.substring(0,1)
+
   function allBrandsForTypeFromInstruments(instruments, selectedInstrumentType) {
     const instrumentsWithType = instruments.filter((instrument) => {
       return instrument.instrumentClass_id.name === selectedInstrumentType

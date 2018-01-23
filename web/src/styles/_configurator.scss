@@ -24,6 +24,12 @@
   text-align: center;
 }
 
+.panel-container .running-cost {
+  align-self: flex-start;
+  padding: 0 0 4rem 2rem;
+  font-size: 2.3rem; 
+}
+
 // INSTRUMENT PANEL
 #svgbox{
   /* border: black solid 1px; */
