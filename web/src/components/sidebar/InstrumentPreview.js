@@ -15,7 +15,6 @@ const InstrumentPreview = ({
   let buttonLabel
 
   !!activeSlot.instrument ? (buttonLabel = "Remove") : (buttonLabel = "Add")
-  console.log("button label", buttonLabel)
 
   return (
     <div>
@@ -27,7 +26,7 @@ const InstrumentPreview = ({
         <p>{ selectedInstrumentModel.text }</p>
       </div>
       <div className="instrument-preview">
-        <p>{ selectedInstrumentModel.price } AUD</p>
+        <p>{ selectedInstrumentModel.price/100 } USD</p>
         { !!selectedInstrumentModel.pictureURL ? (<img src={ selectedInstrumentModel.pictureURL } alt="instrument" className="btnimg"/>) : ('') }
       </div>
       <Button 

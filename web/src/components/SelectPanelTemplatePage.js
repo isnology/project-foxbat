@@ -6,8 +6,10 @@ import FoxbatLogo from './FoxbatLogo'
 function SelectPanelTemplatePage({
   firstPanelName,
   firstPanelTemplate,
+  firstPanelImage,
   secondPanelName,
   secondPanelTemplate,
+  secondPanelImage,
   onSelectTemplate
 }) { 
   return (
@@ -19,8 +21,8 @@ function SelectPanelTemplatePage({
         <h2>Choose a template to continue</h2>
 
         <div className="selection-images">
-          <PanelTemplate name={ firstPanelName } clicked={()=>{onSelectTemplate(firstPanelTemplate)}}/>
-          <PanelTemplate name={ secondPanelName } clicked={()=>{onSelectTemplate(secondPanelTemplate)}}/>
+          <PanelTemplate name={ firstPanelName } image={firstPanelImage} clicked={()=>{onSelectTemplate(firstPanelTemplate)}}/>
+          <PanelTemplate name={ secondPanelName } image={secondPanelImage} clicked={()=>{onSelectTemplate(secondPanelTemplate)}}/>
         </div>
 
         <Button text="What is this button??"/>

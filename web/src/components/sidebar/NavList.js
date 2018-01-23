@@ -7,11 +7,7 @@ function NavList({
   modelObjects,
   onSelect
 }) {
-  console.log(displayItems)
-  // if (validPicturesIncluded){
-  //   console.log("valid Pictures were included")
-  // }
-  !!modelObjects && console.log(modelObjects)
+
   return (
     <div className="instrument-list">
       { 

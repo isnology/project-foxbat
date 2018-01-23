@@ -4,7 +4,9 @@ import logo from '../img/foxbatlogo.png'
 function FoxbatLogo() { 
   return (
     <div className="logo-div">
-      <img src={ logo } alt="foxbat logo" className="foxbat-logo"/>
+      <a href="http://foxbat.com.au/" target="_blank" rel="noopener noreferrer">
+        <img src={ logo } alt="foxbat logo" className="foxbat-logo"/>
+      </a>
     </div>
   )
 }

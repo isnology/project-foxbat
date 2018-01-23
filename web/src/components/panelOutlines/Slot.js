@@ -54,7 +54,7 @@ function Slot({
           <div className="slot-label">
             {`${thisSlot[0].instrument.name} (${thisSlot[0].instrument.brand})`}
           </div> : '' }
-        { !!thisSlot[0].instrument ? <img src={thisSlot[0].instrument.pictureURL} width="100%" alt={thisSlot[0].instrument.model}/> : '' }
+        { !!thisSlot[0].instrument ? <img src={thisSlot[0].instrument.pictureURL} width="100%" alt={thisSlot[0].instrument.name}/> : '' }
       </div>
   )}
 
