@@ -317,39 +317,43 @@ class App extends Component {
   }
 
   onClearCurrentPanel = () => {
-    this.onSidebarClose()
-    let clearedSlots = _lang.cloneDeep(this.state.slots)
-    clearedSlots.forEach(slot => slot.instrument = null)
+    if (window.confirm("Are you sure you want to clear the current panel? Any unsaved changes will be lost.")) {
+      this.onSidebarClose()
+      let clearedSlots = _lang.cloneDeep(this.state.slots)
+      clearedSlots.forEach(slot => slot.instrument = null)
 
-    this.setState({
-      slots: clearedSlots
-    })
-    const key = "paneldata"
-    if (!!localStorage.getItem(key)) {
-      let localSlots = JSON.parse(localStorage.getItem(key))
-      localSlots.slots.map(slot => {
-        slot.instrument = null
-        return slot
+      this.setState({
+        slots: clearedSlots
       })
-      localStorage.setItem(key, JSON.stringify(localSlots))
+      const key = "paneldata"
+      if (!!localStorage.getItem(key)) {
+        let localSlots = JSON.parse(localStorage.getItem(key))
+        localSlots.slots.map(slot => {
+          slot.instrument = null
+          return slot
+        })
+        localStorage.setItem(key, JSON.stringify(localSlots))
+      }
     }
   }
 
   onRefreshApp = () => {
-    this.setState({
-      panelName: null,
-      panel_id: null,
-      selectedSlot: null,
-      selectedInstrumentType: null,
-      selectedInstrumentBrand: null,
-      selectedInstrumentModel: null,
-      templateId: null,
-      modalWindow: null,
-      slots: null
-    })
+    if (window.confirm("Are you sure you want to exit and return to the start? Any unsaved changes to this panel will be lost.")) {
+      this.setState({
+        panelName: null,
+        panel_id: null,
+        selectedSlot: null,
+        selectedInstrumentType: null,
+        selectedInstrumentBrand: null,
+        selectedInstrumentModel: null,
+        templateId: null,
+        modalWindow: null,
+        slots: null
+      })
     // *****
     // Do we need to remove local stored data??
     // *****
+    }
   }
 
   render() {
