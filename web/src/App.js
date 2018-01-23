@@ -6,10 +6,12 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import WelcomePage from './components/WelcomePage'
 import SelectPanelTemplatePage from './components/SelectPanelTemplatePage'
 import Button from './components/Button'
+import SubmitButton from './components/SubmitButton'
 import Sidebar from './components/sidebar/Sidebar'
 import { loadPanels, createPanel, updatePanel } from './api/panels'
 import { loadInstruments } from './api/instruments'
 import { loadTemplates } from './api/templates'
+import { emailPanelDesign } from './api/emailSubmission'
 import Panel from './components/Panel'
 import ModalWindow from './components/ModalWindow'
 
@@ -247,6 +249,10 @@ class App extends Component {
     })
   }
 
+  submitPanel = (email, slotData, templateID) => {
+    emailPanelDesign(email, slotData, templateID)
+  }
+
   render() {
     const {
       decodedToken,
@@ -268,6 +274,13 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
+          <SubmitButton 
+            onClick={ this.submitPanel }
+            email={ decodedToken.email }
+            slotData={ slots }
+            templateID={ templateId }
+          />
+
           <Switch>
 
             <Route path='/' exact render={ () => (

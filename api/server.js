@@ -20,7 +20,8 @@ server.use([
   require('./routes/panel'),
   require('./routes/template'),
   require('./routes/instrument'),
-  require('./routes/instrumentClass')
+  require('./routes/instrumentClass'),
+  require('./routes/sendMail')
 ])
 
 // error handler
