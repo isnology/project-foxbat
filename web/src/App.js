@@ -7,7 +7,6 @@ import WelcomePage from './components/WelcomePage'
 import SelectPanelTemplatePage from './components/SelectPanelTemplatePage'
 import { loadPanels, createPanel, updatePanel } from './api/panels'
 import { loadInstruments } from './api/instruments'
-import { loadTemplates } from './api/templates'
 import Panel from './components/Panel'
 import ModalWindow from './components/ModalWindow'
 import Configurator from './components/Configurator'
@@ -25,7 +24,6 @@ class App extends Component {
     save: null,
     showConfigurator: true,
     instruments: null, //list of all instruments from server
-    templates: null,
     panelName: null, //title user gave their panel
     panel_id: null, // db id of users retrieved/saved panel
     panelList: null,
