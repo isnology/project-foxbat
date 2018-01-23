@@ -11,6 +11,12 @@ import { loadTemplates } from './api/templates'
 import Panel from './components/Panel'
 import ModalWindow from './components/ModalWindow'
 import Configurator from './components/Configurator'
+import _lang from 'lodash/lang'
+import a22Thumb from './img/a22.png'
+import a22DigitalThumb from './img/a22digital.png'
+import a32Thumb from './img/a32.png'
+import a32DigitalThumb from './img/a32digital.png'
+
 
 class App extends Component {
   state = {
@@ -178,8 +184,6 @@ class App extends Component {
         slots: slotins
       })
     })
-
-    //return
   }
 
   onSelectSlot = (slot) => {
@@ -199,13 +203,7 @@ class App extends Component {
   }
 
   assignInstrumentToSlot = (model) => {
-    // Note: we must receive the model as a parameter
-    // because we cannot rely on the state being updated
-    // when this runs. However we can rely on it being correct
-    // for the currently selected slot.
-    console.log(model.name, ' has been assigned to slot: ', this.state.selectedSlot)
-    // let slotIndex = this.state.slots.findIndex(this.findSlot)
-    // console.log('slotindex', slotIndex)
+    // console.log(model.name, ' has been assigned to slot: ', this.state.selectedSlot)
     let newSlots = this.state.slots.map(slot => {
       if (slot.slotNumber === this.state.selectedSlot) {
         !!slot.instrument ? (slot.instrument = null) : (slot.instrument = model)
@@ -230,15 +228,6 @@ class App extends Component {
       selectedInstrumentBrand: brand,
       selectedInstrumentModel: model
     })
-      // if(!!model){
-      //   this.assignInstrumentToSlot(model)
-      //   //Note: we MUST pass it model, we CAN'T rely on the
-      //   // function being able to grab it from the state
-      //   // even though we just set the state, because the
-      //   // setState method is asynchronous, this means it
-      //   // may not have actually been done yet by the time we call
-      //   // this function.
-      // }
   }
 
   onSidebarClose = () => {
@@ -251,22 +240,22 @@ class App extends Component {
   }
 
   onBackClick = () => {
-    if (this.state.selectedInstrumentModel) {
+    if (!!this.state.selectedInstrumentModel) {
       this.setState({
         selectedInstrumentModel: null
       })
     }
-    else if (this.state.selectedInstrumentBrand) {
+    else if (!!this.state.selectedInstrumentBrand) {
       this.setState({
         selectedInstrumentBrand: null
       })
     }
-    else if (this.state.selectedInstrumentType) {
+    else if (!!this.state.selectedInstrumentType) {
       this.setState({
         selectedInstrumentType: null
       })
     }
-    else if (this.state.selectedSlot) {
+    else if (!!this.state.selectedSlot) {
       this.setState({
         selectedSlot: null
       })
@@ -274,12 +263,12 @@ class App extends Component {
   }
 
   onClearCurrentPanel = () => {
-    this.onSelectTemplate(this.state.templateId)
+    this.onSidebarClose()
+    let clearedSlots = _lang.cloneDeep(this.state.slots)
+    clearedSlots.forEach(slot => slot.instrument = null)
+
     this.setState({
-      selectedSlot: null,
-      selectedInstrumentType: null,
-      selectedInstrumentBrand: null,
-      selectedInstrumentModel: null
+      slots: clearedSlots
     })
   }
 
@@ -308,11 +297,14 @@ class App extends Component {
           <Switch>
 
             <Route path='/' exact render={ () => (
+              <div>
               <WelcomePage
                 onSignOut={ this.onSignOut }
                 doModalWindow={ this.doModalWindow }
                 signedIn={ signedIn }
               />
+              <img src={a22Thumb}/>
+              </div>
             )}/>
 
             <Route path='/app' exact render={ () => (
@@ -349,8 +341,10 @@ class App extends Component {
                 <SelectPanelTemplatePage
                   firstPanelName="Analogue A-22 Panel"
                   firstPanelTemplate="a22"
+                  firstPanelImage={ a22Thumb }
                   secondPanelName="Digital A-22 Panel"
                   secondPanelTemplate="a22Digital"
+                  secondPanelImage={ a22DigitalThumb }
                   onSelectTemplate={this.onSelectTemplate}
                 />
               )
@@ -363,8 +357,10 @@ class App extends Component {
                 <SelectPanelTemplatePage
                   firstPanelName="Analogue A-32 Panel"
                   firstPanelTemplate="a32"
+                  firstPanelImage={ a32Thumb }
                   secondPanelName="Digital A-32 Panel"
                   secondPanelTemplate="a32Digital"
+                  secondPanelImage={ a32DigitalThumb }
                   onSelectTemplate={this.onSelectTemplate}
                 />
               )

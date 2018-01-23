@@ -2,7 +2,7 @@ import React from 'react'
 
 function PanelTemplate({
   name,
-  imageURL,
+  image,
   alt,
   clicked
 }) { 
@@ -12,7 +12,7 @@ function PanelTemplate({
     >
       <h3>{ name }</h3>
       <div className="plane-selector">
-        <img src={ imageURL } alt={ alt } className='plane-selector'/>
+        <img src={ image } alt={ alt } className='plane-selector'/>
       </div>
     </button>
   )

@@ -1,5 +1,5 @@
 const sideBarHeadings = {
-  welcome: "Getting started",
+  welcome: "Build your instrument panel",
   selectInstrumentType: "Select instrument type",
   selectBrand: "select brand",
   selectModel: ": select model"
