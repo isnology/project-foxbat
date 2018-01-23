@@ -84,6 +84,19 @@ height: auto;
   width: 20rem;
 }
 
+.panel-button-low-group button {
+  width: 10rem;
+  margin-top: 0;
+  background: $warning-red;
+}
+.panel-button-low-group button .button-text {
+  font-size: 1.2rem;
+  margin: auto;
+  color: white;
+}
+
+
+
 // SIDEBAR
 .sidebar {
   position: absolute;

@@ -325,12 +325,14 @@ class App extends Component {
       slots: clearedSlots
     })
     const key = "paneldata"
-    let localSlots = JSON.parse(localStorage.getItem(key))
-    localSlots.slots.map(slot => {
-      slot.instrument = null
-      return slot
-    })
-    localStorage.setItem(key, JSON.stringify(localSlots))
+    if (!!localStorage.getItem(key)) {
+      let localSlots = JSON.parse(localStorage.getItem(key))
+      localSlots.slots.map(slot => {
+        slot.instrument = null
+        return slot
+      })
+      localStorage.setItem(key, JSON.stringify(localSlots))
+    }
   }
 
   onRefreshApp = () => {

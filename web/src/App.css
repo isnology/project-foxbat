@@ -4,6 +4,7 @@
 .main-button {
   margin: 2rem auto;
   height: 45px;
+  width: 20rem;
   max-width: 400px;
   background-color: #0A64CB;
   border-radius: 5px;
@@ -13,7 +14,7 @@
 .button-text {
   text-align: center;
   font-size: 1.6rem;
-  margin: 35px;
+  margin: 35px auto;
   font-weight: 300; }
 
 .btnimg {
@@ -110,6 +111,16 @@
 
 .panel-button-group button {
   width: 20rem; }
+
+.panel-button-low-group button {
+  width: 10rem;
+  margin-top: 0;
+  background: #8f4343; }
+
+.panel-button-low-group button .button-text {
+  font-size: 1.2rem;
+  margin: auto;
+  color: white; }
 
 .sidebar {
   position: absolute;

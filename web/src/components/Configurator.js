@@ -53,25 +53,27 @@ function Configurator({
           selectSlot={ selectSlot } // This is the function
         />
         <div className="panel-button-group">
-          { signedIn &&
-            <Button
-            text="Sign Out"
-            onToggle={ onSignOut }
-            />
-          }
           <Button
             text="Save"
             onToggle={ onSave }
           />
-          <Button
-            text={ "Clear panel" }
-            onToggle={ onClearPanel }
-          />
-          <Link to="/" onClick={ onRefreshApp }>
+          <div className="panel-button-low-group">
+            { signedIn &&
+              <Button
+              text="Sign Out"
+              onToggle={ onSignOut }
+              />
+            }
             <Button
-              text="Back to start"
+              text={ "Clear panel" }
+              onToggle={ onClearPanel }
             />
-          </Link>
+            <Link to="/" onClick={ onRefreshApp }>
+              <Button
+                text="Back to start"
+              />
+            </Link>
+          </div>
         </div>
       </div>
       <Sidebar
