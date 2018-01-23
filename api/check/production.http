@@ -1,4 +1,4 @@
-@host = https://api-iwlrlbbijk.now.sh
+@host = https://api-lxuniynyef.now.sh
 
 ###
 POST {{host}}/auth/register
@@ -18,5 +18,3 @@ Content-Type: application/json
   "email": "user1@mail.com",
   "password": "password123"
 }
-
-###
