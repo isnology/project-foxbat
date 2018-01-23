@@ -194,7 +194,7 @@ class App extends Component {
     })
   }
 
-  assignInstrumentToSlot = (model) => {
+  assignInstrumentToSlot = (model, slotNumber) => {
     // console.log(model.name, ' has been assigned to slot: ', this.state.selectedSlot)
     let newSlots = this.state.slots.map(slot => {
       if (slot.slotNumber === slotNumber) {
