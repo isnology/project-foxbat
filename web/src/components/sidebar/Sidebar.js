@@ -52,12 +52,7 @@ function Sidebar({
       instrument.instrumentClass_id.name
     ))
 
-    // const allTypesArray =
-    //   instruments.map((instrument) => (
-    //     instrument.instrumentClass_id.name
-    //   ))
     const typesArray = _array.uniq(allTypesArray)
-    console.log(typesArray)
     return typesArray
   }
 
