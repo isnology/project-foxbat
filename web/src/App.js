@@ -377,7 +377,7 @@ class App extends Component {
                   doModalWindow={ this.doModalWindow }
                   signedIn={ signedIn }
                 /> ) : (
-                  <Redirect to='/' />
+                  <Redirect to='/app' />
                 )
             )}/>
 
