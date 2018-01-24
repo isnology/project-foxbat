@@ -493,26 +493,26 @@ class App extends Component {
     })
   }
 
-  restoreFromLocalStorage() {
-    let obj
-    if (!!this.state.decodedToken) {
-      const key = "paneldata"
-      obj = JSON.parse(localStorage.getItem(key))
-      !!obj && this.setState({
-        templateId: obj.templateId,
-        panelName: obj.panelName,
-        panel_id: obj.panel_id,
-        slots: obj.slots
-      })
-    }
-  }
+  //restoreFromLocalStorage() {
+  //  let obj
+  //  if (!!this.state.decodedToken) {
+  //    const key = "paneldata"
+  //    obj = JSON.parse(localStorage.getItem(key))
+  //    !!obj && this.setState({
+  //      templateId: obj.templateId,
+  //      panelName: obj.panelName,
+  //      panel_id: obj.panel_id,
+  //      slots: obj.slots
+  //    })
+  //  }
+  //}
 
   // When this App first appears on screen
   componentDidMount() {
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions)
     this.doLoadInstruments()
-    this.restoreFromLocalStorage()
+    //this.restoreFromLocalStorage()
   }
 }
 
