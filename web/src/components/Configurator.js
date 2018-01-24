@@ -116,6 +116,7 @@ function Configurator({
         </div>
       </div>
       <Sidebar
+        type={ type }
         instruments={ instruments }
         slots={ slots }
         selectedSlot={ selectedSlot }

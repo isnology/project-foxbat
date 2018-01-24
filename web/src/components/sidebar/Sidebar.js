@@ -23,6 +23,7 @@ export function canItGoThere(slotSize, instSize) {
 }
 
 function Sidebar({
+  type,
   instruments,
   slots,
   selectedSlot,
@@ -125,7 +126,7 @@ function Sidebar({
 
   // Nothing selected
   if (!selectedSlot) {
-    topHeading = sideBarHeadings.welcome
+    topHeading = `Build your ${type.charAt(0).toUpperCase() + type.slice(1)} instrument panel`
     exitButton = false
     backButton = false
   }
