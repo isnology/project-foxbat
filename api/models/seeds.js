@@ -514,6 +514,130 @@ InstrumentClass.create([
   console.error(error)
 })
 
+
+InstrumentClass.create([
+  { name: 'Oil Pressure Gauge' }
+])
+.then((oilPressureGauge) => {
+  console.log('Created instrumentClass', oilPressureGauge)
+  Instrument.create([
+    {
+      name: 'Oil Pressure Gauge 0 - 10 BAR',
+      brand: 'UL Flight Line',
+      model: '',
+      partNo: '13-16021',
+      text: 'https://www.aircraftspruce.com/catalog/inpages/flightline13-16021-5.php',
+      price: 8995,
+      size: 'S',
+      pictureURL: 'https://www.aircraftspruce.com/cache/370-320-/catalog/graphics/3/13-16021.jpg',
+      instrumentClass_id: oilPressureGauge[0]._id
+    },
+    {
+      name: 'Pressure Gauge 0-10 BAR 0-145 PSI',
+      brand: 'UL Flight Line',
+      model: '',
+      partNo: '13-16025',
+      text: 'https://www.aircraftspruce.com/catalog/inpages/flightline13-16021-5.php',
+      price: 7995,
+      size: 'S',
+      pictureURL: 'https://www.aircraftspruce.com/cache/370-320-/catalog/graphics/3/13-16021.jpg',
+      instrumentClass_id: oilPressureGauge[0]._id
+    }
+  ])
+  .then(() => {
+    console.log('Created oilPressureGauge instruments')
+  })
+  .catch((error) => {
+    console.error(error)
+  })
+})
+.catch((error) => {
+  console.error(error)
+})
+
+
+InstrumentClass.create([
+  { name: 'Oil Tempreture Gauge' }
+])
+.then((oilTempretureGauge) => {
+  console.log('Created instrumentClass', oilTempretureGauge)
+  Instrument.create([
+    {
+      name: 'Temperature Gauge UL/LSA CANaerospace',
+      brand: 'Road',
+      model: '',
+      partNo: 'IH91.2B35.25',
+      text: 'https://www.road-online.de/products/article.php?grp=2&art=IH91.2B35.25',
+      price: 9867,
+      size: 'S',
+      pictureURL: 'https://www.road-online.de/produkte/imgkatalog/ih91_2b35_25.jpg',
+      instrumentClass_id: oilTempretureGauge[0]._id
+    },
+    {
+      name: 'Temperature Gauge UL/LSA CANaerospace',
+      brand: 'Road',
+      model: '',
+      partNo: 'IH61.2B35.25',
+      text: 'https://www.road-online.de/products/article.php?grp=2&art=IH61.2B35.25',
+      price: 7534,
+      size: 'S',
+      pictureURL: 'https://www.road-online.de/produkte/imgkatalog/ih61_2b35_25.jpg',
+      instrumentClass_id: oilTempretureGauge[0]._id
+    },
+  ])
+  .then(() => {
+    console.log('Created oilTempretureGauge instruments')
+  })
+  .catch((error) => {
+    console.error(error)
+  })
+})
+.catch((error) => {
+  console.error(error)
+})
+
+
+InstrumentClass.create([
+  { name: 'Cylinder Head Temperature Gauge' }
+])
+.then((cylinderHeadTempretureGauge) => {
+  console.log('Created instrumentClass', cylinderHeadTempretureGauge)
+  Instrument.create([
+    {
+      name: '2" CHT 50-150C 150-300F',
+      brand: 'UL Flight Line',
+      model: '',
+      partNo: '13-16017',
+      text: 'https://www.aircraftspruce.com/catalog/inpages/flightline13-16017.php?clickkey=1607587',
+      price: 6995,
+      size: 'S',
+      pictureURL: 'https://www.aircraftspruce.com/cache/370-320-/catalog/graphics/3/13-16017.jpg',
+      instrumentClass_id: cylinderHeadTempretureGauge[0]._id
+    },
+    {
+      name: '2" CHT 50-150C 125-300F',
+      brand: 'UL Flight Line',
+      model: '',
+      partNo: '13-16026',
+      text: 'https://www.aircraftspruce.com/catalog/inpages/flightline13-16017.php?clickkey=1607587',
+      price: 6995,
+      size: 'S',
+      pictureURL: 'https://www.aircraftspruce.com/cache/370-320-/catalog/graphics/3/13-16017.jpg',
+      instrumentClass_id: cylinderHeadTempretureGauge[0]._id
+    }
+  ])
+  .then(() => {
+    console.log('Created cylinderHeadTempretureGauge instruments')
+  })
+  .catch((error) => {
+    console.error(error)
+  })
+})
+.catch((error) => {
+  console.error(error)
+})
+
+
 Template.create([
   {
     code: 'a22',
