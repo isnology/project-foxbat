@@ -28,8 +28,8 @@ function Slot({
     zIndex: 2,
     width: slotWidth + 'px',
     height: slotHeight + 'px',
-    left: panelHeight * leftRatio + 'px',
-    top: panelHeight * (1-bottomRatio) + 'px',
+    left: (panelHeight * leftRatio) + 'px',
+    top: (panelHeight * (1-bottomRatio)) + 'px'
   }
   if (!!diameterRatio) {
     slotStyle.borderRadius = '50%'

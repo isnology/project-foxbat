@@ -68,7 +68,7 @@ function Sidebar({
 
   function allModelsForBrandsForTypeFromInstruments(instruments, selectedInstrumentType, selectedInstrumentBrand) {
     let instrumentsWithTypeAndBrand
-    if (selectedInstrumentBrand == "All models") {
+    if (selectedInstrumentBrand === "All models") {
       instrumentsWithTypeAndBrand = instruments.filter((instrument) => {
         return instrument.instrumentClass_id.name === selectedInstrumentType && canItGoThere(instrument.size) === true
       })
