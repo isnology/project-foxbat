@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import Button from './Button'
 import BasePopUp from './BasePopUp'
 
-function SaveRegister({ onExit, onSubmit, errMsg }) {
+function SaveRegister({ onExit, onSubmit, errMsg, signedIn }) {
   return (
     <BasePopUp onExit={ onExit } errMsg={ errMsg }>
       <p className="form-text">
@@ -17,10 +17,17 @@ function SaveRegister({ onExit, onSubmit, errMsg }) {
 
             const elements = event.target.elements // Allows looking up fields using their 'name' attributes
             // Get entered values from fields
-            const email = elements.email.value
-            const password = elements.password.value
+            let email
+            let password
+            if (!signedIn) {
+              email = elements.email.value
+              password = elements.password.value
+            }
+            else { 
+              email = 'f'
+              password = 'f'
+            }
             const name = elements.name.value
-
             // Pass this information along to the parent component
             onSubmit({ name, email, password })
           } }
@@ -33,24 +40,26 @@ function SaveRegister({ onExit, onSubmit, errMsg }) {
               defaultValue={ "" }
           />
         </label>
+        { !signedIn &&
+        <Fragment>
+          <label>
+            { 'Email: ' }
+            <input
+                type='email'
+                name='email'
+                defaultValue={ "" }
+            />
+          </label>
 
-        <label>
-          { 'Email: ' }
-          <input
-              type='email'
-              name='email'
-              defaultValue={ "" }
-          />
-        </label>
-
-        <label>
-          { 'Password: ' }
-          <input
-              type='password'
-              name='password'
-          />
-        </label>
-
+          <label>
+            { 'Password: ' }
+            <input
+                type='password'
+                name='password'
+            />
+          </label>
+          </Fragment>
+        }
         <br/>
         <Button text="Save"
                 onToggle={ () => {} }

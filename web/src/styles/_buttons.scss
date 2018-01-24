@@ -5,6 +5,7 @@
 .main-button {
   margin: 2rem auto;
   height: 45px; 
+  width: 20rem;
   max-width: 400px;
   background-color: $foxbat-blue; 
   border-radius: 5px;
@@ -15,7 +16,7 @@
 .button-text {
   text-align: center;
   font-size: 1.6rem;
-  margin: 35px;
+  margin: 35px auto;
   font-weight: 300;
 }
 

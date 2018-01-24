@@ -88,7 +88,7 @@ h3 {
 }
 
 .base-popup {
-  position: absolute;
+  position: fixed;
   top: 6%;
   left: 6%;
   width: 87.5%;
@@ -138,6 +138,12 @@ h3 {
     padding-right: 20px;
     font-size: 20px;
     font-size: 2rem;
+  }
+  .round-exit-button {
+    position: absolute;
+    top: 0rem;
+    right: 0rem;
+    margin: 0;
   }
 }
 

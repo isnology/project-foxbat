@@ -4,6 +4,7 @@
 .main-button {
   margin: 2rem auto;
   height: 45px;
+  width: 20rem;
   max-width: 400px;
   background-color: #0A64CB;
   border-radius: 5px;
@@ -13,7 +14,7 @@
 .button-text {
   text-align: center;
   font-size: 1.6rem;
-  margin: 35px;
+  margin: 35px auto;
   font-weight: 300; }
 
 .btnimg {
@@ -58,14 +59,15 @@
   margin-top: 9rem;
   flex-direction: column;
   align-items: center;
-  padding: 3rem 0;
-  width: 75vw;
-  text-align: center; }
-
-.panel-container .running-cost {
-  align-self: flex-start;
-  padding: 0 0 4rem 2rem;
-  font-size: 2.3rem; }
+  padding: 0;
+  width: 75vw; }
+  .panel-container .running-cost {
+    align-self: flex-start;
+    padding: 0 0 2rem 2rem;
+    font-size: 2rem;
+    text-align: left; }
+    .panel-container .running-cost p {
+      margin: 0; }
 
 #svgbox {
   /* border: black solid 1px; */
@@ -109,7 +111,20 @@
   box-shadow: 0px 0px 5px 5px #23547c, inset 0px 0px 5px 5px #23547c; }
 
 .panel-button-group button {
+  margin: 1rem auto;
   width: 20rem; }
+
+.panel-button-low-group {
+  margin: 0 auto; }
+  .panel-button-low-group button {
+    width: 10rem;
+    margin: auto;
+    background: #8f4343; }
+
+.panel-button-low-group button .button-text {
+  font-size: 1.2rem;
+  margin: auto;
+  color: white; }
 
 .sidebar {
   position: absolute;
@@ -216,6 +231,9 @@
 .instrument-preview img {
   display: block; }
 
+.inactive .main-button {
+  background: grey; }
+
 /*  MEDIA QUEEEEEEERIES */
 @media screen and (min-width: 1000px) {
   .sidebar-lower {
@@ -302,7 +320,7 @@ h3 {
   margin: 20px; }
 
 .base-popup {
-  position: absolute;
+  position: fixed;
   top: 6%;
   left: 6%;
   width: 87.5%;
@@ -347,6 +365,11 @@ h3 {
     padding-right: 20px;
     font-size: 20px;
     font-size: 2rem; }
+  .base-popup .round-exit-button {
+    position: absolute;
+    top: 0rem;
+    right: 0rem;
+    margin: 0; }
 
 .form-text {
   font-size: 36px;
