@@ -47,6 +47,12 @@ const InstrumentPreview = ({
     else if (slotSize === 'S' && (instSize === 'S' )) {
       return true
     }
+    else if (activeSlotSize === 'D' && instSize === 'D' ) {
+      return true
+    }
+    else if (activeSlotSize === 'R' && instSize === 'R' ) {
+      return true
+    }  
     else {
       return false
     }
