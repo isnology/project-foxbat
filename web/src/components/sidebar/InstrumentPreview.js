@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '../Button';
 import numeral from "numeral";
-
+import { canItGoThere } from './Sidebar'
 
 function turnTextToAnkor(text) {
   if (text.indexOf("http") >= 0) {
@@ -21,33 +21,24 @@ const InstrumentPreview = ({
   toggleInstrumentToSlot
 }) => {
 
-  let activeSlot = slots.find(function(slot) {
-    return slot.slotNumber === selectedSlot;
-  })
-  let activeSlotSize = activeSlot.slotNumber.substring(0,1)
+  let activeSlot
+  let activeSlotSize
+  let buttonLabel
 
-  function canItGoThere(slotSize, instSize) {
-    if (slotSize === 'L' && (instSize === 'L' || instSize === 'M' || instSize === 'S' )) {
-      return true
-    }
-    else if (slotSize === 'M' && (instSize === 'M' || instSize === 'S' )) {
-      return true
-    }
-    else if (slotSize === 'S' && (instSize === 'S' )) {
-      return true
+  if (!!selectedSlot) {
+    activeSlot = slots.find(function(slot) { return slot.slotNumber === selectedSlot;})
+    activeSlotSize = activeSlot.slotNumber.substring(0,1)
+    if (!!activeSlot.instrument) {
+      buttonLabel = "Remove"
+      selectedInstrumentModel = activeSlot.instrument
     }
     else {
-      return false
+      buttonLabel = "Add"
     }
   }
 
-  let buttonLabel
-  !!activeSlot.instrument ? (buttonLabel = "Remove") : (buttonLabel = "Add")
-
-  let previewClass = "preview-class"
-
   return (
-    <div className={ previewClass }>
+    <div className="previewClass">
       <div className="instrument-details">
         <p><strong>Type:</strong> { selectedInstrumentModel.instrumentClass_id.name }</p>
         <p><strong>Model:</strong> { selectedInstrumentModel.model }</p>
