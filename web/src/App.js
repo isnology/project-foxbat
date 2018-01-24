@@ -186,9 +186,9 @@ class App extends Component {
   setSlots = (templateName) => {
     let slotins
     if (templateName==='a22' || templateName === 'a32'){
-      slotins = require('./data').analogSlottedInstruments
+      slotins = _lang.cloneDeep(require('./data').analogSlottedInstruments)
     } else {
-      slotins = require('./data').digitalSlottedInstruments
+      slotins = _lang.cloneDeep(require('./data').digitalSlottedInstruments)
     }
     return slotins
   }
