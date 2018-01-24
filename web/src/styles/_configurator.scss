@@ -220,6 +220,10 @@ height: auto;
   display: block;
 }
 
+.inactive .main-button {
+  background: grey;
+}
+
 /*  MEDIA QUEEEEEEERIES */
 @media screen and (min-width: 1000px) {
   .sidebar-lower {

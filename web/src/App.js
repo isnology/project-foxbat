@@ -216,9 +216,9 @@ class App extends Component {
     }
     this.setState({
       selectedSlot: newSlot,
-      selectedInstrumentType: null,
-      selectedInstrumentBrand: null,
-      selectedInstrumentModel: null
+      // selectedInstrumentType: null,
+      // selectedInstrumentBrand: null,
+      // selectedInstrumentModel: null
     })
   }
 
