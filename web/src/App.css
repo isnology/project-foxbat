@@ -26,7 +26,8 @@
   height: 70px;
   width: 70px;
   border-radius: 50%;
-  background-color: #333333; }
+  background-color: #333333;
+  cursor: pointer; }
 
 .exit-button-X {
   font-size: 3rem;
