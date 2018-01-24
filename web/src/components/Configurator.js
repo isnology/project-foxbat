@@ -58,7 +58,7 @@ function Configurator({
       <div className="panel-container">
         <div className="running-cost">
           <p>Current cost (USD): ${ numeral(totalCost()).format('0,0.00') }</p>
-          <p>Current cost (USD): ${ numeral(totalCost()).format('0,0.00') }</p>
+          <p>{ !!panelSaved ? "Changes saved" : "Unsaved changes" }</p>
           <p>Current cost (USD): ${ numeral(totalCost()).format('0,0.00') }</p>
         </div>
         <Panel
