@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '../Button';
 import numeral from "numeral";
-
+import { canItGoThere } from './Sidebar'
 
 function turnTextToAnkor(text) {
   if (text.indexOf("http") >= 0) {
@@ -34,27 +34,6 @@ const InstrumentPreview = ({
     }
     else {
       buttonLabel = "Add"
-    }
-  }
-
-  function canItGoThere(slotSize, instSize) {
-    if (slotSize === 'L' && (instSize === 'L' || instSize === 'M' || instSize === 'S' )) {
-      return true
-    }
-    else if (slotSize === 'M' && (instSize === 'M' || instSize === 'S' )) {
-      return true
-    }
-    else if (slotSize === 'S' && (instSize === 'S' )) {
-      return true
-    }
-    else if (activeSlotSize === 'D' && instSize === 'D' ) {
-      return true
-    }
-    else if (activeSlotSize === 'R' && instSize === 'R' ) {
-      return true
-    }  
-    else {
-      return false
     }
   }
 

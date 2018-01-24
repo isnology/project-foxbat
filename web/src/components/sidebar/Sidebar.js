@@ -7,6 +7,21 @@ import InstrumentPreview from './InstrumentPreview'
 import { sideBarHeadings } from '../../constants/messages'
 var _array = require('lodash/array') // Lodash array methods
 
+export function canItGoThere(slotSize, instSize) {
+  if (slotSize === instSize){
+    return true
+  } 
+  else if (slotSize === 'L' && (instSize === 'M' || instSize === 'S' )) {
+    return true //allow medium (2.25") and small (2") size instruments to fit into a large (3.125") slot due to mounting brackets
+  }
+  else if (slotSize === 'M' && (instSize === 'S' )) {
+    return true //allow small (2") size instruments to fit into a medium (2.25") slot due to mounting brackets
+  }
+  else {
+    return false
+  }
+}
+
 function Sidebar({
   instruments,
   slots,
@@ -19,28 +34,7 @@ function Sidebar({
   sidebarClose,
   onBackClick
 }) {
-
-function canItGoThere(slotSize, instSize) {
-  if (slotSize === 'L' && (instSize === 'L' || instSize === 'M' || instSize === 'S' )) {
-    return true
-  }
-  else if (slotSize === 'M' && (instSize === 'M' || instSize === 'S' )) {
-    return true
-  }
-  else if (slotSize === 'S' && (instSize === 'S' )) {
-    return true
-  }
-  else if (activeSlotSize === 'D' && instSize === 'D' ) {
-    return true
-  }
-  else if (activeSlotSize === 'R' && instSize === 'R' ) {
-    return true
-  }
-  else {
-    return false
-  }
-}
-
+  
   if (!!selectedSlot && !selectedInstrumentModel) {
     var activeSlot = slots.find(function(slot) {
       return slot.slotNumber === selectedSlot;
