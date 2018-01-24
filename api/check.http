@@ -32,3 +32,6 @@ POST http://localhost:7000/panel
 ### Get a list of instrument classes
 GET http://localhost:7000/instrumentclasses
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQG1haWwuY29tIiwiaWF0IjoxNTE2NDQ4MjIzLCJleHAiOjE1MTcwNTMwMjMsInN1YiI6IjVhNWZlY2RmNWQwOGFhMTRiMjVkNTEwMyJ9.RCe6OfSdVrmcwrOhLaH-tng1wrmzcSJxBt4nI4HgCFo
+
+###
+POST http://localhost:7000/submitpanel

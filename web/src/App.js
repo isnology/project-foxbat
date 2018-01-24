@@ -5,8 +5,10 @@ import './App.css'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import WelcomePage from './components/WelcomePage'
 import SelectPanelTemplatePage from './components/SelectPanelTemplatePage'
+import SubmitButton from './components/SubmitButton'
 import { loadPanels, createPanel, updatePanel } from './api/panels'
 import { loadInstruments } from './api/instruments'
+import { emailPanelDesign } from './api/emailSubmission'
 import ModalWindow from './components/ModalWindow'
 import Configurator from './components/Configurator'
 import _lang from 'lodash/lang'
@@ -353,6 +355,10 @@ class App extends Component {
     // *****
     }
   }
+  
+  submitPanel = (email, slotData, templateID) => {
+    emailPanelDesign(email, slotData, templateID)
+  }
 
   render() {
     const {
@@ -376,6 +382,13 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
+          {/* <SubmitButton 
+            onClick={ this.submitPanel }
+            email={ decodedToken.email }
+            slotData={ slots }
+            templateID={ templateId }
+          /> */}
+
           <Switch>
 
             <Route path='/' exact render={ () => (
