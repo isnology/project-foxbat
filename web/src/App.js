@@ -506,6 +506,7 @@ class App extends Component {
               panelList={ this.state.panelList }
               onSelectPanel={ this.onSelectPanel }
               errMsg={ !!error ? error.message : null }
+              signedIn={ signedIn }
             />
           }
         </div>
