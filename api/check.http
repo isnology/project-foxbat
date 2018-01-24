@@ -35,3 +35,31 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQ
 
 ###
 POST http://localhost:7000/submitpanel
+
+
+### create a new instrumentClass
+
+POST http://localhost:7000/instrumentclasses
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQG1haWwuY29tIiwiaWF0IjoxNTE2NzY5MzIxLCJleHAiOjE1MTczNzQxMjEsInN1YiI6IjVhNjgxMDI4NWNiMDMzNWFmYzMwMmNhYiJ9.3sOE8h5m8bD7Ui-PEyBwJWV9Sjh3Tx-GUH4vpQkLDvo
+Content-Type: application/json
+
+{
+  "name": "Dynon" 
+}
+
+### create a new instrument
+POST http://localhost:7000/instruments
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQG1haWwuY29tIiwiaWF0IjoxNTE2NzY5MzIxLCJleHAiOjE1MTczNzQxMjEsInN1YiI6IjVhNjgxMDI4NWNiMDMzNWFmYzMwMmNhYiJ9.3sOE8h5m8bD7Ui-PEyBwJWV9Sjh3Tx-GUH4vpQkLDvo
+Content-Type: application/json
+
+{
+  "name": "SkyView Classic",
+  "brand": "DYNON",
+  "model": "SV-D1000",
+  "partNo": "",
+  "text": "The original next generation EFIS. Even without a touch screen, SkyView's intuitive controls and pilot-designed interface are designed to work in your cockpit. SkyView Classic, SkyView Touch, and SkyView HDX displays use the same modules and accessories. SkyView Classic displays can only connect to other SkyView Touch and SkyView Classic displays in an aircraft.\nExperimental and LSA pilots know that they have the most innovative GA aircraft flying. SkyView continues that tradition with the next generation of glass panels, offering redundant networks and systems, incredibly bright screens, design flexibility, and future upgradability unsurpassed by anything else flying. ",
+  "price": 351000,
+  "size": "D",
+  "pictureURL": "http://www.dynonavionics.com/images/products/skyview/skyview-classic.png",
+  "instrumentClass_id": "5a6813967eab98602bb91933"
+}

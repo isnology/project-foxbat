@@ -6,6 +6,34 @@ const Template = require('./Template')
 const Instrument = require('./Instrument')
 const InstrumentClass = require('./InstrumentClass')
 
+InstrumentClass.create([
+  { name: 'Dynon' }
+])
+.then((dynon) => {
+  console.log('Created instrumentClass', dynon)
+  Instrument.create([
+    {
+      name: 'Altimeter',
+      brand: 'UMA Inc.',
+      model: '',
+      partNo: '10-22965',
+      text: 'http://www.umainstruments.com/Altimeter.htm',
+      price: 17550,
+      size: 'L',
+      pictureURL: 'http://www.umainstruments.com/images/Altimeter/3altimeter.jpg',
+      instrumentClass_id: dynon[0]._id
+    }
+  ])
+  .then(() => {
+    console.log('Created altimeter instruments')
+  })
+  .catch((error) => {
+    console.error(error)
+  })
+})
+.catch((error) => {
+  console.error(error)
+})
 
 InstrumentClass.create([
   { name: 'Altimeter' }
