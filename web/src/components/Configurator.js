@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import Button from './Button'
 import Sidebar from './sidebar/Sidebar'
 import Panel from './Panel'
+import SubmitButton from './SubmitButton'
 import logo from '../img/foxbatlogo.png'
 import numeral from 'numeral'
 
 function Configurator({
   type,
+  email,
   windowHeight,
   windowWidth,
   slots, //instruments={slots}
@@ -19,6 +21,7 @@ function Configurator({
   selectSlot,
   signedIn,
   onSave,
+  onSubmit,
   onClearPanel,
   onSignOut,
   onSelect,
@@ -57,6 +60,15 @@ function Configurator({
             text="Save"
             onToggle={ onSave }
           />
+          { signedIn && 
+            <SubmitButton 
+              className="panel-button-group"
+              onClick={ onSubmit }
+              email={ email }
+              slotData={ slots }
+              templateID={ type }
+            />
+          }
           <div className="panel-button-low-group">
             { signedIn &&
               <Button

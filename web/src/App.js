@@ -5,7 +5,6 @@ import './App.css'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import WelcomePage from './components/WelcomePage'
 import SelectPanelTemplatePage from './components/SelectPanelTemplatePage'
-import SubmitButton from './components/SubmitButton'
 import { loadPanels, createPanel, updatePanel } from './api/panels'
 import { loadInstruments } from './api/instruments'
 import { emailPanelDesign } from './api/emailSubmission'
@@ -355,7 +354,7 @@ class App extends Component {
     // *****
     }
   }
-  
+
   submitPanel = (email, slotData, templateID) => {
     emailPanelDesign(email, slotData, templateID)
   }
@@ -382,13 +381,6 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          {/* <SubmitButton 
-            onClick={ this.submitPanel }
-            email={ decodedToken.email }
-            slotData={ slots }
-            templateID={ templateId }
-          /> */}
-
           <Switch>
 
             <Route path='/' exact render={ () => (
@@ -406,6 +398,9 @@ class App extends Component {
               !!templateId ? (
                 <Configurator
                   type={templateId}
+                  email={ signedIn && 
+                    decodedToken.email
+                  }
                   windowHeight={windowHeight}
                   windowWidth={windowWidth}
                   instruments={ instruments }
@@ -416,6 +411,7 @@ class App extends Component {
                   selectedInstrumentModel={ selectedInstrumentModel }
                   signedIn={ signedIn }
                   onSave={ this.onSave }
+                  onSubmit={ this.submitPanel }
                   selectSlot={ this.onSelectSlot }
                   onClearPanel={ this.onClearCurrentPanel }
                   onSignOut={ this.onSignOut }
