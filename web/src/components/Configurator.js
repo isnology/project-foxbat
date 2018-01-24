@@ -1,5 +1,5 @@
 import React from 'react'
-import { Prompt, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Button from './Button'
 import Sidebar from './sidebar/Sidebar'
 import Panel from './Panel'
@@ -33,7 +33,7 @@ function Configurator({
   onRefreshApp,
   onDeletePanel
 }) {
-console.log(panelSaved)
+
   function add(a, b) {
     return a + b;
   }
@@ -45,16 +45,15 @@ console.log(panelSaved)
     return arrayOfPrices.reduce(add, 0)/100
   }
 
-  // window.addEventListener("beforeunload", function (e) {
-  //   e.returnValue = "\o/"
-  // })
+  
+  window.addEventListener("beforeunload", function (e) {
+      if (panelSaved === false) {
+        e.returnValue = "You may have unsaved changes. Are you sure you want to leave?"
+      }
+  })
 
   return (
     <div className="configurator">
-      <Prompt
-        when={ panelSaved === false }
-        message="You may have unsaved changes. Are you sure you want to leave?"
-      />
       <img src={ logo } alt="Foxbat logo" className="configurator-logo" />
       <div className="panel-container">
         <div className="running-cost">Current cost (USD): ${ numeral(totalCost()).format('0,0.00') }</div>
@@ -99,7 +98,7 @@ console.log(panelSaved)
             { signedIn && !!panel_id &&
             <Link to="/" onClick={ onDeletePanel }>
               <Button
-                  text="Delete Panel"
+                  text="Delete panel"
               />
             </Link>
             }

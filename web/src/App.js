@@ -235,12 +235,9 @@ class App extends Component {
     })
     this.setState({
       slots: newSlots,
-      selectedSlot: null,
-      selectedInstrumentType: null,
-      selectedInstrumentBrand: null,
-      selectedInstrumentModel: null,
       panelSaved: false
     })
+    this.onSidebarClose()
   }
 
   assignInstrumentToSelectedSlot = (model) => {
@@ -349,13 +346,18 @@ class App extends Component {
       //}
     }
   }
+  else {
+    this.onSidebarClose()
+    let clearedSlots = _lang.cloneDeep(this.state.slots)
+    clearedSlots.forEach(slot => slot.instrument = null)
+
+    this.setState({
+      slots: clearedSlots
+    })
+  }
 }
 
-  onRefreshApp = (confirm) => {
-    if (confirm && !window.confirm("Are you sure you want to exit and return to the start? Any unsaved changes to" +
-            " this panel will be lost.")) {
-      return
-    }
+  refreshApp = () => {
     this.setState({
       panelName: null,
       panel_id: null,
@@ -367,10 +369,21 @@ class App extends Component {
       modalWindow: null,
       slots: null
     })
-    // *****
-    // Do we need to remove local stored data??
-    // *****
+  }
 
+  onRefreshApp = (confirm) => {
+    if (this.state.panelSaved === false) {
+      if (confirm && !window.confirm("Are you sure you want to exit and return to the start? Any unsaved changes to" +
+              " this panel will be lost.")) {
+        return
+      }
+      else {
+        this.refreshApp()
+      }
+    }
+    else {
+      this.refreshApp()
+    }
   }
 
   submitPanel = (email, slotData, templateID) => {
