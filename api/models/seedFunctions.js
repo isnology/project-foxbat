@@ -3,6 +3,78 @@ const Instrument = require('./Instrument')
 const InstrumentClass = require('./InstrumentClass')
 
 const seedDb = () => {
+
+  InstrumentClass.create([
+    { name: 'Radio' }
+  ])
+  .then((radio) => {
+    console.log('Created instrumentClass', radio)
+    Instrument.create([
+      {
+        name: 'Two-Place Stereo Intercom',
+        brand: 'Dynon',
+        model: 'SV-INTERCOM-2S',
+        partNo: '',
+        text: 'Stereo, two-place intercom with audio connectivity for EFIS alerts and music that is usually only found in full-size audio panels.\nThe SV-INTERCOM-2S solves the problem of having to choose between an underfeatured intercom or an expensive audio panel. With ample inputs for EFIS systems, stereo music, and all the other technology in your panel, the SV-INTERCOM-2S has the features that your modern connected 2-place aircraft requires.',
+        price: 29500,
+        size: 'R',
+        pictureURL: 'https://s3-ap-southeast-2.amazonaws.com/coder-academy-alex-palma-sydney/dynon-sv-stereo-intercom-panel.png',
+        instrumentClass_id: radio[0]._id
+      },
+      {
+        name: 'VHF COM Radio',
+        brand: 'Dynon',
+        model: 'SV-COM-C25',
+        partNo: '',
+        text: 'By integrating deeply with your Dynon SkyView system, the SkyView COM Radio tunes frequencies by airport and station type - rather than by spinning in a number - at the touch of a button. You can also send frequencies over from the SkyView map airport info pages. For when you\'re feeling nostalgic (or are following ATC instructions), a dual concentric knob lets you spin in frequencies "the old fashioned way." SkyView will identify the airport and station type as you tune to help ensure you\'re talking to the right radio station. Dynon offers two COM radios: the SV-COM-C25 has 25 kHz channel spacing only. The SV-COM-X83 adds 8.33 kHz channel spacing.',
+        price: 129500,
+        size: 'R',
+        pictureURL: 'https://s3-ap-southeast-2.amazonaws.com/coder-academy-alex-palma-sydney/dynon-vhf-com-radio.png',
+        instrumentClass_id: radio[0]._id
+      }
+      
+    ])
+    .then(() => {
+      console.log('Created Radio instruments')
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+  })
+  .catch((error) => {
+    console.error(error)
+  })
+
+
+  InstrumentClass.create([
+    { name: 'Dynon' }
+  ])
+  .then((dynon) => {
+    console.log('Created instrumentClass', dynon)
+    Instrument.create([
+      {
+        name: 'SkyView Classic',
+        brand: 'Dynon',
+        model: 'SV-D1000',
+        partNo: '',
+        text: 'The original next generation EFIS. Even without a touch screen, SkyView\'s intuitive controls and pilot-designed interface are designed to work in your cockpit. SkyView Classic, SkyView Touch, and SkyView HDX displays use the same modules and accessories. SkyView Classic displays can only connect to other SkyView Touch and SkyView Classic displays in an aircraft.\n\nExperimental and LSA pilots know that they have the most innovative GA aircraft flying. SkyView continues that tradition with the next generation of glass panels, offering redundant networks and systems, incredibly bright screens, design flexibility, and future upgradability unsurpassed by anything else flying.',
+        price: 351000,
+        size: 'D',
+        pictureURL: 'http://www.dynonavionics.com/images/products/skyview/skyview-classic.png',
+        instrumentClass_id: dynon[0]._id
+      }
+    ])
+    .then(() => {
+      console.log('Created Dynon instruments')
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+  })
+  .catch((error) => {
+    console.error(error)
+  })
+
   InstrumentClass.create([
     { name: 'Altimeter' }
   ])
