@@ -309,6 +309,7 @@ class App extends Component {
           return slot
         }
       })
+      return false
     })
 
     this.setState({
