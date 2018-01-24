@@ -7,7 +7,7 @@ function SaveRegister({ onExit, onSubmit, errMsg }) {
     <BasePopUp onExit={ onExit } errMsg={ errMsg }>
       <p className="form-text">
         Please give your panel a name and enter your email address and a password to save
-        (so it can be re-called latter using these).
+        (so it can be recalled later using these).
       </p>
 
       <form
@@ -30,7 +30,7 @@ function SaveRegister({ onExit, onSubmit, errMsg }) {
           <input
               type='text'
               name='name'
-              defaultValue={ " " }
+              defaultValue={ "" }
           />
         </label>
 
@@ -39,7 +39,7 @@ function SaveRegister({ onExit, onSubmit, errMsg }) {
           <input
               type='email'
               name='email'
-              defaultValue={ " " }
+              defaultValue={ "" }
           />
         </label>
 

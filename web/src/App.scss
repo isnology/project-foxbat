@@ -1,14 +1,73 @@
 @import 'styles/constants';
 @import 'styles/buttons';
-@import 'styles/sidebar';
-@import 'styles/panel';
+@import 'styles/configurator';
 
 .App {
   text-align: center;
+  background: white;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 84vh;
+  text-align: center;
+  background: white;
+}
+
+h1, h2, h3 {
+  font-weight: normal;
+}
+
+h1 {
+  margin: 3rem auto;
+  font-size: 3.2rem;
+}
+
+h2 {
+  margin: 2rem auto;
+  font-size: 2.4rem;
+}
+
+h3 {
+  margin: 1rem auto;
+  font-size: 2rem;
+  font-weight: normal;
+}
+
+.logo-div {
+  width: 100vw;
+  height: 16vh;
+  min-height: 5.3rem;
+  max-height: 11rem;
+  border-bottom: #01013a 1px solid;
+}
+.foxbat-logo {
+  top: 0;
+  margin: auto;
+  height: 15vh;
+  min-height: 5rem;
+  max-height: 10rem;
+  width: auto;
+}
+
+.selection-images {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.landing-page-rectangle {
+  margin: 2rem;
+  padding: 0;
 }
 
 .plane-selector{
   height:20rem;
+  cursor: pointer;
 }
 
 .center {
@@ -19,6 +78,7 @@
   border: 1px solid black;
   height: 128px;
   width: 256px;
+  cursor: pointer;
 }
 
 .template-with-text {
@@ -28,7 +88,7 @@
 }
 
 .base-popup {
-  position: absolute;
+  position: fixed;
   top: 6%;
   left: 6%;
   width: 87.5%;
@@ -40,6 +100,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  h1 strong {
+    color: $foxbat-blue;
+  }
   form label {
     height: 30px;
     height: 3rem;
@@ -58,12 +121,29 @@
       font-size: 2rem;
     }
   }
+  select {
+    border:2px solid $foxbat-blue;
+  }
+  option {
+    min-width: 40rem;
+    text-align: center;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 20px;
+    font-size: 2rem;
+  }
   .errmsg {
     background: $light-red;
     padding-left: 20px;
     padding-right: 20px;
     font-size: 20px;
     font-size: 2rem;
+  }
+  .round-exit-button {
+    position: absolute;
+    top: 0rem;
+    right: 0rem;
+    margin: 0;
   }
 }
 
