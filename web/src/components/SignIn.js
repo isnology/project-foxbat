@@ -6,7 +6,7 @@ function SignIn({ onExit, onSubmit, errMsg }) {
   return (
       <BasePopUp onExit={ onExit } errMsg={ errMsg } >
         <p className="form-text">
-          Please log in to retrieve your Instument Panel.
+          Please log in to retrieve your Instrument Panel.
         </p>
         <form
             onSubmit={ (event) => {
