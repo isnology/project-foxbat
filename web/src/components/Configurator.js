@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import Button from './Button'
 import Sidebar from './sidebar/Sidebar'
@@ -8,6 +8,7 @@ import logo from '../img/foxbatlogo.png'
 import numeral from 'numeral'
 
 function Configurator({
+  panelSaved,
   type,
   email,
   windowHeight,
@@ -20,6 +21,7 @@ function Configurator({
   selectedInstrumentModel,
   selectSlot,
   signedIn,
+  panel_id,
   onSave,
   onSubmit,
   onClearPanel,
@@ -28,7 +30,8 @@ function Configurator({
   assignInstrumentToSelectedSlot,
   sidebarClose,
   onBackClick,
-  onRefreshApp
+  onRefreshApp,
+  onDeletePanel
 }) {
 
   function add(a, b) {
@@ -41,6 +44,13 @@ function Configurator({
     }).map((slot) => (slot.instrument.price))
     return arrayOfPrices.reduce(add, 0)/100
   }
+
+  
+  window.addEventListener("beforeunload", function (e) {
+      if (panelSaved === false) {
+        e.returnValue = "You may have unsaved changes. Are you sure you want to leave?"
+      }
+  })
 
   return (
     <div className="configurator">
@@ -60,8 +70,8 @@ function Configurator({
             text="Save"
             onToggle={ onSave }
           />
-          { signedIn && 
-            <SubmitButton 
+          { signedIn &&
+            <SubmitButton
               className="panel-button-group"
               onClick={ onSubmit }
               email={ email }
@@ -80,11 +90,18 @@ function Configurator({
               text={ "Clear panel" }
               onToggle={ onClearPanel }
             />
-            <Link to="/" onClick={ onRefreshApp }>
+            <Link to="/" onClick={ () => onRefreshApp(true) }>
               <Button
                 text="Back to start"
               />
             </Link>
+            { signedIn && !!panel_id &&
+            <Link to="/" onClick={ onDeletePanel }>
+              <Button
+                  text="Delete panel"
+              />
+            </Link>
+            }
           </div>
         </div>
       </div>

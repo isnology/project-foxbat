@@ -11,7 +11,11 @@ export function createPanel(data) {
 }
 
 export function updatePanel(id, data) {
-  console.log("about to return api.put with data:",data)
   return api.put(`/panels/${id}`, data)
+  .then((res) => res.data)
+}
+
+export function deletePanel(id) {
+  return api.delete(`/panels/${id}`)
   .then((res) => res.data)
 }

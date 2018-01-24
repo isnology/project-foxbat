@@ -1,11 +1,23 @@
 # Project FOXBAT
+
+## Development Team
+[Simon Dwyer](https://github.com/piratechicken/)
+
+[Glenn Marks](https://github.com/isnology/)
+
+[Nathanial Mether](https://github.com/NathanielMether/)
+
+[Alex Palma](https://github.com/developingAlex/)
+
 ## External links
 Figma wireframes ([clean](https://www.figma.com/file/EtEpPs4hyG9qDEsYVX7Kif5w/Foxbat-clean-wireframes) & [dev](https://www.figma.com/file/0tRu6eCM4M8QjqD2DJvvh8Tb/Foxbat-project))  |  [Trello task list](https://www.figma.com/file/0tRu6eCM4M8QjqD2DJvvh8Tb/Foxbat-project)  |  Google Drive for team documents
 ## Contents
 * [The Brief](#the-brief)
 * [How to run](#how-to-run-in-development)
 * [Tools used](#tools-used)
-* [Team](#team)
+* [Deployment Notes](#deployment-notes)
+* [Notable problems overcome during development](#notable-problems-overcome-during-development)
+
 
 ## The Brief
 ### Problem
@@ -74,11 +86,19 @@ We couldn't find a way to seed our database that was being hosted by mLab so dec
 
 Another issue we had was with the backend server talking with the hosted database, and the reason was that we were failing to issue the environment variables option on every time we ran the `now` deployment command.
 
-## Team
-[Simon Dwyer](https://github.com/piratechicken/)
+## Notable problems overcome during development
+* Some sort of anomoly was seemingly resulting in items in our apps 'state' magically reverting to what they were prior to having been cleared.
+    * The cause was identified to be the way in which the item was being set off some constant values, being an array it was an object and its elements were objects comprised of other objects, we were attempting to set our states array to be equal to the hard coded constant value instead of cloning the constants value.
+* In fixing up the code, to remove all error and warning messages that appear in the browser when viewing the site, we came across a number of css warnings that declarations were being dropped:
 
-[Glenn Marks](https://github.com/isnology/)
+    ![screenshot of warning messages in console](readmeassets/declarationDropped1.jpg)
 
-[Nathanial Mether](https://github.com/NathanielMether/)
+    The warning messages came with a link that you can see in the above screenshot as "localhost:3000:45:3" but clicking on them didn't take you to the actual problematic line.
 
-[Alex Palma](https://github.com/developingAlex/)
+    To solve this we had to take a **binary search** approach and comment out all our apps css code (which in this case meant going to the main app.scss and commenting everything out there) and then selectively bring back in segments of css until the error pops up again.
+
+    Doing this we were able to track down the exact lines which were resulting in the warnings and found it to be the result of some extra css code that was never even written by us, but was being injected into the css served up by the front end server for compatibility reasons. Viewing the right place in the browsers style editor the issue is revealed to be the -ms-flexbox value which is not understood by the Firefox browser and so was being ignored.
+
+    ![screenshot of the problematic css line for a firefox web browser](readmeassets/declarationDropped2.jpg)
+
+    This is what we expect to happen so in this case the warning messages are normal and to be expected.

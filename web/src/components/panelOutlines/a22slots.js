@@ -194,6 +194,9 @@ function A22Slots({
       break;
     case 'a32Digital':
       slotRatios = a32DigitalSlotRatios;
+      break;
+    default:
+      slotRatios = a22SlotRatios; // in the event that this is called with an incorrect template default to a22 'six pack'
   }
 
   return(

@@ -49,7 +49,7 @@ router.put('/panels/:id', requireJWT, (req, res) => {
 // delete
 router.delete('/panels/:id', requireJWT, (req, res) => {
   const { id } = req.params
-  Panel.findByIdAndRemove(id, { upsert: true , runValidators: true })
+  Panel.findByIdAndRemove(id, { runValidators: true })
   .then((panel) => {
     if (panel) {
       res.json(panel)

@@ -5,7 +5,7 @@ import './App.css'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import WelcomePage from './components/WelcomePage'
 import SelectPanelTemplatePage from './components/SelectPanelTemplatePage'
-import { loadPanels, createPanel, updatePanel } from './api/panels'
+import { loadPanels, createPanel, updatePanel, deletePanel } from './api/panels'
 import { loadInstruments } from './api/instruments'
 import { emailPanelDesign } from './api/emailSubmission'
 import ModalWindow from './components/ModalWindow'
@@ -15,6 +15,7 @@ import a22Thumb from './img/a22.png'
 import a22DigitalThumb from './img/a22digital.png'
 import a32Thumb from './img/a32.png'
 import a32DigitalThumb from './img/a32digital.png'
+
 
 import _forEach from 'lodash/forEach'
 
@@ -35,6 +36,7 @@ class App extends Component {
     modalWindow: null, //display sign in/up to save panel window
     slots: null, //state of the users panel slots
     error: null, //for displaying any errors recieved from the server
+    panelSaved: null,
     windowWidth: 0, //for adaptive sizing of configurator panel
     windowHeight: 0 //for adaptive sizing of configurator panel
   }
@@ -116,6 +118,7 @@ class App extends Component {
       updatePanel(id, {data})
       .then((panel) => {
         this.onExitModal()
+        this.setState({ panelSaved: true })
       })
       .catch((error) => {
         this.setState({ error })
@@ -125,7 +128,8 @@ class App extends Component {
       .then((panel) => {
         this.setState({
           panel_id: panel._id,
-          panelName: panel.name
+          panelName: panel.name,
+          panelSaved: true
         })
         this.onExitModal()
       })
@@ -145,6 +149,14 @@ class App extends Component {
     else {
       this.setState({ modalWindow: 'saveRegister' })
     }
+  }
+
+  onDeletePanel = () => {
+    const id=this.state.panel_id
+    deletePanel(id)
+    .then(() => {
+      this.onRefreshApp(false)
+    })
   }
 
   onSignOut = () => {
@@ -187,9 +199,9 @@ class App extends Component {
   setSlots = (templateName) => {
     let slotins
     if (templateName==='a22' || templateName === 'a32'){
-      slotins = require('./data').analogSlottedInstruments
-    } else {
-      slotins = require('./data').digitalSlottedInstruments
+      slotins = _lang.cloneDeep(require('./data').analogSlottedInstruments)
+    } else { // object cloning is necessary here because the intention is for the states array to be made to mirror the one in ./data (this solved the persistent instrument (issue #5: https://github.com/isnology/project-foxbat/issues/5) 
+      slotins = _lang.cloneDeep(require('./data').digitalSlottedInstruments)
     }
     return slotins
   }
@@ -223,11 +235,9 @@ class App extends Component {
     })
     this.setState({
       slots: newSlots,
-      selectedSlot: null,
-      selectedInstrumentType: null,
-      selectedInstrumentBrand: null,
-      selectedInstrumentModel: null
+      panelSaved: false
     })
+    this.onSidebarClose()
   }
 
   assignInstrumentToSelectedSlot = (model) => {
@@ -296,6 +306,7 @@ class App extends Component {
           return slot
         }
       })
+      return false
     })
 
     this.setState({
@@ -316,10 +327,11 @@ class App extends Component {
   }
 
   onClearCurrentPanel = () => {
-    if (window.confirm("Are you sure you want to clear the current panel? Any unsaved changes will be lost.")) {
-      this.onSidebarClose()
-      let clearedSlots = _lang.cloneDeep(this.state.slots)
-      clearedSlots.forEach(slot => slot.instrument = null)
+    if (this.state.panelSaved === false) {
+      if (window.confirm("Are you sure you want to clear the current panel? Any unsaved changes will be lost.")) {
+        this.onSidebarClose()
+        let clearedSlots = _lang.cloneDeep(this.state.slots)
+        clearedSlots.forEach(slot => slot.instrument = null)
 
       this.setState({
         slots: clearedSlots
@@ -335,23 +347,43 @@ class App extends Component {
       //}
     }
   }
+  else {
+    this.onSidebarClose()
+    let clearedSlots = _lang.cloneDeep(this.state.slots)
+    clearedSlots.forEach(slot => slot.instrument = null)
 
-  onRefreshApp = () => {
-    if (window.confirm("Are you sure you want to exit and return to the start? Any unsaved changes to this panel will be lost.")) {
-      this.setState({
-        panelName: null,
-        panel_id: null,
-        selectedSlot: null,
-        selectedInstrumentType: null,
-        selectedInstrumentBrand: null,
-        selectedInstrumentModel: null,
-        templateId: null,
-        modalWindow: null,
-        slots: null
-      })
-    // *****
-    // Do we need to remove local stored data??
-    // *****
+    this.setState({
+      slots: clearedSlots
+    })
+  }
+}
+
+  refreshApp = () => {
+    this.setState({
+      panelName: null,
+      panel_id: null,
+      selectedSlot: null,
+      selectedInstrumentType: null,
+      selectedInstrumentBrand: null,
+      selectedInstrumentModel: null,
+      templateId: null,
+      modalWindow: null,
+      slots: null
+    })
+  }
+
+  onRefreshApp = (confirm) => {
+    if (this.state.panelSaved === false) {
+      if (confirm && !window.confirm("Are you sure you want to exit and return to the start? Any unsaved changes to" +
+              " this panel will be lost.")) {
+        return
+      }
+      else {
+        this.refreshApp()
+      }
+    }
+    else {
+      this.refreshApp()
     }
   }
 
@@ -364,6 +396,7 @@ class App extends Component {
       decodedToken,
       modalWindow,
       templateId,
+      panel_id,
       instruments,
       selectedSlot,
       selectedInstrumentType,
@@ -373,6 +406,7 @@ class App extends Component {
       windowWidth,
       windowHeight,
       error,
+      panelSaved
     } = this.state
 
     const signedIn = !!decodedToken
@@ -397,6 +431,7 @@ class App extends Component {
             <Route path='/app' exact render={ () => (
               !!templateId ? (
                 <Configurator
+                  panelSaved={ panelSaved }
                   type={templateId}
                   email={ signedIn && 
                     decodedToken.email
@@ -410,6 +445,7 @@ class App extends Component {
                   selectedInstrumentBrand={ selectedInstrumentBrand }
                   selectedInstrumentModel={ selectedInstrumentModel }
                   signedIn={ signedIn }
+                  panel_id={ panel_id }
                   onSave={ this.onSave }
                   onSubmit={ this.submitPanel }
                   selectSlot={ this.onSelectSlot }
@@ -420,6 +456,7 @@ class App extends Component {
                   sidebarClose={ this.onSidebarClose }
                   onBackClick={ this.onBackClick }
                   onRefreshApp={ this.onRefreshApp }
+                  onDeletePanel={ this.onDeletePanel }
                 />
               ):(
                 <Redirect to='/' />
