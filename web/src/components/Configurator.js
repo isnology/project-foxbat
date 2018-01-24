@@ -63,7 +63,7 @@ function Configurator({
       <img src={ logo } alt="Foxbat logo" className="configurator-logo" />
       <div className="panel-container">
         <div className="running-cost">
-          { !!panelName ? <i>Panel "{ panelName }"</i> : <i style={{color: '#bdbdbd'}}>Save to name your panel</i> }
+          { !!panelName ? <p>Panel: <i>"{ panelName }"</i></p> : <i style={{color: '#bdbdbd'}}>Save to name your panel</i> }
           <p>Current cost (USD): ${ numeral(totalCost()).format('0,0.00') }</p>
         </div>
         <Panel
@@ -100,11 +100,6 @@ function Configurator({
               text={ "Clear panel" }
               onToggle={ onClearPanel }
             />
-            <Link to="/" onClick={ () => onRefreshApp(true) }>
-              <Button
-                text="Back to start"
-              />
-            </Link>
             { signedIn && !!panel_id &&
             <Link to="/" onClick={ onDeletePanel }>
               <Button
@@ -112,6 +107,11 @@ function Configurator({
               />
             </Link>
             }
+            <Link to="/" onClick={ () => onRefreshApp(true) }>
+              <Button
+                text="Back to start"
+              />
+            </Link>
           </div>
         </div>
       </div>
