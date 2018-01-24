@@ -2,6 +2,18 @@ import React from 'react'
 import Button from '../Button';
 import numeral from "numeral";
 
+
+function turnTextToAnkor(text) {
+  if (text.indexOf("http") >= 0) {
+    return (
+      <a href={ text } target="_blank">Link (opens in new tab)</a>
+    )
+  }
+  else {
+    return text
+  }
+}
+
 const InstrumentPreview = ({
   slots,
   selectedSlot,
@@ -41,7 +53,7 @@ const InstrumentPreview = ({
         <p><strong>Model:</strong> { selectedInstrumentModel.model }</p>
         <p><strong>Part no:</strong> { selectedInstrumentModel.partNo }</p>
         <p><strong>Size:</strong> { selectedInstrumentModel.size }</p>
-        <p>{ selectedInstrumentModel.text }</p>
+        <p>{ turnTextToAnkor(selectedInstrumentModel.text) }</p>
       </div>
       <div className="instrument-preview">
         <p>{ numeral(selectedInstrumentModel.price/100).format('$0,0.00') } USD</p>
