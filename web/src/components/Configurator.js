@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import Button from './Button'
 import Sidebar from './sidebar/Sidebar'
@@ -8,6 +8,7 @@ import logo from '../img/foxbatlogo.png'
 import numeral from 'numeral'
 
 function Configurator({
+  panelSaved,
   type,
   email,
   windowHeight,
@@ -43,6 +44,13 @@ function Configurator({
     }).map((slot) => (slot.instrument.price))
     return arrayOfPrices.reduce(add, 0)/100
   }
+
+  
+  window.addEventListener("beforeunload", function (e) {
+      if (panelSaved === false) {
+        e.returnValue = "You may have unsaved changes. Are you sure you want to leave?"
+      }
+  })
 
   return (
     <div className="configurator">
@@ -90,7 +98,7 @@ function Configurator({
             { signedIn && !!panel_id &&
             <Link to="/" onClick={ onDeletePanel }>
               <Button
-                  text="Delete Panel"
+                  text="Delete panel"
               />
             </Link>
             }

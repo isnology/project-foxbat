@@ -64,8 +64,10 @@ As your mongo database will initially be empty, start with a user login:
 1. Note that if you are going to be sending any of the other requests you find in the check.http file which require authentication you should copy the authentication token from the response you just got and replace the text that appears beside any `Authorization: Bearer` text in that file as the existing text will have been for a different developer and won't match the authentication token that your user was given.
 1. If you got up to here you have your backend server up and running, as well as your mongo database, and you just sent a request to your server to write to the database followed by another to read from the database and send a result back to you.
 ### Seed the data necessary for the site
-1. In your terminal ensure you're still in the backend folder: `cd api`
-1. `yarn seed`
+1. ~~In your terminal ensure you're still in the backend folder: `cd api`~~
+1. ~~`yarn seed`~~
+
+    **Update:** This is no longer necessary as the backend server will now seed itself if it finds there are no instruments in the database
 ### Run the frontend server
 1. `cd web`
 1. `yarn dev`
