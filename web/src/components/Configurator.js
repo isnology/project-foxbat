@@ -8,6 +8,7 @@ import logo from '../img/foxbatlogo.png'
 import numeral from 'numeral'
 
 function Configurator({
+  panelName,
   panelSaved,
   type,
   email,
@@ -52,13 +53,17 @@ function Configurator({
       }
   })
 
+  let saveButtonStyle
+  if (panelSaved!==false) {
+    saveButtonStyle = {backgroundColor: "#b9b9b9"}
+  }
+
   return (
     <div className="configurator">
       <img src={ logo } alt="Foxbat logo" className="configurator-logo" />
       <div className="panel-container">
         <div className="running-cost">
-          <p>Current cost (USD): ${ numeral(totalCost()).format('0,0.00') }</p>
-          <p>{ !!panelSaved ? "Changes saved" : "Unsaved changes" }</p>
+          { !!panelName ? <i>Panel "{ panelName }"</i> : <i style={{color: '#bdbdbd'}}>Save to name your panel</i> }
           <p>Current cost (USD): ${ numeral(totalCost()).format('0,0.00') }</p>
         </div>
         <Panel
@@ -73,6 +78,7 @@ function Configurator({
           <Button
             text="Save"
             onToggle={ onSave }
+            style={ saveButtonStyle }
           />
           { signedIn &&
             <SubmitButton

@@ -306,7 +306,6 @@ class App extends Component {
           return slot
         }
       })
-      return false
     })
 
     this.setState({
@@ -406,7 +405,8 @@ class App extends Component {
       windowWidth,
       windowHeight,
       error,
-      panelSaved
+      panelSaved,
+      panelName
     } = this.state
 
     const signedIn = !!decodedToken
@@ -431,6 +431,7 @@ class App extends Component {
             <Route path='/app' exact render={ () => (
               !!templateId ? (
                 <Configurator
+                  panelName={ panelName }
                   panelSaved={ panelSaved }
                   type={templateId}
                   email={ signedIn && 
