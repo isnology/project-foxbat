@@ -55,7 +55,7 @@ function Configurator({
 
   let saveButtonStyle
   if (panelSaved!==false) {
-    saveButtonStyle = {backgroundColor: "#b9b9b9"}
+    saveButtonStyle = {backgroundColor: "#C4C4C4"}
   }
 
   return (

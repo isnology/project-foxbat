@@ -83,7 +83,7 @@ height: auto;
 }
 
 .panel-button-group button {
-  margin: 1rem auto;
+  margin: 1rem 0.5rem;
   width: 20rem;
 }
 
@@ -92,7 +92,8 @@ height: auto;
   button {
     width: 10rem;
     margin: auto;
-    background: $warning-red;
+    background: $foxbat-light-blue;
+    height: 3.5rem;
   }
 }
 .panel-button-low-group button .button-text {
@@ -151,7 +152,7 @@ height: auto;
   margin: 0;
   padding: 5px;
   height: calc(100% - 100px);
-  background: #C4C4C4;
+  background: $grey;
   overflow-y: auto;
 }
 
