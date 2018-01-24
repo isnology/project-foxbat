@@ -388,7 +388,15 @@ class App extends Component {
   }
 
   submitPanel = (email, slotData, templateID) => {
-    emailPanelDesign(email, slotData, templateID)
+    if (window.confirm("Click OK to confrim and send your panel design to Foxabt Australia")) {
+      emailPanelDesign(email, slotData, templateID)
+        .then((res) => {
+          alert("Panel design has been sent")
+        })
+        .catch((error) => {
+          alert("There was an error sending your design, please get in contact with us to resolve this issue")
+        })
+    }
   }
 
   render() {
