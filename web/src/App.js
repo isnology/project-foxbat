@@ -187,7 +187,7 @@ class App extends Component {
     let slotins
     if (templateName==='a22' || templateName === 'a32'){
       slotins = _lang.cloneDeep(require('./data').analogSlottedInstruments)
-    } else {
+    } else { // object cloning is necessary here because the intention is for the states array to be made to mirror the one in ./data (this solved the persistent instrument (issue #5: https://github.com/isnology/project-foxbat/issues/5) 
       slotins = _lang.cloneDeep(require('./data').digitalSlottedInstruments)
     }
     return slotins
