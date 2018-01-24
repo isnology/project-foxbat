@@ -6,12 +6,22 @@ if (process.env.NODE_ENV !== 'production') {
 
 const router = new express.Router()
 
-router.post('/submitpanel', (req, res) => {
+router.post('/submitpanel', (req) => {
   const { email = '', slotData = [], templateID = ''} = req.body
-  console.log(email)
-  console.log(slotData)
-  console.log(templateID)
-  res.json(email)
+
+  let slotDataAsString = ''
+
+  function convertObjectToStr(obj) {
+  }
+
+  slotData.forEach(function(obj) {
+    if (obj.instrument === null) {
+      slotDataAsString = slotDataAsString + "\n\xA0" + obj.slotNumber + ": empty"
+    }
+    else {
+      slotDataAsString = slotDataAsString + "\n\xA0" + obj.slotNumber + ": " + obj.instrument.brand + " - " + obj.instrument.name + " (" + obj.instrument.partNo + ")"
+    }
+  })
 
   var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -24,9 +34,9 @@ router.post('/submitpanel', (req, res) => {
   mailOptions = {
     from: process.env.AUTHENTICATE_EMAIL,
     to: process.env.CLIENT_EMAIL,
-    subject: 'New instrument panel design sumbmitted',
-    text: `New panel design from ${email} on ${templateID}
-    ${slotData},`,
+    subject: 'New ${templateID} instrument panel design sumbmitted',
+    text: `New panel design from ${email} for an ${templateID} dashboard has been submitted
+    ${slotDataAsString},`,
     attachments: ''
   };
 
@@ -37,6 +47,9 @@ router.post('/submitpanel', (req, res) => {
       console.log('Email sent: ' + info.response);
     }
   });
+
+  console.log(slotDataAsString)
+  res.json(email)
 })
 
 module.exports = router

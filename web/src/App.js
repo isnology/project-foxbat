@@ -274,12 +274,12 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <SubmitButton 
+          {/* <SubmitButton 
             onClick={ this.submitPanel }
             email={ decodedToken.email }
             slotData={ slots }
             templateID={ templateId }
-          />
+          /> */}
 
           <Switch>
 
