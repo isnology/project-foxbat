@@ -20,6 +20,7 @@ function Configurator({
   selectedInstrumentModel,
   selectSlot,
   signedIn,
+  panel_id,
   onSave,
   onSubmit,
   onClearPanel,
@@ -28,7 +29,8 @@ function Configurator({
   assignInstrumentToSelectedSlot,
   sidebarClose,
   onBackClick,
-  onRefreshApp
+  onRefreshApp,
+  onDeletePanel
 }) {
 
   function add(a, b) {
@@ -80,11 +82,18 @@ function Configurator({
               text={ "Clear panel" }
               onToggle={ onClearPanel }
             />
-            <Link to="/" onClick={ onRefreshApp }>
+            <Link to="/" onClick={ () => onRefreshApp(true) }>
               <Button
                 text="Back to start"
               />
             </Link>
+            { signedIn && !!panel_id &&
+            <Link to="/" onClick={ onDeletePanel }>
+              <Button
+                  text="Delete Panel"
+              />
+            </Link>
+            }
           </div>
         </div>
       </div>

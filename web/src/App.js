@@ -5,7 +5,7 @@ import './App.css'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import WelcomePage from './components/WelcomePage'
 import SelectPanelTemplatePage from './components/SelectPanelTemplatePage'
-import { loadPanels, createPanel, updatePanel } from './api/panels'
+import { loadPanels, createPanel, updatePanel, deletePanel } from './api/panels'
 import { loadInstruments } from './api/instruments'
 import { emailPanelDesign } from './api/emailSubmission'
 import ModalWindow from './components/ModalWindow'
@@ -15,6 +15,7 @@ import a22Thumb from './img/a22.png'
 import a22DigitalThumb from './img/a22digital.png'
 import a32Thumb from './img/a32.png'
 import a32DigitalThumb from './img/a32digital.png'
+
 
 import _forEach from 'lodash/forEach'
 
@@ -145,6 +146,14 @@ class App extends Component {
     else {
       this.setState({ modalWindow: 'saveRegister' })
     }
+  }
+
+  onDeletePanel = () => {
+    const id=this.state.panel_id
+    deletePanel(id)
+    .then(() => {
+      this.onRefreshApp(false)
+    })
   }
 
   onSignOut = () => {
@@ -336,23 +345,26 @@ class App extends Component {
     }
   }
 
-  onRefreshApp = () => {
-    if (window.confirm("Are you sure you want to exit and return to the start? Any unsaved changes to this panel will be lost.")) {
-      this.setState({
-        panelName: null,
-        panel_id: null,
-        selectedSlot: null,
-        selectedInstrumentType: null,
-        selectedInstrumentBrand: null,
-        selectedInstrumentModel: null,
-        templateId: null,
-        modalWindow: null,
-        slots: null
-      })
+  onRefreshApp = (confirm) => {
+    if (confirm && !window.confirm("Are you sure you want to exit and return to the start? Any unsaved changes to" +
+            " this panel will be lost.")) {
+      return
+    }
+    this.setState({
+      panelName: null,
+      panel_id: null,
+      selectedSlot: null,
+      selectedInstrumentType: null,
+      selectedInstrumentBrand: null,
+      selectedInstrumentModel: null,
+      templateId: null,
+      modalWindow: null,
+      slots: null
+    })
     // *****
     // Do we need to remove local stored data??
     // *****
-    }
+
   }
 
   submitPanel = (email, slotData, templateID) => {
@@ -364,6 +376,7 @@ class App extends Component {
       decodedToken,
       modalWindow,
       templateId,
+      panel_id,
       instruments,
       selectedSlot,
       selectedInstrumentType,
@@ -410,6 +423,7 @@ class App extends Component {
                   selectedInstrumentBrand={ selectedInstrumentBrand }
                   selectedInstrumentModel={ selectedInstrumentModel }
                   signedIn={ signedIn }
+                  panel_id={ panel_id }
                   onSave={ this.onSave }
                   onSubmit={ this.submitPanel }
                   selectSlot={ this.onSelectSlot }
@@ -420,6 +434,7 @@ class App extends Component {
                   sidebarClose={ this.onSidebarClose }
                   onBackClick={ this.onBackClick }
                   onRefreshApp={ this.onRefreshApp }
+                  onDeletePanel={ this.onDeletePanel }
                 />
               ):(
                 <Redirect to='/' />
