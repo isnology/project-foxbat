@@ -7,6 +7,7 @@ import WelcomePage from './components/WelcomePage'
 import SelectPanelTemplatePage from './components/SelectPanelTemplatePage'
 import { loadPanels, createPanel, updatePanel } from './api/panels'
 import { loadInstruments } from './api/instruments'
+import { emailPanelDesign } from './api/emailSubmission'
 import ModalWindow from './components/ModalWindow'
 import Configurator from './components/Configurator'
 import _lang from 'lodash/lang'
@@ -354,6 +355,10 @@ class App extends Component {
     }
   }
 
+  submitPanel = (email, slotData, templateID) => {
+    emailPanelDesign(email, slotData, templateID)
+  }
+
   render() {
     const {
       decodedToken,
@@ -393,6 +398,9 @@ class App extends Component {
               !!templateId ? (
                 <Configurator
                   type={templateId}
+                  email={ signedIn && 
+                    decodedToken.email
+                  }
                   windowHeight={windowHeight}
                   windowWidth={windowWidth}
                   instruments={ instruments }
@@ -403,6 +411,7 @@ class App extends Component {
                   selectedInstrumentModel={ selectedInstrumentModel }
                   signedIn={ signedIn }
                   onSave={ this.onSave }
+                  onSubmit={ this.submitPanel }
                   selectSlot={ this.onSelectSlot }
                   onClearPanel={ this.onClearCurrentPanel }
                   onSignOut={ this.onSignOut }
