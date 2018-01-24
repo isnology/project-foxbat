@@ -6,7 +6,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const router = new express.Router()
 
-router.post('/submitpanel', (req) => {
+router.post('/submitpanel', (req, res) => {
   const { email = '', slotData = [], templateID = ''} = req.body
 
   let slotDataAsString = ''
@@ -34,7 +34,7 @@ router.post('/submitpanel', (req) => {
   mailOptions = {
     from: process.env.AUTHENTICATE_EMAIL,
     to: process.env.CLIENT_EMAIL,
-    subject: 'New ${templateID} instrument panel design sumbmitted',
+    subject: `New ${templateID} instrument panel design sumbmitted`,
     text: `New panel design from ${email} for an ${templateID} dashboard has been submitted
     ${slotDataAsString},`,
     attachments: ''
@@ -48,7 +48,6 @@ router.post('/submitpanel', (req) => {
     }
   });
 
-  console.log(slotDataAsString)
   res.json(email)
 })
 
