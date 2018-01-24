@@ -275,7 +275,6 @@ class App extends Component {
 
   onSelectPanel = (panel) => {
     const panelObj = JSON.parse(panel)
-    console.log(panelObj)
 
     let slots = this.setSlots(panelObj.template)
     let instrumentObj
@@ -286,7 +285,6 @@ class App extends Component {
           return false
         }
       })
-      console.log("instrument object:", instrumentObj)
 
       slots.map(slot => {
         if (slot.slotNumber === dbSlot.position) {
@@ -305,14 +303,14 @@ class App extends Component {
       panel_id: panelObj._id,
       slots: slots,
     })
-    const obj = {
-      templateId: panelObj.template,
-      panelName: panelObj.name,
-      panel_id: panelObj._id,
-      slots: slots
-    }
-    const key = "paneldata"
-    localStorage.setItem(key, JSON.stringify(obj))
+   // const obj = {
+   //   templateId: panelObj.template,
+   //   panelName: panelObj.name,
+   //   panel_id: panelObj._id,
+   //   slots: slots
+   // }
+   // const key = "paneldata"
+    //localStorage.setItem(key, JSON.stringify(obj))
     this.onExitModal()
   }
 
@@ -325,15 +323,15 @@ class App extends Component {
       this.setState({
         slots: clearedSlots
       })
-      const key = "paneldata"
-      if (!!localStorage.getItem(key)) {
-        let localSlots = JSON.parse(localStorage.getItem(key))
-        localSlots.slots.map(slot => {
-          slot.instrument = null
-          return slot
-        })
-        localStorage.setItem(key, JSON.stringify(localSlots))
-      }
+      //const key = "paneldata"
+      //if (!!localStorage.getItem(key)) {
+      //  let localSlots = JSON.parse(localStorage.getItem(key))
+      //  localSlots.slots.map(slot => {
+      //    slot.instrument = null
+      //    return slot
+      //  })
+        //localStorage.setItem(key, JSON.stringify(localSlots))
+      //}
     }
   }
 

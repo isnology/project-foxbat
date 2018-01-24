@@ -10,7 +10,8 @@ function MyPanels({ panelList, onExit, onSubmit, errMsg }) {
       <p>OR</p>
       <h2>exit to start a new instrument panel</h2>
 
-      <select onChange={ (event) => { onSubmit(event.target.value) } } size="5" >
+      <select defaultValue="" onChange={ (event) => { onSubmit(event.target.value) } } size="5" >
+        <option key="1" disabled value=""> -- select a saved dashboard -- </option>
         {!!panelList && panelList.map((panel) => (
             <option key={panel._id} value={ JSON.stringify(panel) } >{ panel.name }</option>
         ))}
