@@ -423,6 +423,7 @@ class App extends Component {
                   onSignOut={ this.onSignOut }
                   doModalWindow={ this.doModalWindow }
                   signedIn={ signedIn }
+                  user={ signedIn && decodedToken.email }
                 /> ) : (
                   <Redirect to='/app' />
                 )
