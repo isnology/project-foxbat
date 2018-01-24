@@ -5,10 +5,10 @@ function MyPanels({ panelList, onExit, onSubmit, errMsg }) {
   return (
     <BasePopUp onExit={ onExit } errMsg={ errMsg } >
 
-      <h1>Welcome back the <strong>Foxbat</strong> Instrument Panel Configurator</h1>
-      <h2>Click the instrument panel name to continue editing</h2>
+      <h2>Welcome back to the <strong>Foxbat</strong> Instrument Panel Configurator</h2>
+      <h3>Exit to start a new instrument panel</h3>
       <p>OR</p>
-      <h2>exit to start a new instrument panel</h2>
+      <h3>Click a saved panel to continue editing</h3>
 
       <select defaultValue="" onChange={ (event) => { onSubmit(event.target.value) } } size="5" >
         <option key="1" disabled value=""> -- select a saved dashboard -- </option>

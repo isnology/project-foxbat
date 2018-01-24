@@ -19,15 +19,17 @@
   margin-top: 9rem;
   flex-direction: column;
   align-items: center;
-  padding: 3rem 0;
+  padding: 0;
   width: 75vw;
-  text-align: center;
-}
-
-.panel-container .running-cost {
-  align-self: flex-start;
-  padding: 0 0 4rem 2rem;
-  font-size: 2.3rem; 
+  .running-cost {
+    align-self: flex-start;
+    padding: 0 0 2rem 2rem;
+    font-size: 2rem; 
+    text-align: left;
+    p {
+      margin: 0;
+    }
+  }
 }
 
 // INSTRUMENT PANEL
@@ -81,13 +83,18 @@ height: auto;
 }
 
 .panel-button-group button {
+  margin: 1rem 0.5rem;
   width: 20rem;
 }
 
-.panel-button-low-group button {
-  width: 10rem;
-  margin-top: 0;
-  background: $warning-red;
+.panel-button-low-group {
+  margin: 0 auto;
+  button {
+    width: 10rem;
+    margin: auto;
+    background: $foxbat-light-blue;
+    height: 3.5rem;
+  }
 }
 .panel-button-low-group button .button-text {
   font-size: 1.2rem;
@@ -145,7 +152,7 @@ height: auto;
   margin: 0;
   padding: 5px;
   height: calc(100% - 100px);
-  background: #C4C4C4;
+  background: $grey;
   overflow-y: auto;
 }
 
@@ -218,6 +225,10 @@ height: auto;
 
 .instrument-preview img {
   display: block;
+}
+
+.inactive .main-button {
+  background: grey;
 }
 
 /*  MEDIA QUEEEEEEERIES */

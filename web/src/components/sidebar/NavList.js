@@ -9,7 +9,7 @@ function NavList({
 }) {
   
   function renderToNavList() {
-    if (!!modelObjects) {
+    if (!!modelObjects && modelObjects.length > 0) {
       return(
         modelObjects.map((object, index) => (
           <Button 
@@ -20,6 +20,9 @@ function NavList({
             />
           ))
         )
+    }
+    else if (!!modelObjects && modelObjects.length < 1) {
+      return(sideBarMessages.noItems)
     }
     else if (!modelObjects && displayItems.length > 0) {
       return( 

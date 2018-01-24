@@ -31,20 +31,13 @@
   width: 70px;
   border-radius: 50%;
   background-color: #333333;
-  margin-top: -6.5%;
-  margin-left: calc(113.5% - 70px);
+  cursor: pointer;
 }
 
 .exit-button-X {
-  font-size: 64px;
-  font-size: 6.4rem;
+  font-size: 3rem;
   color: #F2F2F2;
-
   position: relative;
-  top: -8px;
-  left: 1px;
-}
-
-.landing-page-rectangle {
-  cursor: pointer;
+  top: 0;
+  left: 0;
 }

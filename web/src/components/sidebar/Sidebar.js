@@ -7,7 +7,23 @@ import InstrumentPreview from './InstrumentPreview'
 import { sideBarHeadings } from '../../constants/messages'
 var _array = require('lodash/array') // Lodash array methods
 
+export function canItGoThere(slotSize, instSize) {
+  if (slotSize === instSize){
+    return true
+  } 
+  else if (slotSize === 'L' && (instSize === 'M' || instSize === 'S' )) {
+    return true //allow medium (2.25") and small (2") size instruments to fit into a large (3.125") slot due to mounting brackets
+  }
+  else if (slotSize === 'M' && (instSize === 'S' )) {
+    return true //allow small (2") size instruments to fit into a medium (2.25") slot due to mounting brackets
+  }
+  else {
+    return false
+  }
+}
+
 function Sidebar({
+  type,
   instruments,
   slots,
   selectedSlot,
@@ -19,7 +35,7 @@ function Sidebar({
   sidebarClose,
   onBackClick
 }) {
-
+  
   if (!!selectedSlot && !selectedInstrumentModel) {
     var activeSlot = slots.find(function(slot) {
       return slot.slotNumber === selectedSlot;
@@ -30,24 +46,9 @@ function Sidebar({
   // console.log(activeSlot)
   // console.log(activeSlotSize)
 
-  function canItGoThere(instSize) {
-    if (activeSlotSize === 'L' && (instSize === 'L' || instSize === 'M' || instSize === 'S' )) {
-      return true
-    }
-    else if (activeSlotSize === 'M' && (instSize === 'M' || instSize === 'S' )) {
-      return true
-    }
-    else if (activeSlotSize === 'S' && (instSize === 'S' )) {
-      return true
-    }
-    else {
-      return false
-    }
-  }
-
   function allTypesFromInstruments(instruments) {
     const allTypesArray = instruments.filter((instrument) => {
-      return canItGoThere(instrument.size) === true
+      return canItGoThere(activeSlotSize, instrument.size) === true
     }).map((instrument) => (
       instrument.instrumentClass_id.name
     ))
@@ -58,7 +59,7 @@ function Sidebar({
 
   function allBrandsForTypeFromInstruments(instruments, selectedInstrumentType) {
     const instrumentsWithType = instruments.filter((instrument) => {
-      return instrument.instrumentClass_id.name === selectedInstrumentType && canItGoThere(instrument.size) === true
+      return instrument.instrumentClass_id.name === selectedInstrumentType && canItGoThere(activeSlotSize, instrument.size) === true
     })
     const allBrands = instrumentsWithType.map((instrument) => instrument.brand)
     const uniqueBrands = _array.uniq(allBrands)
@@ -70,12 +71,12 @@ function Sidebar({
     let instrumentsWithTypeAndBrand
     if (selectedInstrumentBrand === "All models") {
       instrumentsWithTypeAndBrand = instruments.filter((instrument) => {
-        return instrument.instrumentClass_id.name === selectedInstrumentType && canItGoThere(instrument.size) === true
+        return instrument.instrumentClass_id.name === selectedInstrumentType && canItGoThere(activeSlotSize, instrument.size) === true
       })
     }
     else {
       instrumentsWithTypeAndBrand = instruments.filter((instrument) => {
-        return instrument.instrumentClass_id.name === selectedInstrumentType && instrument.brand === selectedInstrumentBrand && canItGoThere(instrument.size) === true
+        return instrument.instrumentClass_id.name === selectedInstrumentType && instrument.brand === selectedInstrumentBrand && canItGoThere(activeSlotSize, instrument.size) === true
       })
     } 
     return instrumentsWithTypeAndBrand
@@ -125,7 +126,7 @@ function Sidebar({
 
   // Nothing selected
   if (!selectedSlot) {
-    topHeading = sideBarHeadings.welcome
+    topHeading = `Build your ${type.charAt(0).toUpperCase() + type.slice(1)} instrument panel`
     exitButton = false
     backButton = false
   }

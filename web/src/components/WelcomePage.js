@@ -6,19 +6,22 @@ import FoxbatLogo from './FoxbatLogo'
 import a22pic from '../img/a22.jpg'
 import a32pic from '../img/a32.jpg'
 
-function WelcomePage({ onSignOut, doModalWindow, signedIn }) {
+function WelcomePage({ onSignOut, doModalWindow, signedIn, user }) {
   return (
     <Fragment>
       <FoxbatLogo />
-      
+
       <div className="welcome-container">
-        <h1>Welcome to the Foxbat Instrument Panel Configurator</h1>
-        <h2>Which plane are you configuring for?</h2>
-      
+        <div>
+          <h1 style={{marginBottom: 0}}>Welcome to the Foxbat Instrument Panel Configurator</h1>
+          { signedIn && <p>You are signed in as {user}</p> }
+        </div>
+        <h2>Click on a Foxbat model to start configuring a new instrument panel</h2>
+
         <div className="selection-images">
           <Link to="/a32">
             <PlaneSelect
-            name="A32 Vixxen" 
+            name="A32 Vixxen"
             imageURL={ a32pic }/>
           </Link>
           <Link to="/a22">
@@ -30,17 +33,25 @@ function WelcomePage({ onSignOut, doModalWindow, signedIn }) {
 
         { !signedIn &&
         <Button
-          text="Sign In"
+          text="Retrieve a saved panel"
           onToggle = { (event) => {
             doModalWindow({ name: 'signIn' })
           } }
         />
         }
         { signedIn &&
-          <Button
-            text="Sign Out"
-            onToggle={ onSignOut }
-          />
+          <div class="panel-button-group">
+            <Button
+              text="Saved panels"
+              onToggle={ (event) => {
+                doModalWindow({ name: 'selectPanel' })
+              } }
+            />
+            <Button
+              text="Sign out"
+              onToggle={ onSignOut }
+            />
+          </div>
         }
       </div>
     </Fragment>

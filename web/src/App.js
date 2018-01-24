@@ -216,9 +216,9 @@ class App extends Component {
     }
     this.setState({
       selectedSlot: newSlot,
-      selectedInstrumentType: null,
-      selectedInstrumentBrand: null,
-      selectedInstrumentModel: null
+      // selectedInstrumentType: null,
+      // selectedInstrumentBrand: null,
+      // selectedInstrumentModel: null
     })
   }
 
@@ -306,7 +306,6 @@ class App extends Component {
           return slot
         }
       })
-      return false
     })
 
     this.setState({
@@ -414,7 +413,8 @@ class App extends Component {
       windowWidth,
       windowHeight,
       error,
-      panelSaved
+      panelSaved,
+      panelName
     } = this.state
 
     const signedIn = !!decodedToken
@@ -431,6 +431,7 @@ class App extends Component {
                   onSignOut={ this.onSignOut }
                   doModalWindow={ this.doModalWindow }
                   signedIn={ signedIn }
+                  user={ signedIn && decodedToken.email }
                 /> ) : (
                   <Redirect to='/app' />
                 )
@@ -439,6 +440,7 @@ class App extends Component {
             <Route path='/app' exact render={ () => (
               !!templateId ? (
                 <Configurator
+                  panelName={ panelName }
                   panelSaved={ panelSaved }
                   type={templateId}
                   email={ signedIn && 
@@ -514,6 +516,7 @@ class App extends Component {
               panelList={ this.state.panelList }
               onSelectPanel={ this.onSelectPanel }
               errMsg={ !!error ? error.message : null }
+              signedIn={ signedIn }
             />
           }
         </div>

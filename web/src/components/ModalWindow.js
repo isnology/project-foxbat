@@ -3,7 +3,7 @@ import SaveRegister from './SaveRegister'
 import SignIn from './SignIn'
 import MyPanels from './MyPanels'
 
-function ModalWindow({ window, onExit, onSignIn, onSaveRegister, panelList, onSelectPanel, errMsg }) {
+function ModalWindow({ window, onExit, onSignIn, onSaveRegister, panelList, onSelectPanel, errMsg, signedIn }) {
   const signIn = (window === "signIn")
   const save = (window === "saveRegister")
   const select = (window === "selectPanel")
@@ -21,6 +21,7 @@ function ModalWindow({ window, onExit, onSignIn, onSaveRegister, panelList, onSe
           onExit={ onExit }
           onSubmit={ onSaveRegister }
           errMsg={ errMsg }
+          signedIn={ signedIn }
         />
       }
       { select &&
