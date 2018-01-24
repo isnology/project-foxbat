@@ -56,7 +56,11 @@ function Configurator({
     <div className="configurator">
       <img src={ logo } alt="Foxbat logo" className="configurator-logo" />
       <div className="panel-container">
-        <div className="running-cost">Current cost (USD): ${ numeral(totalCost()).format('0,0.00') }</div>
+        <div className="running-cost">
+          <p>Current cost (USD): ${ numeral(totalCost()).format('0,0.00') }</p>
+          <p>Current cost (USD): ${ numeral(totalCost()).format('0,0.00') }</p>
+          <p>Current cost (USD): ${ numeral(totalCost()).format('0,0.00') }</p>
+        </div>
         <Panel
           type={ type }
           windowHeight={ windowHeight }
