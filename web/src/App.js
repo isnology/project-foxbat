@@ -153,7 +153,6 @@ class App extends Component {
     .then(() => {
       this.onRefreshApp(false)
     })
-
   }
 
   onSignOut = () => {

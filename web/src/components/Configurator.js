@@ -76,11 +76,11 @@ function Configurator({
               />
             </Link>
             { signedIn && !!panel_id &&
-            <link to="/" onClick={ onDeletePanel }>
+            <Link to="/" onClick={ onDeletePanel }>
               <Button
                   text="Delete Panel"
               />
-            </link>
+            </Link>
             }
           </div>
         </div>
