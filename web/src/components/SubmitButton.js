@@ -8,8 +8,8 @@ function SubmitButton({
   templateID
 }) {
   return (
-    <Button text="Test Submission"
-    onToggle={ (event) => {
+    <Button text="Submit Panel Design"
+      onToggle={ (event) => {
       onClick({email, slotData, templateID})
     }}
     />

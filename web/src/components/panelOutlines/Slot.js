@@ -10,6 +10,7 @@ function Slot({
   heightRatio,
   widthRatio,
   selectedSlot,
+  slots,
   onClick //callback function to pass back which slot was clicked
 }){
   let slotWidth
@@ -27,8 +28,8 @@ function Slot({
     zIndex: 2,
     width: slotWidth + 'px',
     height: slotHeight + 'px',
-    left: panelHeight * leftRatio + 'px',
-    top: panelHeight * (1-bottomRatio) + 'px',
+    left: (panelHeight * leftRatio) + 'px',
+    top: (panelHeight * (1-bottomRatio)) + 'px'
   }
   if (!!diameterRatio) {
     slotStyle.borderRadius = '50%'
@@ -42,9 +43,18 @@ function Slot({
     classForSlot = classForSlot + " selected-slot"
   }
 
+  var thisSlot = slots.filter((slot) => 
+    slot.slotNumber === slotNumber
+  )
+  // console.log('thisslot', thisSlot)
+
   return(
       <div className={classForSlot} id={slotNumber} style={slotStyle} onClick={onClick}>
-      {/* <img src="http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/1/10-02259.jpg" width="100%"/> */}
+        { !!thisSlot[0].instrument ? 
+          <div className="slot-label">
+            {`${thisSlot[0].instrument.name} (${thisSlot[0].instrument.brand})`}
+          </div> : '' }
+        { !!thisSlot[0].instrument ? <img src={thisSlot[0].instrument.pictureURL} width="100%" alt={thisSlot[0].instrument.name}/> : '' }
       </div>
   )}
 

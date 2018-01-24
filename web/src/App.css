@@ -2,15 +2,20 @@
   margin-top: 30px; }
 
 .main-button {
+  margin: 2rem auto;
   height: 45px;
-  background-color: #306ACC;
+  width: 20rem;
+  max-width: 400px;
+  background-color: #0A64CB;
   border-radius: 5px;
+  color: #f5f5f5f5;
   cursor: pointer; }
 
 .button-text {
   text-align: center;
-  font-size: 2.4rem;
-  margin: 35px; }
+  font-size: 1.6rem;
+  margin: 35px auto;
+  font-weight: 300; }
 
 .btnimg {
   display: block;
@@ -33,102 +38,40 @@
   top: -8px;
   left: 1px; }
 
-.sidebar {
-  position: absolute;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  right: 0;
-  top: 0;
-  height: 100%;
-  width: 25%;
-  overflow-y: scroll; }
+.landing-page-rectangle {
+  cursor: pointer; }
 
-.sidebar-top {
+.configurator {
+  display: flex;
   position: relative;
-  margin: 0;
-  padding: 10px;
-  width: 100%;
-  min-height: 100px;
-  background: #306ACC;
-  color: #F5F5F5;
-  font-family: 'Roboto', sans-serif; }
-
-.sidebar-top-buttons {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
-  top: 0;
-  height: 50px;
-  padding: 5px 10px; }
-
-.sidebar-top h3 {
-  width: 100%;
-  margin: 20px auto 0 auto;
-  text-align: center;
-  font-size: 24px;
-  font-weight: normal; }
-
-.sidebar-lower {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 2px;
-  height: calc(100% - 100px);
-  background: #C4C4C4;
-  overflow-y: auto; }
-
-.sidebar-text {
-  display: flex;
-  flex-grow: 1;
   flex-direction: column;
   justify-content: center;
-  width: 100%;
-  height: calc(100% - 100px);
-  margin: 0;
-  color: #1b1b1b;
-  font-family: 'Roboto', sans-serif;
-  text-align: left;
-  line-height: 150%; }
+  min-height: 100vh; }
 
-.sidebar-text p {
-  font-size: 18px;
-  margin: 0 0 20px 0; }
+.configurator-logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 9rem; }
 
-.instrument-list {
-  padding: 0 5px; }
+.panel-container {
+  display: flex;
+  margin-top: 9rem;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 0;
+  width: 75vw;
+  text-align: center; }
 
-.instrument-list .main-button {
-  margin-top: 5px;
-  width: 100%;
-  height: fit-content;
-  cursor: pointer; }
-
-.instrument-list .button-text {
-  margin: auto;
-  font-size: 1.5em; }
-
-.sidebar .exit-button-X {
-  font-size: 1.5em;
-  cursor: pointer; }
-
-/*  MEDIA QUEEEEEEERIES */
-@media screen and (min-width: 1000px) {
-  .sidebar-lower {
-    padding: 10px; }
-  .instrument-list {
-    padding: 0 20px; }
-  .instrument-list .main-button {
-    width: 100%;
-    height: fit-content;
-    margin-top: 10px; }
-  .instrument-list .button-text {
-    font-size: 2em; } }
+.panel-container .running-cost {
+  align-self: flex-start;
+  padding: 0 0 4rem 2rem;
+  font-size: 2.3rem; }
 
 #svgbox {
   /* border: black solid 1px; */
   position: relative;
-  width: 80%; }
+  width: 75%; }
 
 .panel-svg .svg-line {
   stroke: #6f7174;
@@ -145,21 +88,215 @@
 
 .slot {
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: solid #6f7174 1px;
   background-color: #ACB3B8;
   overflow: hidden;
   box-shadow: inset -1px -1px 1px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 1px 1px rgba(255, 255, 255, 0.2);
   cursor: pointer; }
 
+.slot img {
+  z-index: 1; }
+
+.slot-label {
+  position: absolute;
+  font-size: 1rem;
+  z-index: 1; }
+
 .selected-slot, .slot:hover {
   border-color: #23547c;
   box-shadow: 0px 0px 5px 5px #23547c, inset 0px 0px 5px 5px #23547c; }
 
-.App {
+.panel-button-group button {
+  width: 20rem; }
+
+.panel-button-low-group button {
+  width: 10rem;
+  margin-top: 0;
+  background: #8f4343; }
+
+.panel-button-low-group button .button-text {
+  font-size: 1.2rem;
+  margin: auto;
+  color: white; }
+
+.sidebar {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 25vw;
+  overflow-y: scroll; }
+
+.sidebar-top {
+  position: relative;
+  margin: 0;
+  padding: 10px;
+  width: 100%;
+  min-height: 100px;
+  background: #0A64CB;
+  color: #F5F5F5; }
+
+.sidebar-top-buttons {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  top: 0;
+  height: 30px;
+  padding: 5px 10px; }
+
+.sidebar-top h3 {
+  width: 100%;
+  margin: 2rem auto 1rem auto;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 300;
+  letter-spacing: 0.1rem;
+  color: #F2F2F2; }
+
+.sidebar-lower {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 5px;
+  height: calc(100% - 100px);
+  background: #C4C4C4;
+  overflow-y: auto; }
+
+.sidebar-text {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: calc(100% - 100px);
+  margin: 0;
+  color: #1b1b1b;
+  text-align: left;
+  line-height: 150%; }
+
+.sidebar-text p {
+  font-size: 18px;
+  margin: 0 0 20px 0; }
+
+.instrument-list {
+  padding: 0 5px; }
+
+.instrument-list .main-button {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+  padding: 5px;
+  width: 100%;
+  height: fit-content;
+  cursor: pointer; }
+
+.instrument-list .btnimg {
+  margin: 5px auto; }
+
+.instrument-list .button-text {
+  margin: auto;
+  font-size: 1.6rem; }
+
+.sidebar .exit-button-X {
+  font-size: 1.5em;
+  cursor: pointer; }
+
+.instrument-details {
+  padding: 5px;
+  width: 100%;
+  background: #e6e6e6; }
+
+.instrument-details p {
+  font-size: 1.5rem;
+  text-align: left;
+  line-height: 125%; }
+
+.instrument-preview {
+  margin: 3rem auto; }
+
+.instrument-preview p {
+  font-size: 2rem;
   text-align: center; }
 
+.instrument-preview img {
+  display: block; }
+
+/*  MEDIA QUEEEEEEERIES */
+@media screen and (min-width: 1000px) {
+  .sidebar-lower {
+    padding: 10px; }
+  .instrument-list {
+    padding: 0 20px; }
+  .instrument-list .main-button {
+    width: 100%;
+    height: fit-content;
+    margin-top: 10px; }
+  .instrument-list .button-text {
+    font-size: 1.6rem; } }
+
+.App {
+  text-align: center;
+  background: white;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
+
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 84vh;
+  text-align: center;
+  background: white; }
+
+h1, h2, h3 {
+  font-weight: normal; }
+
+h1 {
+  margin: 3rem auto;
+  font-size: 3.2rem; }
+
+h2 {
+  margin: 2rem auto;
+  font-size: 2.4rem; }
+
+h3 {
+  margin: 1rem auto;
+  font-size: 2rem;
+  font-weight: normal; }
+
+.logo-div {
+  width: 100vw;
+  height: 16vh;
+  min-height: 5.3rem;
+  max-height: 11rem;
+  border-bottom: #01013a 1px solid; }
+
+.foxbat-logo {
+  top: 0;
+  margin: auto;
+  height: 15vh;
+  min-height: 5rem;
+  max-height: 10rem;
+  width: auto; }
+
+.selection-images {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; }
+
+.landing-page-rectangle {
+  margin: 2rem;
+  padding: 0; }
+
 .plane-selector {
-  height: 20rem; }
+  height: 20rem;
+  cursor: pointer; }
 
 .center {
   text-align: center; }
@@ -167,7 +304,8 @@
 .template {
   border: 1px solid black;
   height: 128px;
-  width: 256px; }
+  width: 256px;
+  cursor: pointer; }
 
 .template-with-text {
   width: 256px;
@@ -175,7 +313,7 @@
   margin: 20px; }
 
 .base-popup {
-  position: absolute;
+  position: fixed;
   top: 6%;
   left: 6%;
   width: 87.5%;
@@ -187,6 +325,8 @@
   display: flex;
   flex-direction: column;
   align-items: center; }
+  .base-popup h1 strong {
+    color: #0A64CB; }
   .base-popup form label {
     height: 30px;
     height: 3rem;
@@ -203,12 +343,26 @@
       height: 3rem;
       font-size: 20px;
       font-size: 2rem; }
+  .base-popup select {
+    border: 2px solid #0A64CB; }
+  .base-popup option {
+    min-width: 40rem;
+    text-align: center;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 20px;
+    font-size: 2rem; }
   .base-popup .errmsg {
     background: rgba(255, 0, 0, 0.27);
     padding-left: 20px;
     padding-right: 20px;
     font-size: 20px;
     font-size: 2rem; }
+  .base-popup .round-exit-button {
+    position: absolute;
+    top: 0rem;
+    right: 0rem;
+    margin: 0; }
 
 .form-text {
   font-size: 36px;

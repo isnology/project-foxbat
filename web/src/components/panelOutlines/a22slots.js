@@ -4,10 +4,10 @@ import Slot from './Slot'
 function A22Slots({
   height,
   // width
-  instruments, //array of objects commented out while component testing
   onClick, //callback function to pass back which slot was clicked
   template, //a22, a32, a22Digital, a32Digital
-  selectedSlot // for conditional formatting
+  selectedSlot, // for conditional formatting
+  slots
 }){
   
 
@@ -122,6 +122,15 @@ function A22Slots({
     circle: true}
   ]
   const a32DigitalSlotRatios = [ //TODO: put controls in place to ensure the ordering is adhered to in the instruments array passed in.
+    //column of the 2.25" (top to bottom)
+    {leftRatio: 1.4286,
+    bottomRatio: 0.8812,
+    diameterRatio: 0.191,
+    circle: true},
+    {leftRatio: 1.4286,
+    bottomRatio: 0.6629,
+    diameterRatio: 0.191,
+    circle: true},
 
     //Dynon big screen
     {leftRatio: 0.3162,
@@ -140,16 +149,7 @@ function A22Slots({
     bottomRatio: 0.5746,
     width: 0.1525,
     height: 0.2970,
-    circle: false},
-    //column of the 2.25" (top to bottom)
-    {leftRatio: 1.4286,
-    bottomRatio: 0.8812,
-    diameterRatio: 0.191,
-    circle: true},
-    {leftRatio: 1.4286,
-    bottomRatio: 0.6629,
-    diameterRatio: 0.191,
-    circle: true}
+    circle: false}
   ]
   const a22DigitalSlotRatios = [ //TODO: put controls in place to ensure the ordering is adhered to in the instruments array passed in.
     //column of the 2.25" (top to bottom)
@@ -194,12 +194,15 @@ function A22Slots({
       break;
     case 'a32Digital':
       slotRatios = a32DigitalSlotRatios;
+      break;
+    default:
+      slotRatios = a22SlotRatios; // in the event that this is called with an incorrect template default to a22 'six pack'
   }
 
   return(
     <Fragment>
       {
-        instruments.map((instrument, index)=> (
+        slots.map((instrument, index)=> (
           <Slot //if a digital [square] instrument is desired, the instrument object should contain a key called 'shape': 'circle' or 'square' ,or boolean key called 'circle':true or false
             key = { instrument.slotNumber }
             instrument = { !!instrument.instrument ? instrument.instrument : null }
@@ -211,6 +214,7 @@ function A22Slots({
             heightRatio = {slotRatios[index].height}
             widthRatio = {slotRatios[index].width}
             onClick = {()=>{onClick(instrument.slotNumber)}} //each button will 
+            slots = { slots }
             selectedSlot={selectedSlot}
           />
         ))

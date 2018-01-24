@@ -6,7 +6,7 @@ const router = new express.Router()
 
 // read
 router.get('/panels', requireJWT, (req, res) => {
-  Panel.find({ User: req.user })
+  Panel.find({ user_id: req.user })
   .then((panels) => {
     res.json(panels)
   })
@@ -17,7 +17,7 @@ router.get('/panels', requireJWT, (req, res) => {
 
 // create
 router.post('/panels', requireJWT, (req, res) => {
-  Panel.create(req.body)
+  Panel.create(req.body.data)
   .then((panel) => {
     res.status(201).json(panel)
   })
@@ -29,7 +29,8 @@ router.post('/panels', requireJWT, (req, res) => {
 // Update
 router.put('/panels/:id', requireJWT, (req, res) => {
   const { id } = req.params
-  Panel.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
+
+  Panel.findByIdAndUpdate(id, req.body.data, { new: true, runValidators: true })
   .then((panel) => {
     if (panel) {
       res.json(panel)
@@ -48,7 +49,7 @@ router.put('/panels/:id', requireJWT, (req, res) => {
 // delete
 router.delete('/panels/:id', requireJWT, (req, res) => {
   const { id } = req.params
-  Panel.findByIdAndRemove(id, { upsert: true , runValidators: true })
+  Panel.findByIdAndRemove(id, { runValidators: true })
   .then((panel) => {
     if (panel) {
       res.json(panel)

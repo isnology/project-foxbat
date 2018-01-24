@@ -2,22 +2,19 @@ import React from 'react'
 
 function PanelTemplate({
   name,
-  imageURL,
+  image,
   alt,
   clicked
 }) { 
   return (
-    <div className="template-with-text">
-      <label>
-        <h2 className="center" >{ name }</h2>
-        <div 
-          className="template"
-          onClick={clicked}
-        >
-          <img src={ imageURL } alt={ alt }/>
-        </div>
-      </label>
-    </div>
+    <button className="landing-page-rectangle"
+      onClick={ clicked }
+    >
+      <h3>{ name }</h3>
+      <div className="plane-selector">
+        <img src={ image } alt={ alt } className='plane-selector'/>
+      </div>
+    </button>
   )
 }
 

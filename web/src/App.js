@@ -1,64 +1,59 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { signIn, signUp, signOutNow } from './api/auth'
 import { getDecodedToken } from './api/token'
 import './App.css'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import WelcomePage from './components/WelcomePage'
 import SelectPanelTemplatePage from './components/SelectPanelTemplatePage'
-import Button from './components/Button'
-import SubmitButton from './components/SubmitButton'
-import Sidebar from './components/sidebar/Sidebar'
-import { loadPanels, createPanel, updatePanel } from './api/panels'
+import { loadPanels, createPanel, updatePanel, deletePanel } from './api/panels'
 import { loadInstruments } from './api/instruments'
-import { loadTemplates } from './api/templates'
 import { emailPanelDesign } from './api/emailSubmission'
-import Panel from './components/Panel'
 import ModalWindow from './components/ModalWindow'
+import Configurator from './components/Configurator'
+import _lang from 'lodash/lang'
+import a22Thumb from './img/a22.png'
+import a22DigitalThumb from './img/a22digital.png'
+import a32Thumb from './img/a32.png'
+import a32DigitalThumb from './img/a32digital.png'
+
+
+import _forEach from 'lodash/forEach'
 
 class App extends Component {
   state = {
     decodedToken: getDecodedToken(), // Restore the previous signed in data
     save: null,
     showConfigurator: true,
-    instruments: this.doLoadInstruments(),
-    templates: this.doLoadTemplates(),
+    instruments: null, //list of all instruments from server
+    panelName: null, //title user gave their panel
+    panel_id: null, // db id of users retrieved/saved panel
+    panelList: null,
     selectedSlot: null,
-    selectedInstrumentType: "Altimeter",
+    selectedInstrumentType: null,
     selectedInstrumentBrand: null,
-    templateId: null,
-    modalWindow: null,
-    slots: null,
-    error: null,
-    windowWidth: 0,
-    windowHeight: 0
+    selectedInstrumentModel: null,
+    templateId: null, //which template? a22, a22digital, a32, a32digital
+    modalWindow: null, //display sign in/up to save panel window
+    slots: null, //state of the users panel slots
+    error: null, //for displaying any errors recieved from the server
+    panelSaved: null,
+    windowWidth: 0, //for adaptive sizing of configurator panel
+    windowHeight: 0 //for adaptive sizing of configurator panel
   }
-
-  // BEGIN: code necessary for window size detection
-  // (necessary for correct sizing of Panel component)
-  constructor(props) {
-    super(props);
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-  }
-  componentDidMount() {
-    this.updateWindowDimensions();
-    window.addEventListener('resize', this.updateWindowDimensions)
-  }
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions)
-  }
-  updateWindowDimensions() {
-    this.setState({
-      windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight })
-  }
-  // END: code necessary for window size detection
 
   onSignIn = ({ email, password }) => {
     this.setState({ error: null })
     signIn({ email, password })
     .then((decodedToken) => {
-      this.setState({ decodedToken })
-      this.onExitModal()
+      this.setState({ decodedToken, modalWindow: "selectPanel"})
+      //this.onExitModal()
+      loadPanels({user: this.state.decodedToken.sub})
+      .then((panelList) => {
+        this.setState({ panelList: panelList})
+      })
+      .catch((error) => {
+        this.setState({ error })
+      })
     })
     .catch((error) => {
       this.setState({ error })
@@ -80,7 +75,7 @@ class App extends Component {
           return signIn({ email, password })
           .then((decodedToken) => {
             this.setState({ decodedToken })
-            this.doSave({name})
+            this.doSave({ name })
           })
         }
         else {
@@ -91,44 +86,63 @@ class App extends Component {
         this.setState({ error })
       })
     }
-    else {
+    else if (signedIn && !!this.state.panelName) {
       const panelName = this.state.panelName
-      this.doSave({ panelName })
+      this.doSave({ name: panelName })
+    }
+    else {
+      this.doSave({ name })
     }
   }
 
   doSave = ({ name }) => {
     this.setState({ error: null })
+    const backendSlots = this.state.slots.map((slot)=>(
+      {
+        position: slot.slotNumber,
+        instrument_id: !!slot.instrument ? slot.instrument._id : null,
+        size: slot.slotNumber.substring(0,1)
+      }
+    )
+    ).filter((slot)=>(
+      !!slot.instrument_id
+    ))
     const data = {
       template: this.state.templateId,
       name: name,
-      slots: this.state.slots,
-      userId: this.state.decodedToken.sub     // as per passport documentation
+      slots: backendSlots,
+      user_id: this.state.decodedToken.sub     // as per passport documentation
     }
-    updatePanel({data})
-    .then(() => {
-      this.onExitModal()
-    })
-    .catch((error) => {
-      // not found
-      if (/ 404/.test(error.message)) {
-        return createPanel({ data })
-        .then(() => {
-          this.onExitModal()
+    if (!!this.state.panel_id){
+      const id=this.state.panel_id
+      updatePanel(id, {data})
+      .then((panel) => {
+        this.onExitModal()
+        this.setState({ panelSaved: true })
+      })
+      .catch((error) => {
+        this.setState({ error })
+      })
+    } else {
+      createPanel({data})
+      .then((panel) => {
+        this.setState({
+          panel_id: panel._id,
+          panelName: panel.name,
+          panelSaved: true
         })
-      }
-      else {
-        throw error
-      }
-    })
-    .catch((error) => {
-      this.setState({ error })
-    })
+        this.onExitModal()
+      })
+      .catch((error) => {
+        this.setState({ error })
+      })
+    }
   }
 
   onSave = () => {
     const signedIn = !!this.state.decodedToken
-    if (signedIn) {
+    const panelName = !!this.state.panelName
+    if (signedIn && panelName) {
       const name = this.state.panelName
       this.doSave({ name })
     }
@@ -137,9 +151,19 @@ class App extends Component {
     }
   }
 
+  onDeletePanel = () => {
+    const id=this.state.panel_id
+    deletePanel(id)
+    .then(() => {
+      this.onRefreshApp(false)
+    })
+  }
+
   onSignOut = () => {
     signOutNow()
-    this.setState({ decodedToken: null, error: null })
+    this.setState({ decodedToken: null, error: null, templateId: null, panelName: null, panel_id: null })
+    const key = "paneldata"
+    localStorage.removeItem(key)
   }
 
   doModalWindow = ({ name }) => {
@@ -150,42 +174,36 @@ class App extends Component {
     this.setState({ modalWindow: null })
   }
 
-  doLoadInstruments() {
-    loadInstruments()
-    .then((instruments) => {
-      this.setState({ instruments })
-    })
-    .catch(() => {
-      this.setState({ instruments: null })
-    })
-  }
-
-  doLoadTemplates() {
-    loadTemplates()
-    .then((templates) => {
-      this.setState({ templates })
-    })
-    .catch(() => {
-      this.setState({ templates: null })
+  onClearCurrentPanel = () => {
+    this.clearInstrumentsFromSlots()
+    this.onSelectTemplate(this.state.templateId)
+    this.setState({
+      selectedSlot: null,
+      selectedInstrumentType: null,
+      selectedInstrumentBrand: null,
+      selectedInstrumentModel: null
     })
   }
 
   onSelectTemplate = (templateName) => {
-    let slotins
-    if (templateName==='a22' || templateName === 'a32'){
-      slotins = require('./data').analogSlottedInstruments
-    } else { //hardcoded for testing.
-      slotins = require('./data').digitalSlottedInstruments
-    }
-    //require get req for all intruments
+    let slotins = this.setSlots(templateName)
+
     this.setState((prevState) => {
       return({
         templateId: templateName,
         slots: slotins
       })
     })
+  }
 
-    //return
+  setSlots = (templateName) => {
+    let slotins
+    if (templateName==='a22' || templateName === 'a32'){
+      slotins = _lang.cloneDeep(require('./data').analogSlottedInstruments)
+    } else { // object cloning is necessary here because the intention is for the states array to be made to mirror the one in ./data (this solved the persistent instrument (issue #5: https://github.com/isnology/project-foxbat/issues/5) 
+      slotins = _lang.cloneDeep(require('./data').digitalSlottedInstruments)
+    }
+    return slotins
   }
 
   onSelectSlot = (slot) => {
@@ -204,49 +222,169 @@ class App extends Component {
     })
   }
 
-  assignInstrumentToSlot = (model) => {
-    // Note: we must receive the model as a parameter
-    // because we cannot rely on the state being updated
-    // when this runs. However we can rely on it being correct
-    // for the currently selected slot.
-    console.log(model, ' has been assigned to slot: ', this.state.selectedSlot)
+  assignInstrumentToSlot = (model, slotNumber) => {
+    // console.log(model.name, ' has been assigned to slot: ', this.state.selectedSlot)
+    let newSlots = this.state.slots.map(slot => {
+      if (slot.slotNumber === slotNumber) {
+        !!slot.instrument ? (slot.instrument = null) : (slot.instrument = model)
+        return slot
+      }
+      else {
+        return slot
+      }
+    })
+    this.setState({
+      slots: newSlots,
+      panelSaved: false
+    })
+    this.onSidebarClose()
+  }
+
+  assignInstrumentToSelectedSlot = (model) => {
+    this.assignInstrumentToSlot(model, this.state.selectedSlot)
   }
 
   updateIntrumentSelection = (type, brand, model) => {
-
-      this.setState({
-        selectedInstrumentType: type,
-        selectedInstrumentBrand: brand,
-        selectedInstrumentModel: model
-      })
-      if(!!model){
-        this.assignInstrumentToSlot(model)
-        //Note: we MUST pass it model, we CAN'T rely on the
-        // function being able to grab it from the state
-        // even though we just set the state, because the
-        // setState method is asynchronous, this means it
-        // may not have actually been done yet by the time we call
-        // this function.
-      }
-
-    }
-
-  onSidebarClose = () => {
     this.setState({
-      selectedSlot: null,
-      selectedInstrumentType: null,
-      selectedInstrumentBrand: null
+      selectedInstrumentType: type,
+      selectedInstrumentBrand: brand,
+      selectedInstrumentModel: model
     })
   }
 
-  onClearCurrentPanel = () => {
-    this.onSelectTemplate(this.state.templateId)
+  onSidebarClose = () => {
     this.setState({
       selectedSlot: null,
       selectedInstrumentType: null,
       selectedInstrumentBrand: null,
       selectedInstrumentModel: null
     })
+  }
+
+  onBackClick = () => {
+    if (!!this.state.selectedInstrumentModel) {
+      this.setState({
+        selectedInstrumentModel: null
+      })
+    }
+    else if (!!this.state.selectedInstrumentBrand) {
+      this.setState({
+        selectedInstrumentBrand: null
+      })
+    }
+    else if (!!this.state.selectedInstrumentType) {
+      this.setState({
+        selectedInstrumentType: null
+      })
+    }
+    else if (!!this.state.selectedSlot) {
+      this.setState({
+        selectedSlot: null
+      })
+    }
+  }
+
+  onSelectPanel = (panel) => {
+    const panelObj = JSON.parse(panel)
+
+    let slots = this.setSlots(panelObj.template)
+    let instrumentObj
+    panelObj.slots.map(dbSlot => {
+      _forEach(this.state.instruments, (instrument) => {
+        if ( instrument._id === dbSlot.instrument_id) {
+          instrumentObj = instrument
+          return false
+        }
+      })
+
+      slots.map(slot => {
+        if (slot.slotNumber === dbSlot.position) {
+          slot.instrument = instrumentObj
+          return slot
+        }
+        else {
+          return slot
+        }
+      })
+      return false
+    })
+
+    this.setState({
+      templateId: panelObj.template,
+      panelName: panelObj.name,
+      panel_id: panelObj._id,
+      slots: slots,
+    })
+   // const obj = {
+   //   templateId: panelObj.template,
+   //   panelName: panelObj.name,
+   //   panel_id: panelObj._id,
+   //   slots: slots
+   // }
+   // const key = "paneldata"
+    //localStorage.setItem(key, JSON.stringify(obj))
+    this.onExitModal()
+  }
+
+  onClearCurrentPanel = () => {
+    if (this.state.panelSaved === false) {
+      if (window.confirm("Are you sure you want to clear the current panel? Any unsaved changes will be lost.")) {
+        this.onSidebarClose()
+        let clearedSlots = _lang.cloneDeep(this.state.slots)
+        clearedSlots.forEach(slot => slot.instrument = null)
+
+      this.setState({
+        slots: clearedSlots
+      })
+      //const key = "paneldata"
+      //if (!!localStorage.getItem(key)) {
+      //  let localSlots = JSON.parse(localStorage.getItem(key))
+      //  localSlots.slots.map(slot => {
+      //    slot.instrument = null
+      //    return slot
+      //  })
+        //localStorage.setItem(key, JSON.stringify(localSlots))
+      //}
+    }
+  }
+  else {
+    this.onSidebarClose()
+    let clearedSlots = _lang.cloneDeep(this.state.slots)
+    clearedSlots.forEach(slot => slot.instrument = null)
+
+    this.setState({
+      slots: clearedSlots
+    })
+  }
+}
+
+  refreshApp = () => {
+    this.setState({
+      panelName: null,
+      panel_id: null,
+      selectedSlot: null,
+      selectedInstrumentType: null,
+      selectedInstrumentBrand: null,
+      selectedInstrumentModel: null,
+      templateId: null,
+      modalWindow: null,
+      slots: null
+    })
+  }
+
+  onRefreshApp = (confirm) => {
+    if (this.state.panelSaved === false) {
+      if (confirm && !window.confirm("Are you sure you want to exit and return to the start? Any unsaved changes to" +
+              " this panel will be lost.")) {
+        return
+      }
+      else {
+        this.refreshApp()
+      }
+    }
+    else {
+      this.refreshApp()
+    }
   }
 
   submitPanel = (email, slotData, templateID) => {
@@ -258,14 +396,17 @@ class App extends Component {
       decodedToken,
       modalWindow,
       templateId,
+      panel_id,
       instruments,
       selectedSlot,
       selectedInstrumentType,
       selectedInstrumentBrand,
+      selectedInstrumentModel,
       slots,
       windowWidth,
       windowHeight,
       error,
+      panelSaved
     } = this.state
 
     const signedIn = !!decodedToken
@@ -274,63 +415,52 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          {/* <SubmitButton 
-            onClick={ this.submitPanel }
-            email={ decodedToken.email }
-            slotData={ slots }
-            templateID={ templateId }
-          /> */}
-
           <Switch>
 
             <Route path='/' exact render={ () => (
-              <WelcomePage
-                onSignOut={ this.onSignOut }
-                doModalWindow={ this.doModalWindow }
-                signedIn={ signedIn }
-              />
+              !templateId ? (
+                <WelcomePage
+                  onSignOut={ this.onSignOut }
+                  doModalWindow={ this.doModalWindow }
+                  signedIn={ signedIn }
+                /> ) : (
+                  <Redirect to='/app' />
+                )
             )}/>
 
             <Route path='/app' exact render={ () => (
-             !!templateId ? (
-               <div>
-                <Panel
-                type={templateId}
-                windowHeight={windowHeight}
-                windowWidth={windowWidth}
-                instruments={slots}
-                selectedSlot={selectedSlot}
-                selectSlot={ this.onSelectSlot }
-                />
-                <Button
-                  text={ "Clear all instruments" }
-                  onToggle={ this.onClearCurrentPanel }
-                />
-                <Sidebar
-                  exitButton={ true }
-                  backButton={ true }
+              !!templateId ? (
+                <Configurator
+                  panelSaved={ panelSaved }
+                  type={templateId}
+                  email={ signedIn && 
+                    decodedToken.email
+                  }
+                  windowHeight={windowHeight}
+                  windowWidth={windowWidth}
                   instruments={ instruments }
+                  slots={ slots }
                   selectedSlot={ selectedSlot }
                   selectedInstrumentType={ selectedInstrumentType }
                   selectedInstrumentBrand={ selectedInstrumentBrand }
+                  selectedInstrumentModel={ selectedInstrumentModel }
+                  signedIn={ signedIn }
+                  panel_id={ panel_id }
+                  onSave={ this.onSave }
+                  onSubmit={ this.submitPanel }
+                  selectSlot={ this.onSelectSlot }
+                  onClearPanel={ this.onClearCurrentPanel }
+                  onSignOut={ this.onSignOut }
                   onSelect={ this.updateIntrumentSelection }
+                  assignInstrumentToSelectedSlot={ this.assignInstrumentToSelectedSlot }
                   sidebarClose={ this.onSidebarClose }
+                  onBackClick={ this.onBackClick }
+                  onRefreshApp={ this.onRefreshApp }
+                  onDeletePanel={ this.onDeletePanel }
                 />
-
-                { signedIn &&
-                  <Button
-                    text="Sign Out"
-                    onToggle={ this.onSignOut }
-                  />
-                }
-                <Button
-                  text="Save"
-                  onToggle={ this.onSave }
-                />
-              </div>
-            ):(
-              <Redirect to='/' />
-            )
+              ):(
+                <Redirect to='/' />
+              )
             )}/>
 
             <Route path='/a22' exact render={ () => (
@@ -340,8 +470,10 @@ class App extends Component {
                 <SelectPanelTemplatePage
                   firstPanelName="Analogue A-22 Panel"
                   firstPanelTemplate="a22"
+                  firstPanelImage={ a22Thumb }
                   secondPanelName="Digital A-22 Panel"
                   secondPanelTemplate="a22Digital"
+                  secondPanelImage={ a22DigitalThumb }
                   onSelectTemplate={this.onSelectTemplate}
                 />
               )
@@ -354,20 +486,13 @@ class App extends Component {
                 <SelectPanelTemplatePage
                   firstPanelName="Analogue A-32 Panel"
                   firstPanelTemplate="a32"
+                  firstPanelImage={ a32Thumb }
                   secondPanelName="Digital A-32 Panel"
                   secondPanelTemplate="a32Digital"
+                  secondPanelImage={ a32DigitalThumb }
                   onSelectTemplate={this.onSelectTemplate}
                 />
               )
-            )}/>
-
-            <Route path='/alextest' exact render={ () => (
-              <Fragment>
-                <h1>Alex testing components page</h1>
-                <Panel
-                type="a22"
-                height={400}/>
-              </Fragment>
             )}/>
 
           </Switch>
@@ -378,12 +503,62 @@ class App extends Component {
               onExit={ this.onExitModal }
               onSignIn={ this.onSignIn }
               onSaveRegister={ this.onSaveRegister }
+              panelList={ this.state.panelList }
+              onSelectPanel={ this.onSelectPanel }
               errMsg={ !!error ? error.message : null }
             />
           }
         </div>
       </Router>
     )
+  }
+
+  constructor(props) {// code necessary for window size detection
+    super(props);
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  }// (necessary for correct sizing of Panel component)
+
+  componentWillUnmount() {// code necessary for window size detection
+    window.removeEventListener('resize', this.updateWindowDimensions)
+  }// (necessary for correct sizing of Panel component)
+
+  updateWindowDimensions() {// code necessary for window size detection
+    this.setState({
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight })
+  }// (necessary for correct sizing of Panel component)
+
+
+  doLoadInstruments() {
+    loadInstruments()
+    .then((instruments) => {
+      this.setState({ instruments })
+    })
+    .catch(() => {
+      this.setState({ instruments: null })
+    })
+  }
+
+  //restoreFromLocalStorage() {
+  //  let obj
+  //  if (!!this.state.decodedToken) {
+  //    const key = "paneldata"
+  //    obj = JSON.parse(localStorage.getItem(key))
+  //    !!obj && this.setState({
+  //      templateId: obj.templateId,
+  //      panelName: obj.panelName,
+  //      panel_id: obj.panel_id,
+  //      slots: obj.slots
+  //    })
+  //  }
+  //}
+
+  // When this App first appears on screen
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions)
+    this.doLoadInstruments()
+    //this.restoreFromLocalStorage()
   }
 }
 
