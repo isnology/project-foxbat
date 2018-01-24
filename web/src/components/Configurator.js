@@ -62,8 +62,8 @@ function Configurator({
             text="Save"
             onToggle={ onSave }
           />
-          { signedIn && 
-            <SubmitButton 
+          { signedIn &&
+            <SubmitButton
               className="panel-button-group"
               onClick={ onSubmit }
               email={ email }
