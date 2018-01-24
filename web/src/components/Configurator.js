@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react'
+import { Prompt, Link } from 'react-router-dom'
 import Button from './Button'
 import Sidebar from './sidebar/Sidebar'
 import Panel from './Panel'
@@ -8,6 +8,7 @@ import logo from '../img/foxbatlogo.png'
 import numeral from 'numeral'
 
 function Configurator({
+  panelSaved,
   type,
   email,
   windowHeight,
@@ -32,7 +33,7 @@ function Configurator({
   onRefreshApp,
   onDeletePanel
 }) {
-
+console.log(panelSaved)
   function add(a, b) {
     return a + b;
   }
@@ -44,8 +45,16 @@ function Configurator({
     return arrayOfPrices.reduce(add, 0)/100
   }
 
+  // window.addEventListener("beforeunload", function (e) {
+  //   e.returnValue = "\o/"
+  // })
+
   return (
     <div className="configurator">
+      <Prompt
+        when={ panelSaved === false }
+        message="You may have unsaved changes. Are you sure you want to leave?"
+      />
       <img src={ logo } alt="Foxbat logo" className="configurator-logo" />
       <div className="panel-container">
         <div className="running-cost">Current cost (USD): ${ numeral(totalCost()).format('0,0.00') }</div>

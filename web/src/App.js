@@ -36,6 +36,7 @@ class App extends Component {
     modalWindow: null, //display sign in/up to save panel window
     slots: null, //state of the users panel slots
     error: null, //for displaying any errors recieved from the server
+    panelSaved: null,
     windowWidth: 0, //for adaptive sizing of configurator panel
     windowHeight: 0 //for adaptive sizing of configurator panel
   }
@@ -117,6 +118,7 @@ class App extends Component {
       updatePanel(id, {data})
       .then((panel) => {
         this.onExitModal()
+        this.setState({ panelSaved: true })
       })
       .catch((error) => {
         this.setState({ error })
@@ -126,7 +128,8 @@ class App extends Component {
       .then((panel) => {
         this.setState({
           panel_id: panel._id,
-          panelName: panel.name
+          panelName: panel.name,
+          panelSaved: true
         })
         this.onExitModal()
       })
@@ -235,7 +238,8 @@ class App extends Component {
       selectedSlot: null,
       selectedInstrumentType: null,
       selectedInstrumentBrand: null,
-      selectedInstrumentModel: null
+      selectedInstrumentModel: null,
+      panelSaved: false
     })
   }
 
@@ -325,10 +329,11 @@ class App extends Component {
   }
 
   onClearCurrentPanel = () => {
-    if (window.confirm("Are you sure you want to clear the current panel? Any unsaved changes will be lost.")) {
-      this.onSidebarClose()
-      let clearedSlots = _lang.cloneDeep(this.state.slots)
-      clearedSlots.forEach(slot => slot.instrument = null)
+    if (this.state.panelSaved === false) {
+      if (window.confirm("Are you sure you want to clear the current panel? Any unsaved changes will be lost.")) {
+        this.onSidebarClose()
+        let clearedSlots = _lang.cloneDeep(this.state.slots)
+        clearedSlots.forEach(slot => slot.instrument = null)
 
       this.setState({
         slots: clearedSlots
@@ -344,6 +349,7 @@ class App extends Component {
       //}
     }
   }
+}
 
   onRefreshApp = (confirm) => {
     if (confirm && !window.confirm("Are you sure you want to exit and return to the start? Any unsaved changes to" +
@@ -386,6 +392,7 @@ class App extends Component {
       windowWidth,
       windowHeight,
       error,
+      panelSaved
     } = this.state
 
     const signedIn = !!decodedToken
@@ -410,6 +417,7 @@ class App extends Component {
             <Route path='/app' exact render={ () => (
               !!templateId ? (
                 <Configurator
+                  panelSaved={ panelSaved }
                   type={templateId}
                   email={ signedIn && 
                     decodedToken.email
