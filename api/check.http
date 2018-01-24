@@ -3,8 +3,9 @@ POST http://localhost:7000/auth/register
 Content-Type: application/json
 
 {
-  "email": "user1@mail.com",
-  "password": "password123"
+  "email": "user1@mail4.com",
+  "password": "password123",
+  "admincode" : "SecretTrapdorsMeetWithMacklemores"
 }
 
 ### sign in
@@ -13,9 +14,17 @@ POST http://localhost:7000/auth
 Content-Type: application/json
 
 {
-  "email": "user1@mail.com",
+  "email": "user1@mail3.com",
   "password": "password123"
 }
+
+### example of getting all panels because signing in as an admin
+GET http://localhost:7000/admin/panels
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQG1haWwzLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE1MTY3OTc3NjcsImV4cCI6MTUxNzQwMjU2Nywic3ViIjoiNWE2ODdiZTlkYTU0MjUxMTY4YjIxMWQyIn0.Ch1Fri7bDJ_XPKRos7uN_NxMaJqypPZoPtW1FiYwTns
+
+### example of getting unauthorised 401 error because not an admin
+GET http://localhost:7000/admin/panels
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQG1haWw0LmNvbSIsImFkbWluIjpmYWxzZSwiaWF0IjoxNTE2Nzk3NjM5LCJleHAiOjE1MTc0MDI0MzksInN1YiI6IjVhNjg3YmZhZGE1NDI1MTE2OGIyMTFkMyJ9.xIgUvdkuHVCzojoG5W8nKmmc1i1ZDudCB-huQCpLXJc
 
 ### Get list of all instruments
 
@@ -40,16 +49,16 @@ POST http://localhost:7000/submitpanel
 ### create a new instrumentClass
 
 POST http://localhost:7000/instrumentclasses
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQG1haWwuY29tIiwiaWF0IjoxNTE2NzY5MzIxLCJleHAiOjE1MTczNzQxMjEsInN1YiI6IjVhNjgxMDI4NWNiMDMzNWFmYzMwMmNhYiJ9.3sOE8h5m8bD7Ui-PEyBwJWV9Sjh3Tx-GUH4vpQkLDvo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQG1haWw0LmNvbSIsImFkbWluIjpmYWxzZSwiaWF0IjoxNTE2Nzk3NjM5LCJleHAiOjE1MTc0MDI0MzksInN1YiI6IjVhNjg3YmZhZGE1NDI1MTE2OGIyMTFkMyJ9.xIgUvdkuHVCzojoG5W8nKmmc1i1ZDudCB-huQCpLXJc
 Content-Type: application/json
 
 {
-  "name": "Dynon" 
+  "name": "shouldfail" 
 }
 
 ### create a new instrument
 POST http://localhost:7000/instruments
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQG1haWwuY29tIiwiaWF0IjoxNTE2NzY5MzIxLCJleHAiOjE1MTczNzQxMjEsInN1YiI6IjVhNjgxMDI4NWNiMDMzNWFmYzMwMmNhYiJ9.3sOE8h5m8bD7Ui-PEyBwJWV9Sjh3Tx-GUH4vpQkLDvo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQG1haWw0LmNvbSIsImFkbWluIjpmYWxzZSwiaWF0IjoxNTE2Nzk3NjM5LCJleHAiOjE1MTc0MDI0MzksInN1YiI6IjVhNjg3YmZhZGE1NDI1MTE2OGIyMTFkMyJ9.xIgUvdkuHVCzojoG5W8nKmmc1i1ZDudCB-huQCpLXJc
 Content-Type: application/json
 
 {
