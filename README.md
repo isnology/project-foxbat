@@ -10,7 +10,8 @@
 [Alex Palma](https://github.com/developingAlex/)
 
 ## External links
-Figma wireframes ([clean](https://www.figma.com/file/EtEpPs4hyG9qDEsYVX7Kif5w/Foxbat-clean-wireframes) & [dev](https://www.figma.com/file/0tRu6eCM4M8QjqD2DJvvh8Tb/Foxbat-project))  |  [Trello task list](https://www.figma.com/file/0tRu6eCM4M8QjqD2DJvvh8Tb/Foxbat-project)  |  Google Drive for team documents | [Initial deployment on netlify](https://foxbatconfigurator.netlify.com)
+Figma wireframes ([clean](https://www.figma.com/file/EtEpPs4hyG9qDEsYVX7Kif5w/Foxbat-clean-wireframes) & [dev](https://www.figma.com/file/0tRu6eCM4M8QjqD2DJvvh8Tb/Foxbat-project))  |  [Trello task list](https://www.figma.com/file/0tRu6eCM4M8QjqD2DJvvh8Tb/Foxbat-project)  |  Google Drive for team documents | [Initial deployment on netlify](https://foxbatconfigurator.netlify.com) | [Client brief, problem/solution, minutes](https://drive.google.com/drive/folders/14T4ceIIZ0rL_E_hOnDiiVwpA2y0eomX7?usp=sharing)
+
 ## Contents
 * [The Brief](#the-brief)
 * [How to run](#how-to-run-in-development)
