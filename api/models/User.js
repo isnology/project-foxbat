@@ -1,7 +1,9 @@
 const mongoose = require('./init')
 const passportLocalMongoose = require('passport-local-mongoose')
 
-const userSchema = new mongoose.Schema({ })
+const userSchema = new mongoose.Schema({
+  admin: Boolean,
+ })
 
 // Enhance using the devise-like library to add email/password
 userSchema.plugin(passportLocalMongoose, {
