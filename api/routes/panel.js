@@ -4,8 +4,26 @@ const { requireJWT } = require('../middleware/auth')
 
 const router = new express.Router()
 
+// get ALL panels - only for admins
+router.get('/admin/panels', requireJWT, (req, res) => {
+  if (req.user.admin){
+    Panel.find()
+    .then((panels) => {
+      res.json(panels)
+    })
+    .catch((error) => {
+      res.json({ error })
+    })
+  } else {
+    res.status(401).json({
+      error: "only administrators can view all panels"
+    })
+  }
+})
+
 // read
 router.get('/panels', requireJWT, (req, res) => {
+  console.log("someone requested GET /panels and it was you: ", req.user)
   Panel.find({ user_id: req.user })
   .then((panels) => {
     res.json(panels)
