@@ -3,10 +3,11 @@ import SaveRegister from './SaveRegister'
 import SignIn from './SignIn'
 import MyPanels from './MyPanels'
 
-function ModalWindow({ window, onExit, onSignIn, onSaveRegister, panelList, onSelectPanel, errMsg, signedIn }) {
+function ModalWindow({ window, onExit, onSignIn, onSaveRegister, loadPanelList, panelList, onSelectPanel, errMsg, signedIn }) {
   const signIn = (window === "signIn")
   const save = (window === "saveRegister")
   const select = (window === "selectPanel")
+  if (select) loadPanelList()
   return (
     <Fragment>
       { signIn &&

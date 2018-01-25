@@ -10,18 +10,18 @@ function WelcomePage({ onSignOut, doModalWindow, signedIn, user }) {
   return (
     <Fragment>
       <FoxbatLogo />
-      
+
       <div className="welcome-container">
         <div>
           <h1 style={{marginBottom: 0}}>Welcome to the Foxbat Instrument Panel Configurator</h1>
           { signedIn && <p>You are signed in as {user}</p> }
         </div>
         <h2>Click on a Foxbat model to start configuring a new instrument panel</h2>
-      
+
         <div className="selection-images">
           <Link to="/a32">
             <PlaneSelect
-            name="A32 Vixxen" 
+            name="A32 Vixxen"
             imageURL={ a32pic }/>
           </Link>
           <Link to="/a22">
@@ -33,7 +33,7 @@ function WelcomePage({ onSignOut, doModalWindow, signedIn, user }) {
 
         { !signedIn &&
         <Button
-          text="Sign in"
+          text="Retrieve a saved panel"
           onToggle = { (event) => {
             doModalWindow({ name: 'signIn' })
           } }

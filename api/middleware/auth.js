@@ -8,11 +8,13 @@ passport.use(User.createStrategy())
 const jwtSecret = process.env.JWT_SECRET
 const jwtAlgorithm = process.env.JWT_ALGORITHM
 const jwtExpiresIn =  process.env.JWT_EXPIRESIN
+const adminCode = process.env.ADMIN_TOKEN_WORD
 
 function register(req, res, next) {
   // create a fresh user model
   const user = new User({
     email: req.body.email,
+    admin: (req.body.admincode === adminCode)
   })
   // Create the user with the specific password
   User.register(user, req.body.password, (error, user) => {
@@ -61,7 +63,8 @@ function signJWTForUser(req, res) {
   const token = JWT.sign(
       // payload
       {
-        email: user.email
+        email: user.email,
+        admin: user.admin
       },
       jwtSecret,
       {
