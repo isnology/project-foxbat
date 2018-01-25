@@ -99,20 +99,20 @@ class App extends Component {
 
   doSave = ({ name }) => {
     this.setState({ error: null })
-    const backendSlots = this.state.slots.map((slot)=>(
-      {
-        position: slot.slotNumber,
-        instrument_id: !!slot.instrument ? slot.instrument._id : null,
-        size: slot.slotNumber.substring(0,1)
-      }
-    )
-    ).filter((slot)=>(
-      !!slot.instrument_id
-    ))
+    //const backendSlots = this.state.slots.map((slot)=>(
+    //  {
+    //    slotNumber: slot.slotNumber,
+    //    instrument: slot.instrument ? slot.instrument._id : null,
+    //    size: slot.slotNumber.substring(0,1)
+    //  }
+    //)
+    //).filter((slot)=>(
+    //  !!slot.instrument_id
+    //))
     const data = {
       template: this.state.templateId,
       name: name,
-      slots: backendSlots,
+      slots: this.state.slots,
       user_id: this.state.decodedToken.sub     // as per passport documentation
     }
     if (!!this.state.panel_id){
@@ -188,25 +188,26 @@ class App extends Component {
   }
 
   onSelectTemplate = (templateName) => {
-    let slotins = this.setSlots(templateName)
+    //let slotins = this.setSlots(templateName)
 
     this.setState((prevState) => {
       return({
         templateId: templateName,
-        slots: slotins
+        slots: null
       })
     })
   }
 
-  setSlots = (templateName) => {
-    let slotins
-    if (templateName==='a22' || templateName === 'a32'){
-      slotins = _lang.cloneDeep(require('./data').analogSlottedInstruments)
-    } else { // object cloning is necessary here because the intention is for the states array to be made to mirror the one in ./data (this solved the persistent instrument (issue #5: https://github.com/isnology/project-foxbat/issues/5)
-      slotins = _lang.cloneDeep(require('./data').digitalSlottedInstruments)
-    }
-    return slotins
-  }
+  //setSlots = (templateName) => {
+  //  let slotins
+  //  if (templateName==='a22' || templateName === 'a32'){
+  //    slotins = _lang.cloneDeep(require('./data').analogSlottedInstruments)
+  //  } else { // object cloning is necessary here because the intention is for the states array to be made to
+  // mirror the one in ./data (this solved the persistent instrument (issue #5: https://github.com/isnology/project-foxbat/issues/5)
+  //    slotins = _lang.cloneDeep(require('./data').digitalSlottedInstruments)
+  //  }
+  //  return slotins
+  //}
 
   onSelectSlot = (slot) => {
     let newSlot
@@ -226,15 +227,16 @@ class App extends Component {
 
   assignInstrumentToSlot = (model, slotNumber) => {
     // console.log(model.name, ' has been assigned to slot: ', this.state.selectedSlot)
-    let newSlots = this.state.slots.map(slot => {
-      if (slot.slotNumber === slotNumber) {
-        !!slot.instrument ? (slot.instrument = null) : (slot.instrument = model)
-        return slot
-      }
-      else {
-        return slot
-      }
-    })
+    //let newSlots = this.state.slots.map(slot => {
+    //  if (slot.slotNumber === slotNumber) {
+    //    !!slot.instrument ? (slot.instrument = null) : (slot.instrument = model)
+    //    return slot
+    //  }
+    //  else {
+    //    return slot
+    //  }
+    //})
+    const newSlots = this.state.slots.push(model)
     this.setState({
       slots: newSlots,
       panelSaved: false
@@ -289,32 +291,32 @@ class App extends Component {
   onSelectPanel = (panel) => {
     const panelObj = JSON.parse(panel)
 
-    let slots = this.setSlots(panelObj.template)
-    let instrumentObj
-    panelObj.slots.map(dbSlot => {
-      _forEach(this.state.instruments, (instrument) => {
-        if ( instrument._id === dbSlot.instrument_id) {
-          instrumentObj = instrument
-          return false
-        }
-      })
+    //let slots = this.setSlots(panelObj.template)
+    //let instrumentObj
+    //panelObj.slots.map(dbSlot => {
+    //  _forEach(this.state.instruments, (instrument) => {
+    //    if ( instrument._id === dbSlot.instrument_id) {
+    //      instrumentObj = instrument
+    //      return false
+    //    }
+    //  })
 
-      slots.map(slot => {
-        if (slot.slotNumber === dbSlot.position) {
-          slot.instrument = instrumentObj
-          return slot
-        }
-        else {
-          return slot
-        }
-      })
-    })
+    //  slots.map(slot => {
+    //    if (slot.slotNumber === dbSlot.slotNumber) {
+    //      slot.instrument = instrumentObj
+    //      return slot
+    //    }
+    //    else {
+    //      return slot
+    //    }
+    //  })
+    //})
 
     this.setState({
       templateId: panelObj.template,
       panelName: panelObj.name,
       panel_id: panelObj._id,
-      slots: slots,
+      slots: panelObj.slots
     })
    // const obj = {
    //   templateId: panelObj.template,
@@ -331,12 +333,12 @@ class App extends Component {
     if (this.state.panelSaved === false) {
       if (window.confirm("Are you sure you want to clear the current panel? Any unsaved changes will be lost.")) {
         this.onSidebarClose()
-        let clearedSlots = _lang.cloneDeep(this.state.slots)
-        clearedSlots.forEach(slot => slot.instrument = null)
+        //let clearedSlots = _lang.cloneDeep(this.state.slots)
+        //clearedSlots.forEach(slot => slot.instrument = null)
 
-      this.setState({
-        slots: clearedSlots
-      })
+        this.setState({
+          slots: null
+        })
       //const key = "paneldata"
       //if (!!localStorage.getItem(key)) {
       //  let localSlots = JSON.parse(localStorage.getItem(key))
@@ -346,18 +348,18 @@ class App extends Component {
       //  })
         //localStorage.setItem(key, JSON.stringify(localSlots))
       //}
+      }
+    }
+    else {
+      this.onSidebarClose()
+      //let clearedSlots = _lang.cloneDeep(this.state.slots)
+      //clearedSlots.forEach(slot => slot.instrument = null)
+
+      this.setState({
+        slots: null
+      })
     }
   }
-  else {
-    this.onSidebarClose()
-    let clearedSlots = _lang.cloneDeep(this.state.slots)
-    clearedSlots.forEach(slot => slot.instrument = null)
-
-    this.setState({
-      slots: clearedSlots
-    })
-  }
-}
 
   refreshApp = () => {
     this.setState({
@@ -548,7 +550,13 @@ class App extends Component {
   doLoadInstruments() {
     loadInstruments()
     .then((instruments) => {
+      let list = {}
+      instruments.map((instrument) => {
+        list[instrument._id] = instrument
+      })
       this.setState({ instruments })
+      console.log("instruments:", list)
+      //this.setState({ instruments: list })
     })
     .catch(() => {
       this.setState({ instruments: null })

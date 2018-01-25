@@ -2,10 +2,10 @@ import React from 'react'
 
 function Slot({
   instrument, //object representing the instrument occupying this slot
-  panelHeight, //necessary to readjust size and position appropriately
+  panelHeight, //necessary to readjust size and slotNumber appropriately
   slotNumber, //assigned and tracked by the caller
-  leftRatio, //the left position of this slot as a ratio of the panel height
-  bottomRatio, //the top position of this slot as a ratio of the panel height measured from the bottom
+  leftRatio, //the left slotNumber of this slot as a ratio of the panel height
+  bottomRatio, //the top slotNumber of this slot as a ratio of the panel height measured from the bottom
   diameterRatio, //the diameter of the slot as a ratio of the panel height
   heightRatio,
   widthRatio,
@@ -37,24 +37,27 @@ function Slot({
   // if (!!instrument && !!instrument.shape){
   //   slotStyle.borderRadius = (instrument.shape === "circle") ? '50%' : '0%'
   // }
-  
+
   var classForSlot = "slot"
   if (selectedSlot === slotNumber) {
     classForSlot = classForSlot + " selected-slot"
   }
 
-  var thisSlot = slots.filter((slot) => 
-    slot.slotNumber === slotNumber
-  )
+  let thisSlot = null
+  if (!!slots) {
+    thisSlot = slots.filter((slot) =>
+      slot.slotNumber === slotNumber
+    )
+  }
   // console.log('thisslot', thisSlot)
 
   return(
       <div className={classForSlot} id={slotNumber} style={slotStyle} onClick={onClick}>
-        { !!thisSlot[0].instrument ? 
+        { !!thisSlot ?
           <div className="slot-label">
             {`${thisSlot[0].instrument.name} (${thisSlot[0].instrument.brand})`}
           </div> : '' }
-        { !!thisSlot[0].instrument ? <img src={thisSlot[0].instrument.pictureURL} width="100%" alt={thisSlot[0].instrument.name}/> : '' }
+        { !!thisSlot ? <img src={thisSlot[0].instrument.pictureURL} width="100%" alt={thisSlot[0].instrument.name}/> : '' }
       </div>
   )}
 

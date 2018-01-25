@@ -2,8 +2,10 @@ const mongoose = require('./init')
 const Schema = mongoose.Schema
 
 const SlotSchema = new Schema({
-  position: { type: String },
-  instrument_id: { type: Schema.ObjectId, ref: 'Instrument' },
+  slotNumber: { type: String },
+  instrument: {
+    type: Schema.Object, ref: "Instrument"
+  },
   size: { type: String }
 })
 

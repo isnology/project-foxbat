@@ -40,13 +40,18 @@ function Configurator({
   }
 
   function totalCost() {
-    let arrayOfPrices = slots.filter((slot) => {
-      return slot.instrument !== null
-    }).map((slot) => (slot.instrument.price))
+    //let arrayOfPrices = slots.filter((slot) => {
+    //  return slot.instrument !== null
+    //}).map((slot) => (slot.instrument.price))
+    let arrayOfPrices = [0]
+    if (!!slots) {
+      arrayOfPrices = slots.map((slot) => (slot.instrument.price))
+    }
     return arrayOfPrices.reduce(add, 0)/100
   }
 
-  
+
+
   window.addEventListener("beforeunload", function (e) {
       if (panelSaved === false) {
         e.returnValue = "You may have unsaved changes. Are you sure you want to leave?"
