@@ -46,14 +46,16 @@ class App extends Component {
     signIn({ email, password })
     .then((decodedToken) => {
       this.setState({ decodedToken, modalWindow: "selectPanel"})
-      //this.onExitModal()
-      loadPanels({user: this.state.decodedToken.sub})
-      .then((panelList) => {
-        this.setState({ panelList: panelList})
-      })
-      .catch((error) => {
-        this.setState({ error })
-      })
+    })
+    .catch((error) => {
+      this.setState({ error })
+    })
+  }
+
+  loadPanelList = () => {
+    loadPanels({user: this.state.decodedToken.sub})
+    .then((panelList) => {
+      this.setState({ panelList: panelList})
     })
     .catch((error) => {
       this.setState({ error })
@@ -163,7 +165,7 @@ class App extends Component {
     signOutNow()
     this.setState({ decodedToken: null, error: null, templateId: null, panelName: null, panel_id: null })
     const key = "paneldata"
-    localStorage.removeItem(key)
+    //localStorage.removeItem(key)
   }
 
   doModalWindow = ({ name }) => {
@@ -200,7 +202,7 @@ class App extends Component {
     let slotins
     if (templateName==='a22' || templateName === 'a32'){
       slotins = _lang.cloneDeep(require('./data').analogSlottedInstruments)
-    } else { // object cloning is necessary here because the intention is for the states array to be made to mirror the one in ./data (this solved the persistent instrument (issue #5: https://github.com/isnology/project-foxbat/issues/5) 
+    } else { // object cloning is necessary here because the intention is for the states array to be made to mirror the one in ./data (this solved the persistent instrument (issue #5: https://github.com/isnology/project-foxbat/issues/5)
       slotins = _lang.cloneDeep(require('./data').digitalSlottedInstruments)
     }
     return slotins
@@ -369,6 +371,7 @@ class App extends Component {
       modalWindow: null,
       slots: null
     })
+
   }
 
   onRefreshApp = (confirm) => {
@@ -384,6 +387,7 @@ class App extends Component {
     else {
       this.refreshApp()
     }
+    //this.onSignOut()
   }
 
   submitPanel = (email, slotData, templateID) => {
@@ -443,7 +447,7 @@ class App extends Component {
                   panelName={ panelName }
                   panelSaved={ panelSaved }
                   type={templateId}
-                  email={ signedIn && 
+                  email={ signedIn &&
                     decodedToken.email
                   }
                   windowHeight={windowHeight}
@@ -513,6 +517,7 @@ class App extends Component {
               onExit={ this.onExitModal }
               onSignIn={ this.onSignIn }
               onSaveRegister={ this.onSaveRegister }
+              loadPanelList={ this.loadPanelList }
               panelList={ this.state.panelList }
               onSelectPanel={ this.onSelectPanel }
               errMsg={ !!error ? error.message : null }
