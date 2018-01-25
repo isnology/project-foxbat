@@ -27,19 +27,14 @@
   width: 70px;
   border-radius: 50%;
   background-color: #333333;
-  margin-top: -6.5%;
-  margin-left: calc(113.5% - 70px); }
+  cursor: pointer; }
 
 .exit-button-X {
-  font-size: 64px;
-  font-size: 6.4rem;
+  font-size: 3rem;
   color: #F2F2F2;
   position: relative;
-  top: -8px;
-  left: 1px; }
-
-.landing-page-rectangle {
-  cursor: pointer; }
+  top: 0;
+  left: 0; }
 
 .configurator {
   display: flex;
@@ -111,7 +106,7 @@
   box-shadow: 0px 0px 5px 5px #23547c, inset 0px 0px 5px 5px #23547c; }
 
 .panel-button-group button {
-  margin: 1rem auto;
+  margin: 1rem 0.5rem;
   width: 20rem; }
 
 .panel-button-low-group {
@@ -119,7 +114,8 @@
   .panel-button-low-group button {
     width: 10rem;
     margin: auto;
-    background: #8f4343; }
+    background: #428bca;
+    height: 3.5rem; }
 
 .panel-button-low-group button .button-text {
   font-size: 1.2rem;
@@ -299,7 +295,12 @@ h3 {
 
 .landing-page-rectangle {
   margin: 2rem;
-  padding: 0; }
+  padding: 0;
+  cursor: pointer; }
+
+.landing-page-rectangle:hover {
+  border-color: #23547c;
+  box-shadow: 0px 0px 5px 5px #23547c; }
 
 .plane-selector {
   height: 20rem;
@@ -320,19 +321,26 @@ h3 {
   margin: 20px; }
 
 .base-popup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   position: fixed;
-  top: 6%;
-  left: 6%;
+  overflow: scroll;
+  left: 50%;
+  top: 50%;
   width: 87.5%;
+  height: 87.5%;
   border: 1px solid black;
-  border-radius: 41px;
+  border-radius: 4px;
   padding: 5%;
   z-index: 10;
   background: white;
   display: flex;
   flex-direction: column;
-  align-items: center; }
-  .base-popup h1 strong {
+  align-items: center;
+  transform: translate(-50%, -50%); }
+  .base-popup h2 strong {
     color: #0A64CB; }
   .base-popup form label {
     height: 30px;
@@ -351,14 +359,16 @@ h3 {
       font-size: 20px;
       font-size: 2rem; }
   .base-popup select {
-    border: 2px solid #0A64CB; }
+    border: 2px solid #0A64CB;
+    width: 40rem;
+    max-width: 100%;
+    min-height: 10rem; }
   .base-popup option {
-    min-width: 40rem;
+    width: 100%;
     text-align: center;
     cursor: pointer;
     padding: 5px;
-    font-size: 20px;
-    font-size: 2rem; }
+    font-size: 1.5rem; }
   .base-popup .errmsg {
     background: rgba(255, 0, 0, 0.27);
     padding-left: 20px;
@@ -366,13 +376,18 @@ h3 {
     font-size: 20px;
     font-size: 2rem; }
   .base-popup .round-exit-button {
+    display: flex;
     position: absolute;
+    align-items: flex-start;
+    justify-content: center;
     top: 0rem;
     right: 0rem;
-    margin: 0; }
+    margin: 0;
+    height: 40px;
+    width: 40px;
+    border-radius: 0; }
 
 .form-text {
-  font-size: 36px;
-  font-size: 3.6rem;
-  text-align: left;
+  font-size: 2.5rem;
+  text-align: center;
   width: 100%; }
