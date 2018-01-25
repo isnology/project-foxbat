@@ -23,7 +23,6 @@ router.get('/admin/panels', requireJWT, (req, res) => {
 
 // read
 router.get('/panels', requireJWT, (req, res) => {
-  console.log("someone requested GET /panels and it was you: ", req.user)
   Panel.find({ user_id: req.user })
   .then((panels) => {
     res.json(panels)
