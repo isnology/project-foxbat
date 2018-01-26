@@ -1,17 +1,5 @@
 import React, { Fragment } from 'react'
 import Slot from './Slot'
-import _forEach from 'lodash/forEach'
-
-function findSlot(slotNumber, slots) {
-   let instrument = null
-    _forEach(slots, (slot) => {
-    if (slot.slotNumber === slotNumber) {
-      instrument = slot
-      return false
-    }
-  })
-  return instrument
-}
 
 function A22Slots({
   height,
@@ -21,7 +9,6 @@ function A22Slots({
   selectedSlot, // for conditional formatting
   slots
 }){
-
 
   const a32SlotRatios = [ //TODO: put controls in place to ensure the ordering is adhered to in the instruments array passed in.
     //top of the six pack (all 3.125") (left to right)
@@ -251,7 +238,7 @@ function A22Slots({
         slotRatios.map((slot) => (
           <Slot //if a digital [square] instrument is desired, the instrument object should contain a key called 'shape': 'circle' or 'square' ,or boolean key called 'circle':true or false
             key = { slot.slotNumber }
-            instrument = { findSlot( slot.slotNumber, slots ) }
+            instrument = { slots[slot.slotNumber] }     // { findSlot( slot.slotNumber, slots ) }
             panelHeight = {height} //necessary to readjust size and slotNumber appropriately
             slotNumber = {slot.slotNumber} //assigned and tracked by the caller
             leftRatio = {slot.leftRatio} //the left slotNumber of this slot as a ratio of the panel height

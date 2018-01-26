@@ -40,7 +40,7 @@ function WelcomePage({ onSignOut, doModalWindow, signedIn, user }) {
         />
         }
         { signedIn &&
-          <div class="panel-button-group">
+          <div className="panel-button-group">
             <Button
               text="Saved panels"
               onToggle={ (event) => {
