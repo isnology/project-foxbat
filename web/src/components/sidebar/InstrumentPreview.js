@@ -49,7 +49,10 @@ const InstrumentPreview = ({
       </div>
       <div className="instrument-preview">
         <p>{ numeral(selectedInstrumentModel.price/100).format('$0,0.00') } USD</p>
-        { !!selectedInstrumentModel.pictureURL ? (<img src={ selectedInstrumentModel.pictureURL } alt="instrument" className="btnimg"/>) : ('') }
+        { !!selectedInstrumentModel.pictureURL ?
+            (<img src={ selectedInstrumentModel.pictureURL } alt="instrument" className="btnimg" />) :
+            ('')
+        }
       </div>
       { canItGoThere(activeSlotSize, selectedInstrumentModel.size) ?
         <Button

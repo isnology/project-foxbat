@@ -238,7 +238,7 @@ function A22Slots({
         slotRatios.map((slot) => (
           <Slot //if a digital [square] instrument is desired, the instrument object should contain a key called 'shape': 'circle' or 'square' ,or boolean key called 'circle':true or false
             key = { slot.slotNumber }
-            instrument = { slots[slot.slotNumber] }     // { findSlot( slot.slotNumber, slots ) }
+            instrument = { slots[slot.slotNumber] }
             panelHeight = {height} //necessary to readjust size and slotNumber appropriately
             slotNumber = {slot.slotNumber} //assigned and tracked by the caller
             leftRatio = {slot.leftRatio} //the left slotNumber of this slot as a ratio of the panel height

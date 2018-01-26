@@ -1,4 +1,5 @@
 import React from 'react'
+import _toString from 'lodash/toString'
 
 function Slot({
   instrument, //object representing the instrument occupying this slot
@@ -45,13 +46,18 @@ function Slot({
 
   let thisSlot = slots[slotNumber]
 
+  let picWidth = 100
+  if (!!instrument) {
+    picWidth *= (instrument.sizeMultiplier / 10000)
+  }
+
   return(
       <div className={classForSlot} id={slotNumber} style={slotStyle} onClick={onClick}>
         { !!thisSlot ?
           <div className="slot-label">
             {`${thisSlot.name} (${thisSlot.brand})`}
           </div> : '' }
-        { !!thisSlot ? <img src={thisSlot.pictureURL} width="100%" alt={thisSlot.name}/> : '' }
+        { !!thisSlot ? <img src={thisSlot.pictureURL} width={ _toString(picWidth)+'%' } alt={thisSlot.name}/> : '' }
       </div>
   )}
 
