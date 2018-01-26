@@ -72,7 +72,7 @@ function Sidebar({
     _forEach(instruments, (value, key) => {
       if (canItGoThere(activeSlotSize, value.size) &&
           selectedInstrumentType === value.instrumentClass_id.name &&
-          selectedInstrumentBrand === value.brand) {
+          (selectedInstrumentBrand === 'All models' || selectedInstrumentBrand === value.brand)) {
         models[key] = value
       }
     })

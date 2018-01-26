@@ -10,6 +10,9 @@ const instrumentSchema = new Schema({
   pictureURL: { type: String },
   price: { type: Number },
   size: { type: String },
+  horizontalMultiplier: { type: Number },
+  verticalMultiplier:{ type: Number },
+  sizeMultiplier: { type: Number },
   instrumentClass_id: { type: Schema.ObjectId, ref: 'InstrumentClass' },
 })
 
