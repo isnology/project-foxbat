@@ -43,21 +43,15 @@ function Slot({
     classForSlot = classForSlot + " selected-slot"
   }
 
-  let thisSlot = null
-  if (!!slots) {
-    thisSlot = slots.filter((slot) =>
-      slot.slotNumber === slotNumber
-    )
-  }
-  // console.log('thisslot', thisSlot)
+  let thisSlot = slots[slotNumber]
 
   return(
       <div className={classForSlot} id={slotNumber} style={slotStyle} onClick={onClick}>
         { !!thisSlot ?
           <div className="slot-label">
-            {`${thisSlot[0].instrument.name} (${thisSlot[0].instrument.brand})`}
+            {`${thisSlot.name} (${thisSlot.brand})`}
           </div> : '' }
-        { !!thisSlot ? <img src={thisSlot[0].instrument.pictureURL} width="100%" alt={thisSlot[0].instrument.name}/> : '' }
+        { !!thisSlot ? <img src={thisSlot.pictureURL} width="100%" alt={thisSlot.name}/> : '' }
       </div>
   )}
 

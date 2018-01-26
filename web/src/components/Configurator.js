@@ -6,6 +6,7 @@ import Panel from './Panel'
 import SubmitButton from './SubmitButton'
 import logo from '../img/foxbatlogo.png'
 import numeral from 'numeral'
+import _forEach from 'lodash/forEach'
 
 function Configurator({
   panelName,
@@ -15,6 +16,7 @@ function Configurator({
   windowHeight,
   windowWidth,
   slots, //instruments={slots}
+  templateSlots,
   instruments,
   selectedSlot,
   selectedInstrumentType,
@@ -35,21 +37,13 @@ function Configurator({
   onDeletePanel
 }) {
 
-  function add(a, b) {
-    return a + b;
-  }
-
   function totalCost() {
-    //let arrayOfPrices = slots.filter((slot) => {
-    //  return slot.instrument !== null
-    //}).map((slot) => (slot.instrument.price))
-    let arrayOfPrices = [0]
-    if (!!slots) {
-      arrayOfPrices = slots.map((slot) => (slot.instrument.price))
-    }
-    return arrayOfPrices.reduce(add, 0)/100
+    let totalPrices = 0
+    _forEach(slots, (value, key) => {
+      totalPrices += value.price
+    })
+    return totalPrices / 100
   }
-
 
 
   window.addEventListener("beforeunload", function (e) {
@@ -92,6 +86,7 @@ function Configurator({
               email={ email }
               slotData={ slots }
               templateID={ type }
+              templareSlots={ templateSlots }
             />
           }
           <div className="panel-button-low-group">

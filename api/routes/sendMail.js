@@ -7,19 +7,20 @@ if (process.env.NODE_ENV !== 'production') {
 const router = new express.Router()
 
 router.post('/submitpanel', (req, res) => {
-  const { email = '', slotData = [], templateID = ''} = req.body
+  const { email = '', slotData = [], templateID = '', templateSlots = []} = req.body
 
   let slotDataAsString = ''
 
   function convertObjectToStr(obj) {
   }
 
-  slotData.forEach(function(obj) {
-    if (obj.instrument === null) {
-      slotDataAsString = slotDataAsString + "\n\xA0" + obj.slotNumber + ": empty"
+  templateSlots.forEach(function(tSlot) {
+    let slot = _find(slotData, { slotNumber: tSlot })
+    if (!!slot) {
+      slotDataAsString = slotDataAsString + "\n\xA0" + slot.slotNumber + ": " + slot.instrument.brand + " - " + slot.instrument.name + " (" + slot.instrument.partNo + ")"
     }
     else {
-      slotDataAsString = slotDataAsString + "\n\xA0" + obj.slotNumber + ": " + obj.instrument.brand + " - " + obj.instrument.name + " (" + obj.instrument.partNo + ")"
+      slotDataAsString = slotDataAsString + "\n\xA0" + tSlot + ": empty"
     }
   })
 

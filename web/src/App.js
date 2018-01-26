@@ -10,14 +10,10 @@ import { loadInstruments } from './api/instruments'
 import { emailPanelDesign } from './api/emailSubmission'
 import ModalWindow from './components/ModalWindow'
 import Configurator from './components/Configurator'
-import _lang from 'lodash/lang'
 import a22Thumb from './img/a22.png'
 import a22DigitalThumb from './img/a22digital.png'
 import a32Thumb from './img/a32.png'
 import a32DigitalThumb from './img/a32digital.png'
-
-
-import _forEach from 'lodash/forEach'
 
 class App extends Component {
   state = {
@@ -34,7 +30,8 @@ class App extends Component {
     selectedInstrumentModel: null,
     templateId: null, //which template? a22, a22digital, a32, a32digital
     modalWindow: null, //display sign in/up to save panel window
-    slots: null, //state of the users panel slots
+    slots: {}, //state of the users panel slots
+    templateSlots: null,
     error: null, //for displaying any errors recieved from the server
     panelSaved: null,
     windowWidth: 0, //for adaptive sizing of configurator panel
@@ -99,20 +96,11 @@ class App extends Component {
 
   doSave = ({ name }) => {
     this.setState({ error: null })
-    //const backendSlots = this.state.slots.map((slot)=>(
-    //  {
-    //    slotNumber: slot.slotNumber,
-    //    instrument: slot.instrument ? slot.instrument._id : null,
-    //    size: slot.slotNumber.substring(0,1)
-    //  }
-    //)
-    //).filter((slot)=>(
-    //  !!slot.instrument_id
-    //))
     const data = {
       template: this.state.templateId,
       name: name,
       slots: this.state.slots,
+      templateSlots: this.state.templateSlots,
       user_id: this.state.decodedToken.sub     // as per passport documentation
     }
     if (!!this.state.panel_id){
@@ -189,25 +177,20 @@ class App extends Component {
 
   onSelectTemplate = (templateName) => {
     //let slotins = this.setSlots(templateName)
+    let templateSlots
+    if (templateName === 'a22' || templateName === 'a32') {
+      templateSlots = require('./data').analogSlots
+    }
+    else {
+      templateSlots = require('./data').digitalSlots
+    }
 
-    this.setState((prevState) => {
-      return({
-        templateId: templateName,
-        slots: null
-      })
+    this.setState({
+      templateId: templateName,
+      slots: {},
+      templateSlots: templateSlots
     })
   }
-
-  //setSlots = (templateName) => {
-  //  let slotins
-  //  if (templateName==='a22' || templateName === 'a32'){
-  //    slotins = _lang.cloneDeep(require('./data').analogSlottedInstruments)
-  //  } else { // object cloning is necessary here because the intention is for the states array to be made to
-  // mirror the one in ./data (this solved the persistent instrument (issue #5: https://github.com/isnology/project-foxbat/issues/5)
-  //    slotins = _lang.cloneDeep(require('./data').digitalSlottedInstruments)
-  //  }
-  //  return slotins
-  //}
 
   onSelectSlot = (slot) => {
     let newSlot
@@ -226,17 +209,14 @@ class App extends Component {
   }
 
   assignInstrumentToSlot = (model, slotNumber) => {
-    // console.log(model.name, ' has been assigned to slot: ', this.state.selectedSlot)
-    //let newSlots = this.state.slots.map(slot => {
-    //  if (slot.slotNumber === slotNumber) {
-    //    !!slot.instrument ? (slot.instrument = null) : (slot.instrument = model)
-    //    return slot
-    //  }
-    //  else {
-    //    return slot
-    //  }
-    //})
-    const newSlots = this.state.slots.push(model)
+    let newSlots = this.state.slots
+    if (!!newSlots[slotNumber]) {
+      delete newSlots[slotNumber]
+    }
+    else {
+      newSlots[slotNumber] = model
+    }
+
     this.setState({
       slots: newSlots,
       panelSaved: false
@@ -291,32 +271,12 @@ class App extends Component {
   onSelectPanel = (panel) => {
     const panelObj = JSON.parse(panel)
 
-    //let slots = this.setSlots(panelObj.template)
-    //let instrumentObj
-    //panelObj.slots.map(dbSlot => {
-    //  _forEach(this.state.instruments, (instrument) => {
-    //    if ( instrument._id === dbSlot.instrument_id) {
-    //      instrumentObj = instrument
-    //      return false
-    //    }
-    //  })
-
-    //  slots.map(slot => {
-    //    if (slot.slotNumber === dbSlot.slotNumber) {
-    //      slot.instrument = instrumentObj
-    //      return slot
-    //    }
-    //    else {
-    //      return slot
-    //    }
-    //  })
-    //})
-
     this.setState({
       templateId: panelObj.template,
       panelName: panelObj.name,
       panel_id: panelObj._id,
-      slots: panelObj.slots
+      slots: panelObj.slots,
+      templateSlots: panelObj.templateSlots
     })
    // const obj = {
    //   templateId: panelObj.template,
@@ -333,11 +293,9 @@ class App extends Component {
     if (this.state.panelSaved === false) {
       if (window.confirm("Are you sure you want to clear the current panel? Any unsaved changes will be lost.")) {
         this.onSidebarClose()
-        //let clearedSlots = _lang.cloneDeep(this.state.slots)
-        //clearedSlots.forEach(slot => slot.instrument = null)
 
         this.setState({
-          slots: null
+          slots: {}
         })
       //const key = "paneldata"
       //if (!!localStorage.getItem(key)) {
@@ -352,11 +310,9 @@ class App extends Component {
     }
     else {
       this.onSidebarClose()
-      //let clearedSlots = _lang.cloneDeep(this.state.slots)
-      //clearedSlots.forEach(slot => slot.instrument = null)
 
       this.setState({
-        slots: null
+        slots: {}
       })
     }
   }
@@ -371,7 +327,8 @@ class App extends Component {
       selectedInstrumentModel: null,
       templateId: null,
       modalWindow: null,
-      slots: null
+      slots: {},
+      templateSlots: null
     })
 
   }
@@ -392,9 +349,9 @@ class App extends Component {
     //this.onSignOut()
   }
 
-  submitPanel = (email, slotData, templateID) => {
+  submitPanel = (email, slotData, templateID, templateSlots) => {
     if (window.confirm("Click OK to confrim and send your panel design to Foxabt Australia")) {
-      emailPanelDesign(email, slotData, templateID)
+      emailPanelDesign(email, slotData, templateID, templateSlots)
         .then((res) => {
           alert("Panel design has been sent")
         })
@@ -416,6 +373,7 @@ class App extends Component {
       selectedInstrumentBrand,
       selectedInstrumentModel,
       slots,
+      templateSlots,
       windowWidth,
       windowHeight,
       error,
@@ -456,6 +414,7 @@ class App extends Component {
                   windowWidth={windowWidth}
                   instruments={ instruments }
                   slots={ slots }
+                  templateSlots={ templateSlots }
                   selectedSlot={ selectedSlot }
                   selectedInstrumentType={ selectedInstrumentType }
                   selectedInstrumentBrand={ selectedInstrumentBrand }
@@ -554,9 +513,9 @@ class App extends Component {
       instruments.map((instrument) => {
         list[instrument._id] = instrument
       })
-      this.setState({ instruments })
-      console.log("instruments:", list)
-      //this.setState({ instruments: list })
+      //this.setState({ instruments })
+      //console.log("instruments:", list)
+      this.setState({ instruments: list })
     })
     .catch(() => {
       this.setState({ instruments: null })

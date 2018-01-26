@@ -249,7 +249,6 @@ function A22Slots({
     <Fragment>
       {
         slotRatios.map((slot) => (
-        //slots.map((instrument, index)=> (
           <Slot //if a digital [square] instrument is desired, the instrument object should contain a key called 'shape': 'circle' or 'square' ,or boolean key called 'circle':true or false
             key = { slot.slotNumber }
             instrument = { findSlot( slot.slotNumber, slots ) }

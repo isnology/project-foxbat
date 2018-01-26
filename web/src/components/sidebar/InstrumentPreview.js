@@ -26,11 +26,12 @@ const InstrumentPreview = ({
   let buttonLabel
 
   if (!!selectedSlot) {
-    activeSlot = slots.find(function(slot) { return slot.slotNumber === selectedSlot;})
-    activeSlotSize = activeSlot.slotNumber.substring(0,1)
-    if (!!activeSlot.instrument) {
+
+    activeSlot = slots[selectedSlot]
+    activeSlotSize = selectedSlot.substring(0,1)
+    if (!!activeSlot) {
       buttonLabel = "Remove"
-      selectedInstrumentModel = activeSlot.instrument
+      selectedInstrumentModel = activeSlot
     }
     else {
       buttonLabel = "Add"
@@ -50,11 +51,11 @@ const InstrumentPreview = ({
         <p>{ numeral(selectedInstrumentModel.price/100).format('$0,0.00') } USD</p>
         { !!selectedInstrumentModel.pictureURL ? (<img src={ selectedInstrumentModel.pictureURL } alt="instrument" className="btnimg"/>) : ('') }
       </div>
-      { canItGoThere(activeSlotSize, selectedInstrumentModel.size) ? 
+      { canItGoThere(activeSlotSize, selectedInstrumentModel.size) ?
         <Button
           text={ buttonLabel }
           onToggle={ ()=>{ toggleInstrumentToSlot(selectedInstrumentModel) } }
-        /> : 
+        /> :
         <div className="inactive"><Button
           text={ "Incompatible slot" }
         /></div>

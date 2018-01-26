@@ -5,12 +5,14 @@ import NavList from './NavList'
 import SidebarText from './SidebarText'
 import InstrumentPreview from './InstrumentPreview'
 import { sideBarHeadings } from '../../constants/messages'
-var _array = require('lodash/array') // Lodash array methods
+import _forEach from 'lodash/forEach'
+import _toArray from 'lodash/toArray'
+
 
 export function canItGoThere(slotSize, instSize) {
   if (slotSize === instSize){
     return true
-  } 
+  }
   else if (slotSize === 'L' && (instSize === 'M' || instSize === 'S' )) {
     return true //allow medium (2.25") and small (2") size instruments to fit into a large (3.125") slot due to mounting brackets
   }
@@ -26,7 +28,7 @@ function Sidebar({
   type,
   instruments,
   slots,
-  selectedSlot,
+  selectedSlot,           // slot number
   selectedInstrumentType,
   selectedInstrumentBrand,
   selectedInstrumentModel, // This is an object
@@ -35,62 +37,57 @@ function Sidebar({
   sidebarClose,
   onBackClick
 }) {
-  
+
+  let activeSlot = null
+  let activeSlotSize = null
   if (!!selectedSlot && !selectedInstrumentModel) {
-    var activeSlot = slots.find(function(slot) {
-      return slot.slotNumber === selectedSlot;
-    })
-    var activeSlotSize = activeSlot.slotNumber.substring(0,1)
+    activeSlot = slots[selectedSlot]
+    activeSlotSize = selectedSlot.substring(0,1)
   }
 
-  // console.log(activeSlot)
-  // console.log(activeSlotSize)
-
   function allTypesFromInstruments(instruments) {
-    const allTypesArray = instruments.filter((instrument) => {
-      return canItGoThere(activeSlotSize, instrument.size) === true
-    }).map((instrument) => (
-      instrument.instrumentClass_id.name
-    ))
-
-    const typesArray = _array.uniq(allTypesArray)
-    return typesArray
+    let types = {}
+    _forEach(instruments, (value, key) => {
+      if (canItGoThere(activeSlotSize, value.size)) {
+        types[value.instrumentClass_id.name] = value.instrumentClass_id.name
+      }
+    })
+    return _toArray(types)
   }
 
   function allBrandsForTypeFromInstruments(instruments, selectedInstrumentType) {
-    const instrumentsWithType = instruments.filter((instrument) => {
-      return instrument.instrumentClass_id.name === selectedInstrumentType && canItGoThere(activeSlotSize, instrument.size) === true
+    let brands = {}
+    _forEach(instruments, (value, key) => {
+      if (canItGoThere(activeSlotSize, value.size) && selectedInstrumentType === value.instrumentClass_id.name) {
+        brands[value.brand] = value.brand
+      }
     })
-    const allBrands = instrumentsWithType.map((instrument) => instrument.brand)
-    const uniqueBrands = _array.uniq(allBrands)
-    uniqueBrands.push(`All models`)
-    return uniqueBrands
+    let temp = _toArray(brands)
+    temp.push('All models')
+    return temp
   }
 
   function allModelsForBrandsForTypeFromInstruments(instruments, selectedInstrumentType, selectedInstrumentBrand) {
-    let instrumentsWithTypeAndBrand
-    if (selectedInstrumentBrand === "All models") {
-      instrumentsWithTypeAndBrand = instruments.filter((instrument) => {
-        return instrument.instrumentClass_id.name === selectedInstrumentType && canItGoThere(activeSlotSize, instrument.size) === true
-      })
-    }
-    else {
-      instrumentsWithTypeAndBrand = instruments.filter((instrument) => {
-        return instrument.instrumentClass_id.name === selectedInstrumentType && instrument.brand === selectedInstrumentBrand && canItGoThere(activeSlotSize, instrument.size) === true
-      })
-    } 
-    return instrumentsWithTypeAndBrand
+    let models = {}
+    _forEach(instruments, (value, key) => {
+      if (canItGoThere(activeSlotSize, value.size) &&
+          selectedInstrumentType === value.instrumentClass_id.name &&
+          selectedInstrumentBrand === value.brand) {
+        models[key] = value
+      }
+    })
+    return _toArray(models)
   }
 
   function RenderToSidebar() {
     if (!!selectedSlot && !selectedInstrumentModel) {
             // Is there an instrument already in the slot?
       return (
-        !!activeSlot.instrument ? (
+        !!slots[selectedSlot] ? (
           <InstrumentPreview
             slots={ slots }
             selectedSlot={ selectedSlot }
-            selectedInstrumentModel={ activeSlot.instrument }
+            selectedInstrumentModel={ slots[selectedSlot] }
             toggleInstrumentToSlot={ assignInstrumentToSelectedSlot }
           />
         ) : (
@@ -118,7 +115,7 @@ function Sidebar({
   }
 
   let topHeading
-  let displayItems
+  let displayItems = []
   let onSelectItem
   let modelObjects
   let exitButton = true

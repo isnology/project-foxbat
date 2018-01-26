@@ -1,18 +1,17 @@
 const mongoose = require('./init')
 const Schema = mongoose.Schema
 
-const SlotSchema = new Schema({
-  slotNumber: { type: String },
-  instrument: {
-    type: Schema.Object, ref: "Instrument"
-  },
-  size: { type: String }
-})
+// slots {
+//  slotNumber: { type: String },
+//  instrument: { Instrument Object },
+//  size: { type: String }
+//})
 
 const panelSchema = new Schema({
-  template: { type: String },
-  name: { type: String },
-  slots: [SlotSchema],
+  template: String,
+  name: String,
+  slots: {},
+  templateSlots: [String],
   user_id: { type: Schema.ObjectId, ref: 'User'}
 })
 
