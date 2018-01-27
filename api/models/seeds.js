@@ -343,7 +343,7 @@ InstrumentClass.create([
       text: 'http://www.aircraftspruce.com/catalog/inpages/falconasi120m-3.php',
       price: 18995,
       size: 'L',
-      horizontalMultiplier: 100,
+      horizontalMultiplier: 99,
       verticalMultiplier: 97,
       sizeMultiplier: 115,
       pictureURL: 'http://www.aircraftspruce.com/cache/370-320-/catalog/graphics/10-02915.jpg',
