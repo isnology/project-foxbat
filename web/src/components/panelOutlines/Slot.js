@@ -47,8 +47,19 @@ function Slot({
   let thisSlot = slots[slotNumber]
 
   let picWidth = 100
+  let picHorizontal = 100
+  let picVertical = 100
   if (!!instrument) {
-    picWidth *= (instrument.sizeMultiplier / 10000)
+    let multiplier = instrument.sizeMultiplier / 100
+    picWidth *= multiplier
+    multiplier = instrument.horizontalMultiplier / 100
+    picHorizontal *= multiplier
+    multiplier = instrument.verticalMultiplier / 100
+    picVertical *= multiplier
+  }
+  let picStyle = {
+    marginLeft: picHorizontal,
+    marginTop: picVertical
   }
 
   return(
@@ -57,7 +68,7 @@ function Slot({
           <div className="slot-label">
             {`${thisSlot.name} (${thisSlot.brand})`}
           </div> : '' }
-        { !!thisSlot ? <img src={thisSlot.pictureURL} width={ _toString(picWidth)+'%' } alt={thisSlot.name}/> : '' }
+        { !!thisSlot ? <img src={thisSlot.pictureURL} width={ _toString(picWidth)+'%' } alt={thisSlot.name} style={picStyle}/> : '' }
       </div>
   )}
 

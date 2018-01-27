@@ -24,7 +24,7 @@
   .running-cost {
     align-self: flex-start;
     padding: 0 0 2rem 2rem;
-    font-size: 2rem; 
+    font-size: 2rem;
     text-align: left;
     p {
       margin: 0;
@@ -69,6 +69,8 @@ height: auto;
 
 .slot img {
   z-index: 1;
+  margin-bottom: 100px;
+  margin-right: 100px
 }
 
 .slot-label {
@@ -157,12 +159,12 @@ height: auto;
 }
 
 .sidebar-text {
-  display: flex;  
+  display: flex;
   flex-grow: 1;
-  flex-direction: column;  
+  flex-direction: column;
   justify-content: center;
   width: 100%;
-  height: calc(100% - 100px); 
+  height: calc(100% - 100px);
   margin: 0;
   color: #1b1b1b;
   text-align: left;
