@@ -513,8 +513,6 @@ class App extends Component {
       instruments.map((instrument) => {
         list[instrument._id] = instrument
       })
-      //this.setState({ instruments })
-      //console.log("instruments:", list)
       this.setState({ instruments: list })
     })
     .catch(() => {
